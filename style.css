@@ -500,20 +500,103 @@ header {
   100% { transform: translateX(-50%); }
 }
 
-/* ─── MOBILE ─── */
+/* ─── TABLET ─── */
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .card-hero { grid-column: 1 / -1; }
-  .hero-inner { flex-direction: column; align-items: flex-start; }
+  .card:last-child { grid-column: 1 / -1; }
+  .card:last-child > div:last-child { grid-template-columns: repeat(3, 1fr); }
+  .hero-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
   .hero-right { text-align: left; }
   .countdown-unit { text-align: left; }
 }
 
+/* ─── MOBILE ─── */
 @media (max-width: 600px) {
-  .dashboard-grid { grid-template-columns: 1fr; }
-  header { flex-wrap: wrap; }
+  body { padding-bottom: 48px; }
+
+  .container {
+    width: 94%;
+    padding: 24px 0 24px;
+  }
+
+  /* Header */
+  header {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+  }
+
+  .avatar-wrap img {
+    width: 52px;
+    height: 52px;
+  }
+
+  #greeting {
+    font-size: 1.55rem;
+    letter-spacing: 1px;
+  }
+
+  .header-meta {
+    font-size: 0.72rem;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
   .header-brand { display: none; }
-  .card-hero { padding: 28px 24px; }
+
+  /* Grid: single column */
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card-hero { grid-column: 1; }
+  .card:last-child { grid-column: 1; }
+
+  /* Cards */
+  .card { padding: 20px 18px; border-radius: 14px; }
+
+  .card-label { font-size: 0.6rem; margin-bottom: 14px; }
+
+  /* Links card — stack to 1 col on small screens */
+  .card:last-child > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  .link-item { padding: 13px 14px; font-size: 0.88rem; }
+
+  /* FX */
+  .fx-value { font-size: 0.92rem; }
+
+  .row { padding: 9px 0; }
+  .row span { font-size: 0.83rem; }
+
+  /* Crypto */
+  .crypto-row { padding: 10px 0; }
+  .crypto-name { font-size: 0.85rem; width: 42px; }
+  .crypto-usd { font-size: 0.88rem; }
+  .crypto-ngn { font-size: 0.62rem; }
+  .badge { font-size: 0.62rem; padding: 2px 6px; min-width: 50px; margin-left: 8px; }
+
+  /* Weather */
+  .weather-temp { font-size: 0.92rem; }
+
+  /* Hero match card */
+  .card-hero { padding: 22px 18px; }
+  .hero-fixture { font-size: 1.5rem; }
+  .hero-meta { font-size: 0.7rem; }
+  #countdown { font-size: 3rem; letter-spacing: 2px; }
+  .countdown-label { font-size: 0.58rem; }
+  .countdown-unit { font-size: 0.6rem; }
+
+  /* Ticker */
+  .news-ticker { padding: 8px 0; }
+  .ticker-label { width: 52px; font-size: 0.7rem; }
+  .ticker-wrapper { padding-left: calc(100% + 52px); }
+  .ticker-wrapper span { font-size: 0.7rem; padding: 0 24px; }
 }
