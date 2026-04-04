@@ -10,7 +10,7 @@
 
 <div class="container">
 
-<header>
+  <header>
     <div class="avatar-wrap">
       <img src="https://media.licdn.com/dms/image/v2/D4E03AQFCmn-OEMQYcA/profile-displayphoto-crop_800_800/B4EZ1aQz7_IEAI-/0/1775335853855?e=1776902400&v=beta&t=vYXvM9-6InZFOmHqfnbkxIFY3dwC__E45p-aRWq8xoA" alt="Jid">
       <div class="avatar-status"></div>
@@ -61,40 +61,6 @@
       </div>
     </div>
 
-    <div class="card" id="savings-simulator" style="grid-column: span 3;">
-    <div class="card-label"><span class="dot"></span> Your 2026 Wealth Path Simulator</div>
-    <div class="simulator-container" style="display: flex; gap: 30px; flex-wrap: wrap;">
-        
-        <div class="sim-inputs" style="flex: 1; min-width: 280px;">
-            <div class="row">
-                <span>Monthly Deposit (₦)</span>
-                <input type="number" id="sim-deposit" value="50000" class="sim-input-field">
-            </div>
-            <div class="row">
-                <span>Current Balance (₦)</span>
-                <input type="number" id="sim-initial" value="100000" class="sim-input-field">
-            </div>
-            <div class="row">
-                <span>Fintech Strategy</span>
-                <select id="sim-strategy" class="sim-input-field">
-                    <option value="0.15">Neobank High-Yield (15%)</option>
-                    <option value="0.12">Locked Savings (12%)</option>
-                    <option value="0.04">Traditional Bank (4%)</option>
-                </select>
-            </div>
-            <button onclick="calculateSavings()" class="link-item" style="width: 100%; margin-top: 20px; cursor: pointer; justify-content: center;">
-                Generate Wealth Path
-            </button>
-        </div>
-
-        <div class="sim-results" style="flex: 1.5; background: var(--navy-mid); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border);">
-            <div class="result-label">Projected Balance by Dec 2026</div>
-            <div id="sim-total" style="font-family: 'Bebas Neue'; font-size: 3.5rem; color: var(--city-blue);">₦0.00</div>
-            <div class="result-comp" id="sim-interest-earned" style="color: var(--up);">+ ₦0.00 in interest alone</div>
-        </div>
-    </div>
-</div>
-
     <div class="card card-hero">
       <div class="hero-inner">
         <div class="hero-left">
@@ -112,30 +78,6 @@
           <div id="countdown">00d 00h 00m</div>
           <div class="countdown-unit" id="countdown-secs">00s remaining</div>
         </div>
-      </div>
-    </div>
-
-      <div class="card tools-card" style="grid-column: span 3;">
-      <div class="card-label"><span class="dot"></span> My Tools</div>
-      <div class="tools-tabs">
-        <button class="tool-tab active" onclick="showTool('calculator', this)">⚙ Fee Calculator</button>
-        <button class="tool-tab" onclick="showTool('game', this)">🎮 Squaredodger</button>
-        <button class="tool-tab" onclick="showTool('decode', this)">📈 Fintech 2026</button>
-      </div>
-      <div class="tool-frame-wrap">
-        <iframe id="tool-calculator" class="tool-frame active-frame"
-          src="https://jidspaymentfeecalcv4.vercel.app"
-          title="NG Pay Fee Calculator"
-          loading="lazy"
-          allow="clipboard-write"></iframe>
-        <iframe id="tool-game" class="tool-frame"
-          src="https://jidsdodgergame.vercel.app/"
-          title="Squaredodger Game"
-          loading="lazy"></iframe>
-        <iframe id="tool-decode" class="tool-frame"
-          src="./decode.html"
-          title="DECODE Fintech Report"
-          loading="lazy"></iframe>
       </div>
     </div>
 
