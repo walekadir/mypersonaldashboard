@@ -325,6 +325,35 @@ section{
   font-size:1rem;letter-spacing:0.5px;
   color:var(--amber);
 }
+  <div class="landscape-card reveal" style="margin-top: 24px; grid-column: span 2;">
+    <div class="bar-section-title">2026 Wealth Path Simulator</div>
+    <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: center;">
+      <div style="flex: 1; min-width: 250px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span style="font-size:0.7rem; color:var(--muted);">Monthly Deposit (₦)</span>
+            <input type="number" id="sim-deposit" value="50000" style="background:var(--surface2); border:1px solid var(--border); color:var(--text); text-align:right; border-radius:4px;">
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span style="font-size:0.7rem; color:var(--muted);">Starting Balance (₦)</span>
+            <input type="number" id="sim-initial" value="100000" style="background:var(--surface2); border:1px solid var(--border); color:var(--text); text-align:right; border-radius:4px;">
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+            <span style="font-size:0.7rem; color:var(--muted);">Strategy</span>
+            <select id="sim-strategy" style="background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:4px;">
+                <option value="0.15">Neobank (15%)</option>
+                <option value="0.12">Savings App (12%)</option>
+                <option value="0.04">Bank (4%)</option>
+            </select>
+        </div>
+        <button onclick="calculateSavings()" style="width:100%; padding:10px; background:var(--orange); color:black; border:none; border-radius:6px; font-family:'Bebas Neue'; cursor:pointer;">Calculate Path</button>
+      </div>
+      <div style="flex: 1; text-align:center;">
+          <div style="font-size:0.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px;">Est. Balance Dec 2026</div>
+          <div id="sim-total" style="font-family:'Bebas Neue'; font-size:3rem; color:var(--orange);">₦0.00</div>
+          <div id="sim-interest-earned" style="font-size:0.65rem; color:var(--green);">+ ₦0.00 interest</div>
+      </div>
+    </div>
+  </div>
 
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(16px);}
@@ -1288,6 +1317,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.4 });
   sections.forEach(s => observer.observe(s));
 });
+  function calculateSavings() {
+    const P = parseFloat(document.getElementById('sim-initial').value) || 0;
+    const PMT = parseFloat(document.getElementById('sim-deposit').value) || 0;
+    const r = parseFloat(document.getElementById('sim-strategy').value);
+    const n = 12; 
+    const t = 0.66; // Approx months remaining to end of 2026
+
+    const futurePrincipal = P * Math.pow((1 + r/n), (n * t));
+    const futureAnnuity = PMT * ((Math.pow((1 + r/n), (n * t)) - 1) / (r/n));
+    const totalWealth = futurePrincipal + futureAnnuity;
+    const interestEarned = totalWealth - (P + (PMT * (n * t)));
+
+    document.getElementById('sim-total').innerText = "₦" + totalWealth.toLocaleString(undefined, {maximumFractionDigits: 0});
+    document.getElementById('sim-interest-earned').innerText = "+ ₦" + interestEarned.toLocaleString(undefined, {maximumFractionDigits: 0}) + " interest";
+}
+// Run on load
+document.addEventListener('DOMContentLoaded', calculateSavings);
 </script>
 </body>
 </html>
