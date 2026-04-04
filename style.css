@@ -600,3 +600,102 @@ header {
   .ticker-wrapper { padding-left: calc(100% + 52px); }
   .ticker-wrapper span { font-size: 0.7rem; padding: 0 24px; }
 }
+
+/* ─── LAST RESULT ─── */
+.last-result {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(108,171,221,0.1);
+}
+.result-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.result-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 1.5px;
+  color: var(--text);
+}
+.result-win { color: var(--up); }
+.result-loss { color: var(--down); }
+.result-comp {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+/* ─── TOOLS CARD ─── */
+.tools-card {
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.tools-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tool-tab {
+  padding: 8px 18px;
+  background: rgba(108,171,221,0.06);
+  border: 1px solid rgba(108,171,221,0.12);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+}
+.tool-tab:hover {
+  color: var(--text);
+  border-color: rgba(108,171,221,0.3);
+}
+.tool-tab.active {
+  background: rgba(108,171,221,0.14);
+  border-color: var(--city-blue);
+  color: var(--city-blue);
+}
+
+.tool-frame-wrap {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  background: #06100a;
+}
+
+.tool-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  border-radius: 0 0 18px 18px;
+}
+
+.tool-frame.active-frame {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── MOBILE TOOLS ─── */
+@media (max-width: 600px) {
+  .tool-frame-wrap { height: 620px; }
+  .tools-tabs { flex-wrap: wrap; }
+  .tool-tab { font-size: 0.72rem; padding: 7px 14px; }
+}
