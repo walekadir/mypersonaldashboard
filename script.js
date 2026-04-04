@@ -102,7 +102,7 @@ async function fetchCrypto() {
 }
 
 // ─── 5. COUNTDOWN ───
-const matchDay = new Date("April 5, 2026 12:45:00").getTime();
+const matchDay = new Date("April 12, 2026 16:30:00").getTime();
 function runCountdown() {
     const now = new Date().getTime();
     const gap = matchDay - now;
@@ -116,6 +116,14 @@ function runCountdown() {
     const s = Math.floor((gap % (1000 * 60)) / 1000);
     document.getElementById('countdown').innerText = `${String(d).padStart(2,'0')}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`;
     document.getElementById('countdown-secs').innerText = `${String(s).padStart(2,'0')}s remaining`;
+}
+
+// ─── 6. TOOL SWITCHER ───
+function showTool(name, btn) {
+    document.querySelectorAll('.tool-frame').forEach(f => f.classList.remove('active-frame'));
+    document.querySelectorAll('.tool-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('tool-' + name).classList.add('active-frame');
+    btn.classList.add('active');
 }
 
 // ─── BOOT ───
