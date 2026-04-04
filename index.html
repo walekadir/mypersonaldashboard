@@ -115,6 +115,30 @@
       </div>
     </div>
 
+      <div class="card tools-card" style="grid-column: span 3;">
+      <div class="card-label"><span class="dot"></span> My Tools</div>
+      <div class="tools-tabs">
+        <button class="tool-tab active" onclick="showTool('calculator', this)">⚙ Fee Calculator</button>
+        <button class="tool-tab" onclick="showTool('game', this)">🎮 Squaredodger</button>
+        <button class="tool-tab" onclick="showTool('decode', this)">📈 Fintech 2026</button>
+      </div>
+      <div class="tool-frame-wrap">
+        <iframe id="tool-calculator" class="tool-frame active-frame"
+          src="https://jidspaymentfeecalcv4.vercel.app"
+          title="NG Pay Fee Calculator"
+          loading="lazy"
+          allow="clipboard-write"></iframe>
+        <iframe id="tool-game" class="tool-frame"
+          src="https://jidsdodgergame.vercel.app/"
+          title="Squaredodger Game"
+          loading="lazy"></iframe>
+        <iframe id="tool-decode" class="tool-frame"
+          src="./decode.html"
+          title="DECODE Fintech Report"
+          loading="lazy"></iframe>
+      </div>
+    </div>
+
     <div class="card tools-card" style="grid-column: span 3;">
       <div class="card-label"><span class="dot"></span> My Tools</div>
       <div class="tools-tabs">
