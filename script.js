@@ -126,6 +126,37 @@ function showTool(name, btn) {
     btn.classList.add('active');
 }
 
+function calculateSavings() {
+    const P = parseFloat(document.getElementById('sim-initial').value); // Initial Principal
+    const PMT = parseFloat(document.getElementById('sim-deposit').value); // Monthly Deposit
+    const r = parseFloat(document.getElementById('sim-strategy').value); // Annual Interest Rate
+    const n = 12; // Compounded monthly
+    
+    // Target date: Dec 2026. Current date: April 2026.
+    // t = 0.66 years (8 months remaining)
+    const t = 0.66; 
+
+    // Formula for Future Value of Principal: A = P(1 + r/n)^(nt)
+    const futurePrincipal = P * Math.pow((1 + r/n), (n * t));
+
+    // Formula for Future Value of Monthly Deposits: FV = PMT * [((1 + r/n)^(nt) - 1) / (r/n)]
+    const futureAnnuity = PMT * ((Math.pow((1 + r/n), (n * t)) - 1) / (r/n));
+
+    const totalWealth = futurePrincipal + futureAnnuity;
+    const totalInvested = P + (PMT * (n * t));
+    const interestEarned = totalWealth - totalInvested;
+
+    // Update UI
+    document.getElementById('sim-total').innerText = `₦${totalWealth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    document.getElementById('sim-interest-earned').innerText = `+ ₦${interestEarned.toLocaleString(undefined, {maximumFractionDigits: 0})} in interest alone`;
+    
+    // Wit touch
+    console.log("Wealth decoded. 2026 is looking bright, Jid.");
+}
+
+// Run once on load
+window.addEventListener('DOMContentLoaded', calculateSavings);
+
 // ─── BOOT ───
 updateHeader(); setInterval(updateHeader, 1000);
 updateNairaRates();
