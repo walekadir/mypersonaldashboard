@@ -699,3 +699,26 @@ header {
   .tools-tabs { flex-wrap: wrap; }
   .tool-tab { font-size: 0.72rem; padding: 7px 14px; }
 }
+.sim-input-field {
+    background: var(--navy);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    width: 140px;
+    text-align: right;
+}
+
+.sim-input-field:focus {
+    outline: none;
+    border-color: var(--city-blue);
+    box-shadow: 0 0 8px var(--orange-glow);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
