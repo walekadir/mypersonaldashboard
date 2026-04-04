@@ -61,6 +61,40 @@
       </div>
     </div>
 
+    <div class="card" id="savings-simulator" style="grid-column: span 3;">
+    <div class="card-label"><span class="dot"></span> 2026 Wealth Path Simulator</div>
+    <div class="simulator-container" style="display: flex; gap: 30px; flex-wrap: wrap;">
+        
+        <div class="sim-inputs" style="flex: 1; min-width: 280px;">
+            <div class="row">
+                <span>Monthly Deposit (₦)</span>
+                <input type="number" id="sim-deposit" value="50000" class="sim-input-field">
+            </div>
+            <div class="row">
+                <span>Current Balance (₦)</span>
+                <input type="number" id="sim-initial" value="100000" class="sim-input-field">
+            </div>
+            <div class="row">
+                <span>Fintech Strategy</span>
+                <select id="sim-strategy" class="sim-input-field">
+                    <option value="0.15">Neobank High-Yield (15%)</option>
+                    <option value="0.12">Locked Savings (12%)</option>
+                    <option value="0.04">Traditional Bank (4%)</option>
+                </select>
+            </div>
+            <button onclick="calculateSavings()" class="link-item" style="width: 100%; margin-top: 20px; cursor: pointer; justify-content: center;">
+                Generate Wealth Path
+            </button>
+        </div>
+
+        <div class="sim-results" style="flex: 1.5; background: var(--navy-mid); padding: 20px; border-radius: 12px; border: 1px solid var(--card-border);">
+            <div class="result-label">Projected Balance by Dec 2026</div>
+            <div id="sim-total" style="font-family: 'Bebas Neue'; font-size: 3.5rem; color: var(--city-blue);">₦0.00</div>
+            <div class="result-comp" id="sim-interest-earned" style="color: var(--up);">+ ₦0.00 in interest alone</div>
+        </div>
+    </div>
+</div>
+
     <div class="card card-hero">
       <div class="hero-inner">
         <div class="hero-left">
