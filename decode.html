@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Jid's Nigerian Fintech Landscape 2026 — DECODE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;
+  --surface:#0f0f0f;
+  --surface2:#161616;
+  --surface3:#1e1e1e;
+  --border:#242424;
+  --border2:#2e2e2e;
+  --text:#f0ede6;
+  --muted:#5a5a5a;
+  --muted2:#3a3a3a;
+  --orange:#f97316;
+  --orange-dim:#c05a0e;
+  --orange-glow:rgba(249,115,22,0.12);
+  --green:#22c55e;
+  --green-dim:#16a34a;
+  --green-glow:rgba(34,197,94,0.10);
+  --red:#ef4444;
+  --amber:#f59e0b;
+  --blue:#38bdf8;
+  --purple:#a78bfa;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ── GRAIN ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.5;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  height:56px;
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.2rem;letter-spacing:3px;
+  color:var(--orange);
+}
+.nav-links{
+  display:flex;gap:32px;list-style:none;
+}
+.nav-links a{
+  font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.15s;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-tag{
+  font-size:0.6rem;letter-spacing:0.15em;
+  color:var(--muted);
+}
+.nav-tag span{color:var(--green);}
+
+/* ── SECTIONS ── */
+section{
+  min-height:100vh;
+  padding:100px 40px 80px;
+  position:relative;
+  z-index:1;
+}
+
+.section-label{
+  font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--orange-dim),transparent);
+  max-width:120px;
+}
+
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  font-weight:900;line-height:1.0;
+  letter-spacing:-0.02em;
+  margin-bottom:12px;
+}
+.section-title em{font-style:italic;color:var(--orange);}
+
+.section-sub{
+  font-size:0.78rem;color:var(--muted);
+  line-height:1.7;max-width:560px;margin-bottom:48px;
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding-top:80px;
+  overflow:hidden;
+  position:relative;
+}
+
+.hero-bg-text{
+  position:absolute;
+  right:-20px;top:50%;transform:translateY(-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(180px,22vw,320px);
+  color:rgba(249,115,22,0.04);
+  letter-spacing:-0.05em;
+  line-height:1;
+  pointer-events:none;
+  white-space:nowrap;
+  user-select:none;
+}
+
+.hero-eyebrow{
+  font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--orange);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:900;line-height:0.95;
+  letter-spacing:-0.03em;
+  max-width:900px;
+  margin-bottom:28px;
+}
+.hero-headline .accent{color:var(--orange);}
+.hero-headline .italic{font-style:italic;}
+
+.hero-deck{
+  font-size:0.82rem;color:var(--muted);
+  line-height:1.8;max-width:520px;
+  margin-bottom:48px;
+}
+.hero-deck strong{color:var(--text);}
+
+/* Hero stats bar */
+.hero-stats{
+  display:flex;gap:0;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  max-width:860px;
+  margin-bottom:48px;
+}
+.hero-stat{
+  flex:1;padding:20px 24px;
+  border-right:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.hero-stat:last-child{border-right:none;}
+.hero-stat::before{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.6s ease;
+}
+.hero-stat:hover::before{transform:scaleX(1);}
+.stat-value{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;letter-spacing:1px;
+  color:var(--text);
+  display:block;margin-bottom:4px;
+}
+.stat-value.orange{color:var(--orange);}
+.stat-value.green{color:var(--green);}
+.stat-value.amber{color:var(--amber);}
+.stat-value.blue{color:var(--blue);}
+.stat-label{font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+
+.hero-scroll{
+  display:flex;align-items:center;gap:12px;
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.scroll-line{width:40px;height:1px;background:var(--muted);}
+
+/* ═══════════════════════════════════════
+   PLAYERS — Company cards
+═══════════════════════════════════════ */
+#players{background:var(--bg);}
+
+.filter-bar{
+  display:flex;gap:8px;flex-wrap:wrap;
+  margin-bottom:32px;
+}
+.filter-btn{
+  padding:7px 16px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:6px;
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.15s;
+}
+.filter-btn:hover{border-color:var(--orange-dim);color:var(--text);}
+.filter-btn.active{background:var(--orange-glow);border-color:var(--orange);color:var(--orange);}
+
+.companies-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:16px;
+}
+
+.company-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  transition:all 0.2s ease;
+  animation:fadeUp 0.4s ease both;
+}
+.company-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,0,0,0.4);
+}
+.company-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--card-accent,var(--orange));
+  opacity:0.6;
+}
+.company-card:hover::before{opacity:1;}
+
+.card-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:16px;
+}
+.company-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;letter-spacing:1px;
+  color:var(--text);
+}
+.company-founded{
+  font-size:0.6rem;color:var(--muted);
+  letter-spacing:0.1em;
+}
+.category-badge{
+  font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:20px;
+  background:var(--badge-bg,rgba(249,115,22,0.1));
+  color:var(--badge-color,var(--orange));
+  border:1px solid var(--badge-border,rgba(249,115,22,0.2));
+  white-space:nowrap;
+}
+
+.company-desc{
+  font-size:0.73rem;color:var(--muted);
+  line-height:1.6;margin-bottom:20px;
+  min-height:56px;
+}
+
+.card-metrics{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin-bottom:16px;
+}
+.metric{
+  background:var(--surface2);
+  border-radius:8px;padding:10px 12px;
+}
+.metric-val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:0.5px;
+  color:var(--text);display:block;
+}
+.metric-key{
+  font-size:0.58rem;color:var(--muted);
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+
+.card-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.status-chip{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;
+}
+.status-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green);
+}
+.valuation-tag{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.5px;
+  color:var(--amber);
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ═══════════════════════════════════════
+   TIMELINE
+═══════════════════════════════════════ */
+#timeline{background:var(--surface);}
+
+.timeline-wrap{
+  position:relative;
+  max-width:900px;
+  margin:0 auto;
+}
+.timeline-line{
+  position:absolute;
+  left:50%;transform:translateX(-50%);
+  top:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,var(--orange),var(--green),var(--blue));
+  opacity:0.3;
+}
+
+.timeline-item{
+  display:flex;gap:40px;align-items:flex-start;
+  margin-bottom:48px;
+  position:relative;
+}
+.timeline-item:nth-child(even){flex-direction:row-reverse;}
+.timeline-item:nth-child(even) .tl-content{text-align:right;}
+.timeline-item:nth-child(even) .tl-tags{justify-content:flex-end;}
+
+.tl-year{
+  flex-shrink:0;width:80px;text-align:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;letter-spacing:1px;
+  color:var(--orange);
+  position:relative;z-index:1;
+  padding-top:4px;
+}
+.tl-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--orange);
+  position:absolute;
+  left:50%;top:8px;transform:translateX(-50%);
+  box-shadow:0 0 12px rgba(249,115,22,0.5);
+  z-index:2;
+}
+
+.tl-content{
+  flex:1;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px 22px;
+}
+.tl-event{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;font-weight:700;
+  color:var(--text);margin-bottom:8px;
+}
+.tl-detail{
+  font-size:0.71rem;color:var(--muted);
+  line-height:1.6;margin-bottom:12px;
+}
+.tl-tags{
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.tl-tag{
+  font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;
+  background:var(--orange-glow);color:var(--orange);
+  border:1px solid rgba(249,115,22,0.2);
+}
+.tl-tag.green{background:var(--green-glow);color:var(--green);border-color:rgba(34,197,94,0.2);}
+.tl-tag.blue{background:rgba(56,189,248,0.08);color:var(--blue);border-color:rgba(56,189,248,0.2);}
+.tl-tag.amber{background:rgba(245,158,11,0.08);color:var(--amber);border-color:rgba(245,158,11,0.2);}
+.tl-tag.purple{background:rgba(167,139,250,0.08);color:var(--purple);border-color:rgba(167,139,250,0.2);}
+
+/* ═══════════════════════════════════════
+   LANDSCAPE — Visual comparison
+═══════════════════════════════════════ */
+#landscape{background:var(--bg);}
+
+.landscape-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-bottom:32px;
+}
+
+.landscape-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:28px;
+  overflow:hidden;
+}
+
+/* Bar chart */
+.bar-section-title{
+  font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:20px;
+}
+.bar-chart-row{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:14px;
+}
+.bar-name{
+  font-size:0.7rem;color:var(--text);
+  width:100px;flex-shrink:0;text-align:right;
+}
+.bar-track{
+  flex:1;height:24px;
+  background:var(--surface2);
+  border-radius:4px;overflow:hidden;
+  position:relative;
+}
+.bar-fill{
+  height:100%;border-radius:4px;
+  display:flex;align-items:center;
+  justify-content:flex-end;padding-right:10px;
+  transition:width 1.2s cubic-bezier(0.34,1.56,0.64,1);
+  width:0;
+}
+.bar-fill span{
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;font-weight:500;
+  color:rgba(0,0,0,0.85);
+  white-space:nowrap;
+}
+
+/* Radar / quadrant map */
+.quadrant-wrap{
+  position:relative;
+  width:100%;aspect-ratio:1;
+  max-height:380px;
+  margin:0 auto;
+}
+.quadrant-svg{width:100%;height:100%;}
+
+/* Funding flow */
+.funding-bars{display:flex;flex-direction:column;gap:10px;}
+.funding-year-row{
+  display:flex;align-items:center;gap:12px;
+}
+.funding-year-lbl{
+  font-size:0.68rem;color:var(--muted);
+  width:36px;flex-shrink:0;
+}
+.funding-bar-track{
+  flex:1;height:28px;
+  background:var(--surface2);border-radius:4px;overflow:hidden;
+}
+.funding-bar-fill{
+  height:100%;border-radius:4px;
+  display:flex;align-items:center;padding-left:12px;
+  transition:width 1.2s cubic-bezier(0.34,1.56,0.64,1);width:0;
+}
+.funding-bar-fill span{
+  font-size:0.63rem;font-family:'DM Mono',monospace;
+  color:rgba(0,0,0,0.8);font-weight:500;
+}
+.funding-bar-fill.orange{background:linear-gradient(90deg,var(--orange),#fb923c);}
+.funding-bar-fill.green{background:linear-gradient(90deg,var(--green),#4ade80);}
+.funding-bar-fill.amber{background:linear-gradient(90deg,var(--amber),#fcd34d);}
+.funding-bar-fill.blue{background:linear-gradient(90deg,var(--blue),#7dd3fc);}
+.funding-bar-fill.red{background:linear-gradient(90deg,var(--red),#f87171);}
+.funding-bar-fill.purple{background:linear-gradient(90deg,var(--purple),#c4b5fd);}
+
+/* ═══════════════════════════════════════
+   INSIGHTS — DECODE section
+═══════════════════════════════════════ */
+#insights{
+  background:var(--surface);
+}
+
+.decode-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:40px;
+}
+.decode-badge{
+  background:var(--orange);
+  color:#080808;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:0.9rem;letter-spacing:3px;
+  padding:6px 14px;border-radius:6px;
+}
+
+.insights-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+
+.insight-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;padding:24px;
+  position:relative;overflow:hidden;
+  transition:all 0.2s ease;
+}
+.insight-card:hover{
+  border-color:var(--orange-dim);
+  transform:translateY(-2px);
+}
+.insight-card::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+  opacity:0;transition:opacity 0.2s;
+}
+.insight-card:hover::after{opacity:1;}
+
+.insight-number{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3rem;letter-spacing:1px;
+  color:rgba(249,115,22,0.15);
+  position:absolute;right:16px;top:12px;
+  line-height:1;
+}
+.insight-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--text);margin-bottom:10px;
+  position:relative;z-index:1;
+}
+.insight-body{
+  font-size:0.72rem;color:var(--muted);
+  line-height:1.7;
+  position:relative;z-index:1;
+}
+.insight-body strong{color:var(--text);}
+
+/* ═══════════════════════════════════════
+   M&A MAP
+═══════════════════════════════════════ */
+#acquisitions{background:var(--bg);}
+
+.ma-list{
+  display:flex;flex-direction:column;gap:12px;
+  max-width:800px;
+}
+.ma-row{
+  display:flex;align-items:center;gap:0;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  transition:border-color 0.15s;
+  animation:fadeUp 0.3s ease both;
+}
+.ma-row:hover{border-color:var(--orange-dim);}
+.ma-acquirer{
+  flex-shrink:0;width:140px;
+  background:var(--surface2);
+  padding:16px 18px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.5px;
+  color:var(--orange);
+  border-right:1px solid var(--border);
+}
+.ma-arrow{
+  flex-shrink:0;padding:0 16px;
+  font-size:1.2rem;color:var(--orange-dim);
+}
+.ma-target{
+  flex:1;padding:16px 0;
+}
+.ma-target-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.5px;color:var(--text);
+}
+.ma-target-detail{
+  font-size:0.65rem;color:var(--muted);margin-top:2px;
+}
+.ma-year{
+  flex-shrink:0;padding:0 20px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;color:var(--muted2);
+  letter-spacing:1px;
+}
+.ma-amount{
+  flex-shrink:0;padding:0 20px 0 0;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.5px;
+  color:var(--green);
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:48px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.footer-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;letter-spacing:4px;
+  color:var(--orange);
+}
+.footer-meta{
+  font-size:0.65rem;color:var(--muted);
+  line-height:1.7;text-align:right;
+}
+.footer-meta a{color:var(--orange-dim);text-decoration:none;}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  section{padding:80px 20px 60px;}
+  .hero-headline{font-size:clamp(2.2rem,8vw,3.5rem);}
+  .hero-stats{flex-wrap:wrap;}
+  .hero-stat{min-width:150px;}
+  .landscape-grid{grid-template-columns:1fr;}
+  .timeline-item{flex-direction:column!important;}
+  .timeline-item:nth-child(even) .tl-content{text-align:left;}
+  .timeline-item:nth-child(even) .tl-tags{justify-content:flex-start;}
+  .timeline-line{display:none;}
+  .tl-year{align-self:flex-start;}
+  .ma-acquirer{width:110px;font-size:0.85rem;}
+  footer{flex-direction:column;text-align:center;}
+  .footer-meta{text-align:center;}
+}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--orange-dim);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">DECODE</div>
+  <ul class="nav-links">
+    <li><a href="#players">Players</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#landscape">Landscape</a></li>
+    <li><a href="#acquisitions">M&A</a></li>
+    <li><a href="#insights">Insights</a></li>
+  </ul>
+  <div class="nav-tag">Nigeria Fintech <span>2026</span></div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg-text">FINTECH</div>
+
+  <div class="hero-eyebrow">
+    <div class="eyebrow-dot"></div>
+    JID's Intelligence Report · April 2026
+  </div>
+
+  <h1 class="hero-headline">
+    Nigeria's<br/>
+    <em>Financial</em><br/>
+    Revolution
+  </h1>
+
+  <p class="hero-deck">
+    From mobile wallets to banking licences. From Lagos to London.
+    <strong>430+ companies. 4 unicorns. $3.42B raised in 2025.</strong>
+    This is the most complete picture of Nigeria's fintech landscape! Who's winning, who's consolidating and what comes next.
+  </p>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="stat-value orange" data-count="430" data-suffix="+">430+</span>
+      <span class="stat-label">Fintech Companies</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-value green" data-count="3.42" data-prefix="$" data-suffix="B">$3.42B</span>
+      <span class="stat-label">Raised in 2025</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-value amber" data-count="800" data-prefix="₦" data-suffix="T+">₦800T+</span>
+      <span class="stat-label">Digital Txns 2024</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-value blue" data-count="28" data-suffix="%">28%</span>
+      <span class="stat-label">of All African Fintechs</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-value" style="color:var(--purple)" data-count="4">4</span>
+      <span class="stat-label">Unicorns 🦄</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ PLAYERS ═══ -->
+<section id="players">
+  <div class="section-label">The Players</div>
+  <h2 class="section-title">Who's <em>Running</em><br/>the Rails</h2>
+  <p class="section-sub">Eight companies define Nigeria's fintech narrative in 2026. Each has survived the naira collapse, funding freeze and regulatory pressure and emerged with bigger ambitions.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('payments',this)">Payments</button>
+    <button class="filter-btn" onclick="filterCards('neobank',this)">Neobanks</button>
+    <button class="filter-btn" onclick="filterCards('savings',this)">Savings & Invest</button>
+    <button class="filter-btn" onclick="filterCards('infrastructure',this)">Infrastructure</button>
+    <button class="filter-btn" onclick="filterCards('unicorn',this)">🦄 Unicorns Only</button>
+  </div>
+
+  <div class="companies-grid" id="companiesGrid"></div>
+</section>
+
+<!-- ═══ TIMELINE ═══ -->
+<section id="timeline">
+  <div class="section-label">The Timeline</div>
+  <h2 class="section-title">A Decade of<br/><em>Disruption</em></h2>
+  <p class="section-sub">From Paystack's first checkout in 2016 to Flutterwave's banking licence in 2026. Ten years that rewired how money moves in Africa.</p>
+
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+    <div id="timelineItems"></div>
+  </div>
+</section>
+
+<!-- ═══ LANDSCAPE ═══ -->
+<section id="landscape">
+  <div class="section-label">The Landscape</div>
+  <h2 class="section-title">Numbers That<br/><em>Tell the Story</em></h2>
+  <p class="section-sub">Market valuations, transaction volumes, user growth and annual funding, visualised for clarity.</p>
+
+  <div class="landscape-grid">
+    <!-- Valuation chart -->
+    <div class="landscape-card reveal">
+      <div class="bar-section-title">Valuation — USD Billion</div>
+      <div id="valuationChart"></div>
+    </div>
+    <!-- Transaction volume chart -->
+    <div class="landscape-card reveal">
+      <div class="bar-section-title">Monthly Txn Volume — USD Billion</div>
+      <div id="volumeChart"></div>
+    </div>
+    <!-- Funding by year -->
+    <div class="landscape-card reveal">
+      <div class="bar-section-title">Nigeria Fintech Funding — Annual (USD Billion)</div>
+      <div class="funding-bars" id="fundingChart"></div>
+    </div>
+    <!-- Users chart -->
+    <div class="landscape-card reveal">
+      <div class="bar-section-title">Registered Users / Customers — Millions</div>
+      <div id="usersChart"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ M&A MAP ═══ -->
+<section id="acquisitions">
+  <div class="section-label">M&A Wave</div>
+  <h2 class="section-title">The Great<br/><em>Consolidation</em></h2>
+  <p class="section-sub">67 acquisitions across African tech in 2025 alone — a 72% jump. Nigeria's fintech giants are buying their way into banks, licences, and new markets. Here's who acquired what.</p>
+
+  <div class="ma-list" id="maList"></div>
+</section>
+
+<!-- ═══ INSIGHTS ═══ -->
+<section id="insights">
+  <div class="section-label">Intelligence</div>
+  <div class="decode-header">
+    <div class="decode-badge">DECODE</div>
+    <h2 class="section-title" style="margin-bottom:0;">Six <em>Signals</em><br/>to Watch</h2>
+  </div>
+
+  <div class="insights-grid" id="insightsGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">DECODE</div>
+    <div style="font-size:0.65rem;color:var(--muted);margin-top:6px;max-width:320px;line-height:1.6;">
+      Making everyday complex ideas simple and accessible.<br/>
+      Built by <strong style="color:var(--text)">Abdulwajid (Jid)</strong> · Nigeria
+    </div>
+  </div>
+  <div class="footer-meta">
+    Data sourced from TechCabal, Technext, Businessday, Fintech News Africa<br/>
+    Partech Africa, Boston Consulting Group · Updated April 2026<br/>
+    <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a> ·
+    <a href="https://mypersonaldashboard.vercel.app" target="_blank">Dashboard</a> ·
+    <a href="https://jidspaymentfeecalcv4.vercel.app" target="_blank">Fee Calculator</a>
+  </div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+
+const COMPANIES = [
+  {
+    name: 'Flutterwave',
+    founded: '2016',
+    category: 'payments',
+    desc: 'Africa\'s most valuable fintech. Cross-border payment infrastructure spanning 34 countries. Now adding banking, stablecoin rails, and open banking via Mono acquisition.',
+    valuation: '$3B',
+    funding: '$475M+',
+    txnVol: '$34B+',
+    users: '2M+ businesses',
+    status: 'Expanding',
+    unicorn: true,
+    accentColor: '#f97316',
+    badgeBg: 'rgba(249,115,22,0.1)',
+    badgeColor: '#f97316',
+    badgeBorder: 'rgba(249,115,22,0.2)',
+    badgeLabel: 'Payments',
+  },
+  {
+    name: 'Paystack',
+    founded: '2015',
+    category: 'payments',
+    desc: 'Acquired by Stripe for $200M in 2020. Now restructured as The Stack Group — spanning payments, microfinance, consumer app Zap, and TSG Labs venture arm.',
+    valuation: 'Stripe-owned',
+    funding: '$200M (acq.)',
+    txnVol: '$250M/mo',
+    users: '300K+ merchants',
+    status: 'Restructuring',
+    unicorn: false,
+    accentColor: '#22c55e',
+    badgeBg: 'rgba(34,197,94,0.1)',
+    badgeColor: '#22c55e',
+    badgeBorder: 'rgba(34,197,94,0.2)',
+    badgeLabel: 'Payments',
+  },
+  {
+    name: 'Moniepoint',
+    founded: '2015',
+    category: 'infrastructure',
+    desc: 'Nigeria\'s fastest-growing fintech. POS-first, now a full financial OS for SMEs. Disbursed ₦1 trillion+ in loans in 2025. Expanding into Kenya and Europe via acquisitions.',
+    valuation: '$1B+',
+    funding: '$170M+',
+    txnVol: '$22B/mo',
+    users: '10M+ businesses',
+    status: 'Unicorn 🦄',
+    unicorn: true,
+    accentColor: '#38bdf8',
+    badgeBg: 'rgba(56,189,248,0.1)',
+    badgeColor: '#38bdf8',
+    badgeBorder: 'rgba(56,189,248,0.2)',
+    badgeLabel: 'Infrastructure',
+  },
+  {
+    name: 'OPay',
+    founded: '2018',
+    category: 'neobank',
+    desc: 'Second most valuable fintech in Africa. One-stop financial platform across Nigeria, Egypt, Pakistan. 50M+ users, 1M merchants, $12B+ monthly transactions.',
+    valuation: '$2B',
+    funding: '$520M+',
+    txnVol: '$12B+/mo',
+    users: '50M+',
+    status: 'Unicorn 🦄',
+    unicorn: true,
+    accentColor: '#a78bfa',
+    badgeBg: 'rgba(167,139,250,0.1)',
+    badgeColor: '#a78bfa',
+    badgeBorder: 'rgba(167,139,250,0.2)',
+    badgeLabel: 'Neobank',
+  },
+  {
+    name: 'PalmPay',
+    founded: '2019',
+    category: 'neobank',
+    desc: 'FT Africa\'s fastest-growing companies list. 35M+ users. ₦71.5 trillion processed in 2024. 500K+ agent network. Backed by Transsion/NetEase. 80% monthly active users.',
+    valuation: '$500M+',
+    funding: '$140M+',
+    txnVol: '15M txns/day',
+    users: '35M+',
+    status: 'Scaling',
+    unicorn: false,
+    accentColor: '#f59e0b',
+    badgeBg: 'rgba(245,158,11,0.1)',
+    badgeColor: '#f59e0b',
+    badgeBorder: 'rgba(245,158,11,0.2)',
+    badgeLabel: 'Neobank',
+  },
+  {
+    name: 'PiggyVest',
+    founded: '2016',
+    category: 'savings',
+    desc: 'Nigeria\'s savings and investment leader. Pivoting generationally with PiggyVest Kids launching before Children\'s Day 2026. Pioneered the digital savings category.',
+    valuation: 'Private',
+    funding: 'Undisclosed',
+    txnVol: 'N/A',
+    users: '5M+',
+    status: 'Innovating',
+    unicorn: false,
+    accentColor: '#22c55e',
+    badgeBg: 'rgba(34,197,94,0.1)',
+    badgeColor: '#22c55e',
+    badgeBorder: 'rgba(34,197,94,0.2)',
+    badgeLabel: 'Savings & Invest',
+  },
+  {
+    name: 'Kuda',
+    founded: '2019',
+    category: 'neobank',
+    desc: 'Nigeria\'s challenger bank. Microfinance bank licence. Zero monthly fees, instant transfers, budgeting tools. Positioned as the "bank of the free" for young Nigerians.',
+    valuation: '$500M',
+    funding: '$91M+',
+    txnVol: 'Undisclosed',
+    users: '7M+',
+    status: 'Consolidating',
+    unicorn: false,
+    accentColor: '#38bdf8',
+    badgeBg: 'rgba(56,189,248,0.1)',
+    badgeColor: '#38bdf8',
+    badgeBorder: 'rgba(56,189,248,0.2)',
+    badgeLabel: 'Neobank',
+  },
+  {
+    name: 'LemFi',
+    founded: '2020',
+    category: 'payments',
+    desc: 'Cross-border remittances for African diaspora. Multi-currency accounts. Operating in UK, Canada, US, EU. One of Nigeria\'s most globally ambitious new-gen fintechs.',
+    valuation: '$200M+',
+    funding: '$33M+',
+    txnVol: '$1B+',
+    users: '700K+',
+    status: 'Growing Fast',
+    unicorn: false,
+    accentColor: '#f97316',
+    badgeBg: 'rgba(249,115,22,0.1)',
+    badgeColor: '#f97316',
+    badgeBorder: 'rgba(249,115,22,0.2)',
+    badgeLabel: 'Payments',
+  },
+];
+
+const TIMELINE_EVENTS = [
+  { year: '2015', event: 'The Founding Generation', detail: 'Paystack and Moniepoint (as TeamApt) are founded within months of each other. A decade later both are defining Nigerian fintech. Neither starts where they end up.', tags: ['Paystack', 'Moniepoint'] },
+  { year: '2016', event: 'Flutterwave Goes Live', detail: 'Iyinoluwa Aboyeji, Olugbenga Agboola and team launch Flutterwave to solve Africa\'s cross-border payment chaos. First product: Rave. Target: developers.', tags: ['Flutterwave', 'Payments'] },
+  { year: '2018', event: 'OPay & PalmPay Enter', detail: 'Chinese-backed OPay and PalmPay launch in Nigeria, bringing massive capital and agent network playbooks. Competition intensifies instantly.', tags: ['OPay', 'PalmPay', 'Competition'], tagType: 'amber' },
+  { year: '2020', event: 'Stripe Buys Paystack', detail: '$200M+ acquisition — the largest African startup acquisition ever at the time. Validates Nigeria\'s tech ecosystem globally. Overnight, every Nigerian founder\'s ambition scales up.', tags: ['Paystack', 'Stripe', '$200M'], tagType: 'green' },
+  { year: '2021', event: 'Flutterwave Unicorn', detail: '$170M Series C. Then in 2022, a $250M Series D. Valuation hits $3 billion. Africa\'s first fintech unicorn from Nigeria. Backed by Tiger Global, Avenir, B Capital.', tags: ['Flutterwave', '$3B', 'Unicorn 🦄'], tagType: 'green' },
+  { year: '2023', event: 'The Naira Collapse', detail: 'Nigeria floats its exchange rate. Naira loses 70%+ of its value vs USD between 2023-2024. Every naira-revenue fintech effectively gets a valuation haircut. Survival mode begins.', tags: ['Naira', 'FX Crisis', 'Pressure'], tagType: 'amber' },
+  { year: '2024', event: 'Moniepoint Joins the Club', detail: '$110M Series C. Unicorn status achieved. Backed by Visa. TIME100 Most Influential Companies. Processes 1 billion transactions per month. SME lending hits ₦1 trillion.', tags: ['Moniepoint', 'Unicorn 🦄', 'Visa'], tagType: 'green' },
+  { year: '2025', event: 'The Consolidation Wave', detail: '67 M&A deals across African tech — a 72% surge. Moniepoint buys banks in Kenya and UK. Flutterwave acquires Mono. Paystack absorbs Brass. The era of fragmentation ends.', tags: ['M&A Wave', '67 Deals', 'Consolidation'], tagType: 'blue' },
+  { year: '2026', event: 'Infrastructure Wars', detail: 'Flutterwave gets a banking licence. Paystack launches its microfinance bank. Moniepoint deploys Moniebook for SME ops. The battleground shifts from payments to full financial infrastructure ownership.', tags: ['Banking Licences', 'New Phase', 'Infrastructure'], tagType: 'purple' },
+];
+
+const ACQUISITIONS = [
+  { acquirer: 'Stripe', target: 'Paystack', detail: 'Largest African startup acquisition ever at the time', year: '2020', amount: '$200M+' },
+  { acquirer: 'Paystack', target: 'Brass', detail: 'SME financial services — credit, payroll, expense management', year: '2024', amount: 'Undisclosed' },
+  { acquirer: 'Flutterwave', target: 'Mono', detail: 'Open banking & account-linking infrastructure', year: '2026', amount: '$25–40M' },
+  { acquirer: 'Moniepoint', target: 'Sumac Bank (KE)', detail: '78% stake in Kenya microfinance bank — East Africa entry', year: '2025', amount: 'Undisclosed' },
+  { acquirer: 'Moniepoint', target: 'Bancom Europe', detail: 'UK electronic money institution with EEA licences', year: '2025', amount: 'Undisclosed' },
+  { acquirer: 'Moniepoint', target: 'Orda Nigeria', detail: 'Restaurant/business management platform', year: '2025', amount: 'Undisclosed' },
+  { acquirer: 'Nedbank', target: 'iKhokha', detail: 'South African payments company', year: '2025', amount: '$93M' },
+  { acquirer: 'Peach Payments', target: 'PayDunya', detail: 'Francophone West Africa expansion', year: '2025', amount: 'Undisclosed' },
+];
+
+const INSIGHTS = [
+  {
+    n: '01',
+    title: 'The Payments War is Over. The Infrastructure War Has Begun.',
+    body: 'In 2020 the question was "can I accept payments digitally?" That question is answered. In 2026, <strong>Flutterwave, Paystack and Moniepoint are fighting for who owns the full financial stack</strong> — banking, credit, data, settlement. The moat is no longer the checkout form. It\'s the licence, the balance sheet, and the data.',
+  },
+  {
+    n: '02',
+    title: 'The Naira Forced a Necessary Maturity.',
+    body: 'The 70%+ naira devaluation between 2023–24 was brutal. But it killed the growth-at-all-costs era. <strong>Companies that survived did so on operational discipline, not VC subsidies.</strong> Moniepoint profited through it. OPay went profitable. The companies emerging from this are structurally stronger.',
+  },
+  {
+    n: '03',
+    title: 'Stablecoins Are the Next Battleground.',
+    body: 'Africa receives ~$97B in diaspora remittances annually. Fees average 8%+. Flutterwave\'s Polygon blockchain integration points directly at this. <strong>The company that cracks stablecoin-based remittances at Nigerian scale wins a multi-billion dollar prize.</strong>',
+  },
+  {
+    n: '04',
+    title: 'The SME Layer Is the Most Valuable Real Estate.',
+    body: 'Moniepoint\'s bet is the most interesting: embed so deeply into how small businesses operate — POS, inventory, payroll, loans — that switching becomes unthinkable. <strong>They disbursed ₦1 trillion in loans to 70,000 businesses in 2025.</strong> That\'s not payments. That\'s the operating system for informal commerce.',
+  },
+  {
+    n: '05',
+    title: 'Three or Four Players Will Dominate Everything.',
+    body: '67 M&A deals in 2025. The consolidation isn\'t slowing. Every acquisition by Flutterwave, Paystack or Moniepoint raises the barrier to entry. <strong>By 2027, Nigeria\'s fintech ecosystem will likely have 3–4 dominant platforms and hundreds of niche specialists</strong> operating under or alongside them.',
+  },
+  {
+    n: '06',
+    title: 'The Real Opportunity Is Still Offline.',
+    body: 'Banking inclusion rose from 40% to 60%+ of Nigerians — impressive. But <strong>40% remains unbanked or underserved.</strong> That\'s over 80 million people. The next unicorn from Nigeria might not be a fintech in the Silicon Valley sense. It might be the POS operator, the USSD bank, the agent network that cracks the last mile.',
+  },
+];
+
+// ══════════════════════════════════════════════
+// RENDER COMPANIES
+// ══════════════════════════════════════════════
+function renderCompanies(filter) {
+  const grid = document.getElementById('companiesGrid');
+  const filtered = filter === 'all' ? COMPANIES
+    : filter === 'unicorn' ? COMPANIES.filter(c => c.unicorn)
+    : COMPANIES.filter(c => c.category === filter);
+
+  grid.innerHTML = filtered.map((c, i) => `
+    <div class="company-card" style="--card-accent:${c.accentColor};animation-delay:${i*0.06}s"
+         data-category="${c.category}" data-unicorn="${c.unicorn}">
+      <div class="card-top">
+        <div>
+          <div class="company-name">${c.name}</div>
+          <div class="company-founded">Founded ${c.founded}</div>
+        </div>
+        <div class="category-badge" style="background:${c.badgeBg};color:${c.badgeColor};border-color:${c.badgeBorder}">
+          ${c.badgeLabel}
+        </div>
+      </div>
+      <p class="company-desc">${c.desc}</p>
+      <div class="card-metrics">
+        <div class="metric">
+          <span class="metric-val">${c.valuation}</span>
+          <span class="metric-key">Valuation</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">${c.funding}</span>
+          <span class="metric-key">Total Funding</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">${c.txnVol}</span>
+          <span class="metric-key">Txn Volume</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val" style="font-size:0.85rem">${c.users}</span>
+          <span class="metric-key">Users/Customers</span>
+        </div>
+      </div>
+      <div class="card-bottom">
+        <div class="status-chip">
+          <div class="status-dot" style="background:${c.accentColor};box-shadow:0 0 6px ${c.accentColor}"></div>
+          ${c.status}
+        </div>
+        ${c.unicorn ? '<div class="valuation-tag">UNICORN 🦄</div>' : ''}
+      </div>
+    </div>`).join('');
+}
+
+function filterCards(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCompanies(filter);
+}
+
+// ══════════════════════════════════════════════
+// RENDER TIMELINE
+// ══════════════════════════════════════════════
+function renderTimeline() {
+  const colors = { default: 'orange', green: 'green', amber: 'amber', blue: 'blue', purple: 'purple' };
+  document.getElementById('timelineItems').innerHTML = TIMELINE_EVENTS.map((e, i) => `
+    <div class="timeline-item reveal" style="transition-delay:${i*0.07}s">
+      <div class="tl-year">${e.year}<div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-event">${e.event}</div>
+        <div class="tl-detail">${e.detail}</div>
+        <div class="tl-tags">
+          ${e.tags.map(t => `<span class="tl-tag ${e.tagType||''}">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// RENDER CHARTS
+// ══════════════════════════════════════════════
+const VALUATION_DATA = [
+  { name:'Flutterwave', val:3.0, color:'#f97316' },
+  { name:'OPay', val:2.0, color:'#a78bfa' },
+  { name:'Moniepoint', val:1.0, color:'#38bdf8' },
+  { name:'PalmPay', val:0.5, color:'#f59e0b' },
+  { name:'Kuda', val:0.5, color:'#22c55e' },
+];
+const VOLUME_DATA = [
+  { name:'OPay', val:12, color:'#a78bfa' },
+  { name:'Moniepoint', val:22, color:'#38bdf8' },
+  { name:'PalmPay', val:6, color:'#f59e0b' },
+  { name:'Flutterwave', val:5.5, color:'#f97316' },
+  { name:'Paystack', val:3, color:'#22c55e' },
+];
+const USERS_DATA = [
+  { name:'OPay', val:50, color:'#a78bfa' },
+  { name:'PalmPay', val:35, color:'#f59e0b' },
+  { name:'Kuda', val:7, color:'#22c55e' },
+  { name:'PiggyVest', val:5, color:'#34d399' },
+  { name:'Moniepoint', val:10, color:'#38bdf8' },
+  { name:'LemFi', val:0.7, color:'#f97316' },
+];
+const FUNDING_DATA = [
+  { year:'2019', val:0.36, pct:12, color:'orange' },
+  { year:'2020', val:0.55, pct:18, color:'amber' },
+  { year:'2021', val:1.37, pct:45, color:'green' },
+  { year:'2022', val:0.98, pct:32, color:'amber' },
+  { year:'2023', val:0.41, pct:14, color:'red' },
+  { year:'2024', val:2.24, pct:73, color:'blue' },
+  { year:'2025', val:3.42, pct:100, color:'orange' },
+];
+
+function buildBarChart(containerId, data, maxVal, suffix) {
+  const container = document.getElementById(containerId);
+  const maxData = Math.max(...data.map(d => d.val));
+  container.innerHTML = data.map(d => `
+    <div class="bar-chart-row">
+      <div class="bar-name">${d.name}</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-width="${(d.val/maxData*95).toFixed(1)}"
+             style="background:linear-gradient(90deg,${d.color},${d.color}99)">
+          <span>${suffix === 'B' ? '$' + d.val + 'B' : d.val + suffix}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function buildFundingChart() {
+  document.getElementById('fundingChart').innerHTML = FUNDING_DATA.map(d => `
+    <div class="funding-year-row">
+      <div class="funding-year-lbl">${d.year}</div>
+      <div class="funding-bar-track">
+        <div class="funding-bar-fill ${d.color}" data-width="${d.pct}">
+          <span>$${d.val}B</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function animateBars() {
+  document.querySelectorAll('.bar-fill[data-width], .funding-bar-fill[data-width]').forEach(el => {
+    const w = el.getAttribute('data-width');
+    if (w && el.style.width === '0px' || el.style.width === '') {
+      requestAnimationFrame(() => { el.style.width = w + '%'; });
+    }
+  });
+}
+
+// ══════════════════════════════════════════════
+// RENDER M&A
+// ══════════════════════════════════════════════
+function renderMA() {
+  document.getElementById('maList').innerHTML = ACQUISITIONS.map((a, i) => `
+    <div class="ma-row reveal" style="transition-delay:${i*0.06}s">
+      <div class="ma-acquirer">${a.acquirer}</div>
+      <div class="ma-arrow">→</div>
+      <div class="ma-target">
+        <div class="ma-target-name">${a.target}</div>
+        <div class="ma-target-detail">${a.detail}</div>
+      </div>
+      <div class="ma-year">${a.year}</div>
+      <div class="ma-amount">${a.amount}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// RENDER INSIGHTS
+// ══════════════════════════════════════════════
+function renderInsights() {
+  document.getElementById('insightsGrid').innerHTML = INSIGHTS.map((ins, i) => `
+    <div class="insight-card reveal" style="transition-delay:${i*0.07}s">
+      <div class="insight-number">${ins.n}</div>
+      <div class="insight-title">${ins.title}</div>
+      <p class="insight-body">${ins.body}</p>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// SCROLL REVEAL + BAR ANIMATION
+// ══════════════════════════════════════════════
+function setupReveal() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // trigger bar animations when landscape section is visible
+        if (entry.target.closest('#landscape') || entry.target.id === 'landscape') {
+          setTimeout(animateBars, 200);
+        }
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Also observe the landscape section itself
+  const landscapeSection = document.getElementById('landscape');
+  if (landscapeSection) {
+    const sectionIO = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) setTimeout(animateBars, 300);
+    }, { threshold: 0.05 });
+    sectionIO.observe(landscapeSection);
+  }
+}
+
+// ══════════════════════════════════════════════
+// COUNTER ANIMATION
+// ══════════════════════════════════════════════
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.getAttribute('data-count'));
+    const prefix = el.getAttribute('data-prefix') || '';
+    const suffix = el.getAttribute('data-suffix') || '';
+    const isDecimal = target % 1 !== 0;
+    let start = 0;
+    const duration = 1800;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = isDecimal ? (eased * target).toFixed(2) : Math.floor(eased * target);
+      el.textContent = prefix + current + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderCompanies('all');
+  renderTimeline();
+  buildBarChart('valuationChart', VALUATION_DATA, 3, 'B');
+  buildBarChart('volumeChart', VOLUME_DATA, 22, 'B');
+  buildBarChart('usersChart', USERS_DATA, 50, 'M');
+  buildFundingChart();
+  renderMA();
+  renderInsights();
+
+  setTimeout(setupReveal, 100);
+  setTimeout(animateCounters, 300);
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + e.target.id
+            ? 'var(--orange)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => observer.observe(s));
+});
+</script>
+</body>
+</html>
