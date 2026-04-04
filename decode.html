@@ -11,113 +11,64 @@
   --bg:#080808;
   --surface:#0f0f0f;
   --surface2:#161616;
-  --surface3:#1e1e1e;
   --border:#242424;
-  --border2:#2e2e2e;
   --text:#f0ede6;
   --muted:#5a5a5a;
-  --muted2:#3a3a3a;
   --orange:#f97316;
-  --orange-dim:#c05a0e;
-  --orange-glow:rgba(249,115,22,0.12);
   --green:#22c55e;
-  --green-dim:#16a34a;
-  --green-glow:rgba(34,197,94,0.10);
-  --red:#ef4444;
-  --amber:#f59e0b;
-  --blue:#38bdf8;
-  --purple:#a78bfa;
 }
-
-html{scroll-behavior:smooth}
 
 body{
   background:var(--bg);
   color:var(--text);
   font-family:'DM Mono',monospace;
-  overflow-x:hidden;
-  cursor:default;
+  padding: 20px;
 }
 
-body::after{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:9999;opacity:0.5;
-}
-
-nav{
-  position:fixed;top:0;left:0;right:0;
-  z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;
-  height:56px;
-  background:rgba(8,8,8,0.92);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.nav-brand{ font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:3px; color:var(--orange); }
-
-section{ min-height:100vh; padding:100px 40px 80px; position:relative; z-index:1; }
-
-.section-label{ font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--orange); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
-.section-title{ font-family:'Playfair Display',serif; font-size:clamp(2.4rem,5vw,4rem); font-weight:900; line-height:1.0; margin-bottom:12px; }
-.section-title em{font-style:italic; color:var(--orange);}
-
-.landscape-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:32px; }
-.landscape-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; overflow:hidden; }
+.landscape-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.landscape-card{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; }
 .bar-section-title{ font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; }
+
+/* Simulator specific styles */
+.sim-input-row { display:flex; justify-content:space-between; margin-bottom:10px; align-items: center; }
+.sim-field { background:var(--surface2); border:1px solid var(--border); color:var(--text); text-align:right; border-radius:4px; padding: 5px; width: 100px; }
 
 .reveal{opacity:0; transform:translateY(24px); transition:opacity 0.55s ease, transform 0.55s ease;}
 .reveal.visible{opacity:1; transform:translateY(0);}
-
-footer{ background:var(--surface); border-top:1px solid var(--border); padding:48px 40px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">DECODE</div>
-  <div class="nav-tag">Nigeria Fintech <span>2026</span></div>
-</nav>
-
-<section id="hero">
-  <div class="section-label">JID's Intelligence Report</div>
-  <h1 class="section-title">Nigeria's<br/><em>Financial</em><br/>Revolution</h1>
-  <p style="color:var(--muted); max-width:500px;">A 2026 outlook on the companies re-wiring money in Africa.</p>
-</section>
-
 <section id="landscape">
-  <div class="section-label">The Landscape</div>
-  <h2 class="section-title">Numbers That<br/><em>Tell the Story</em></h2>
+  <h2 style="font-family:'Playfair Display'; font-size: 2rem; margin-bottom: 20px;">Fintech <em>Intelligence</em> 2026</h2>
   
   <div class="landscape-grid">
-    <div class="landscape-card reveal">
+    <div class="landscape-card">
         <div class="bar-section-title">Market Maturity</div>
-        <p style="font-size:0.8rem; color:var(--muted);">Explore the projected growth and wealth accumulation within the ecosystem.</p>
+        <p style="font-size:0.8rem; color:var(--muted);">Projected growth and wealth accumulation within the Nigerian ecosystem by 2026.</p>
     </div>
 
-    <div class="landscape-card reveal" style="grid-column: span 2;">
+    <div class="landscape-card" style="grid-column: span 2;">
         <div class="bar-section-title">2026 Wealth Path Simulator</div>
         <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: center;">
           <div style="flex: 1; min-width: 250px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <div class="sim-input-row">
                 <span style="font-size:0.75rem; color:var(--muted);">Monthly Deposit (₦)</span>
-                <input type="number" id="sim-deposit" value="50000" style="background:var(--surface2); border:1px solid var(--border); color:var(--text); text-align:right; border-radius:4px; padding: 5px;">
+                <input type="number" id="sim-deposit" value="50000" class="sim-field">
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <div class="sim-input-row">
                 <span style="font-size:0.75rem; color:var(--muted);">Starting Balance (₦)</span>
-                <input type="number" id="sim-initial" value="100000" style="background:var(--surface2); border:1px solid var(--border); color:var(--text); text-align:right; border-radius:4px; padding: 5px;">
+                <input type="number" id="sim-initial" value="100000" class="sim-field">
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+            <div class="sim-input-row">
                 <span style="font-size:0.75rem; color:var(--muted);">Strategy</span>
-                <select id="sim-strategy" style="background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:4px; padding: 5px;">
+                <select id="sim-strategy" class="sim-field">
                     <option value="0.15">Neobank (15%)</option>
                     <option value="0.12">Savings App (12%)</option>
                     <option value="0.04">Traditional Bank (4%)</option>
                 </select>
             </div>
-            <button onclick="calculateSavings()" style="width:100%; padding:12px; background:var(--orange); color:black; border:none; border-radius:6px; font-family:'Bebas Neue'; cursor:pointer; font-size:1.1rem;">Calculate Wealth Path</button>
+            <button onclick="calculateSavings()" style="width:100%; padding:12px; background:var(--orange); color:black; border:none; border-radius:6px; font-family:'Bebas Neue'; cursor:pointer; font-size:1.1rem; margin-top: 10px;">Calculate Path</button>
           </div>
           <div style="flex: 1; text-align:center;">
               <div style="font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px;">Est. Balance Dec 2026</div>
@@ -129,18 +80,13 @@ footer{ background:var(--surface); border-top:1px solid var(--border); padding:4
   </div>
 </section>
 
-<footer>
-  <div class="footer-brand">DECODE</div>
-  <div style="font-size:0.65rem;color:var(--muted);">Built by <strong>Abdulwajid (Jid)</strong></div>
-</footer>
-
 <script>
 function calculateSavings() {
     const P = parseFloat(document.getElementById('sim-initial').value) || 0;
     const PMT = parseFloat(document.getElementById('sim-deposit').value) || 0;
     const r = parseFloat(document.getElementById('sim-strategy').value);
     const n = 12; 
-    const t = 0.66; // Approx 8 months to Dec 2026
+    const t = 0.66; // Time until Dec 2026
 
     const futurePrincipal = P * Math.pow((1 + r/n), (n * t));
     const futureAnnuity = PMT * ((Math.pow((1 + r/n), (n * t)) - 1) / (r/n));
@@ -151,18 +97,8 @@ function calculateSavings() {
     document.getElementById('sim-interest-earned').innerText = "+ ₦" + interestEarned.toLocaleString(undefined, {maximumFractionDigits: 0}) + " interest earned";
 }
 
-function setupReveal() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    setupReveal();
-    calculateSavings();
+    calculateSavings(); // Initialize the numbers on load
 });
 </script>
 </body>
