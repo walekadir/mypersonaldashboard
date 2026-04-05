@@ -66,16 +66,16 @@
       </div>
     </div>
 
-    <!-- HERO MATCH CARD — auto-updated by script.js -->
+    <!-- HERO MATCH CARD -->
     <div class="card card-hero">
       <div class="hero-inner">
         <div class="hero-left">
           <div class="card-label"><span class="dot"></span> Next Man City Match</div>
-          <div class="hero-fixture" id="hero-fixture">Man City <span>vs</span> <span id="hero-opponent">Chelsea</span></div>
+          <div class="hero-fixture">Man City <span>vs</span> <span id="hero-opponent">Chelsea</span></div>
           <div class="hero-meta" id="hero-meta">Premier League · Sun Apr 12 · 4:30 PM WAT · Etihad Stadium</div>
           <div class="last-result">
             <span class="result-label">Last Result</span>
-            <span class="result-score" id="last-result-score">Man City <strong class="result-win" id="city-score">4</strong> – <strong class="result-loss" id="opp-score">0</strong> <span id="last-result-opp">Liverpool</span></span>
+            <span class="result-score">Man City <strong class="result-win" id="city-score">4</strong> – <strong class="result-loss" id="opp-score">0</strong> <span id="last-result-opp">Liverpool</span></span>
             <span class="result-comp" id="last-result-comp">FA Cup QF · Apr 5 · Haaland hat-trick 🔵</span>
           </div>
         </div>
@@ -87,23 +87,7 @@
       </div>
     </div>
 
-    <!-- LINKS CARD -->
-    <div class="card" style="grid-column: span 3;">
-      <div class="card-label"><span class="dot"></span> Connect With Me</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-        <a href="https://t.co/sR0pXMr2xZ" target="_blank" class="link-item">
-          <span class="link-icon">🗂</span> Portfolio
-        </a>
-        <a href="https://x.com/Swiiish_x" target="_blank" class="link-item">
-          <span class="link-icon">𝕏</span> Twitter / X
-        </a>
-        <a href="https://www.linkedin.com/in/abdulthedataanalyst/" target="_blank" class="link-item">
-          <span class="link-icon">💼</span> LinkedIn
-        </a>
-      </div>
-    </div>
-
-    <!-- SAVINGS SIMULATOR CARD -->
+    <!-- SAVINGS SIMULATOR -->
     <div class="card" id="savings-simulator" style="grid-column: span 3;">
       <div class="card-label"><span class="dot"></span> 2026 Wealth Path Simulator</div>
       <div class="simulator-container">
@@ -125,7 +109,7 @@
               <option value="0.04">Traditional Bank (4%)</option>
             </select>
           </div>
-          <div class="row" style="padding-top:4px;">
+          <div class="row">
             <span>Target Month</span>
             <select id="sim-months" class="sim-input-field">
               <option value="8">Dec 2026 (8 mo)</option>
@@ -141,7 +125,7 @@
 
         <div class="sim-results">
           <div class="sim-result-grid">
-            <div class="sim-result-block">
+            <div class="sim-result-block" style="grid-column:span 2;">
               <div class="sim-result-label">Projected Balance</div>
               <div id="sim-total" class="sim-big-number">₦0.00</div>
             </div>
@@ -157,18 +141,22 @@
               <div class="sim-result-label">Effective Return</div>
               <div id="sim-return-pct" class="sim-medium-number" style="color:var(--city-gold)">0%</div>
             </div>
+            <div class="sim-result-block">
+              <div class="sim-result-label">Duration</div>
+              <div id="sim-duration" class="sim-medium-number" style="color:var(--muted)">8 months</div>
+            </div>
           </div>
-          <div id="sim-bar-wrap" style="margin-top:18px;">
-            <div style="font-size:0.62rem;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Breakdown</div>
+          <div style="margin-top:18px;">
+            <div style="font-size:0.62rem;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Portfolio Breakdown</div>
             <div style="display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px;">
               <div id="sim-bar-principal" style="background:var(--city-blue);height:100%;transition:width 0.6s ease;width:0%"></div>
-              <div id="sim-bar-deposits" style="background:var(--up);height:100%;transition:width 0.6s ease;width:0%"></div>
-              <div id="sim-bar-interest" style="background:var(--city-gold);height:100%;transition:width 0.6s ease;width:0%"></div>
+              <div id="sim-bar-deposits"  style="background:var(--up);height:100%;transition:width 0.6s ease;width:0%"></div>
+              <div id="sim-bar-interest"  style="background:var(--city-gold);height:100%;transition:width 0.6s ease;width:0%"></div>
             </div>
             <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
-              <div style="display:flex;align-items:center;gap:5px;font-size:0.6rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:var(--city-blue)"></div>Initial Principal</div>
-              <div style="display:flex;align-items:center;gap:5px;font-size:0.6rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:var(--up)"></div>New Deposits</div>
-              <div style="display:flex;align-items:center;gap:5px;font-size:0.6rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:var(--city-gold)"></div>Interest</div>
+              <span class="sim-legend-item"><span class="sim-legend-dot" style="background:var(--city-blue)"></span>Initial Principal</span>
+              <span class="sim-legend-item"><span class="sim-legend-dot" style="background:var(--up)"></span>New Deposits</span>
+              <span class="sim-legend-item"><span class="sim-legend-dot" style="background:var(--city-gold)"></span>Interest Earned</span>
             </div>
           </div>
         </div>
@@ -185,29 +173,48 @@
         <button class="tool-tab" onclick="showTool('fintech', this)">📊 Fintech 2026</button>
       </div>
       <div class="tool-frame-wrap">
-        <iframe id="tool-calculator" class="tool-frame active-frame"
+        <iframe id="tool-calculator"
+          class="tool-frame active-frame"
           src="https://jidspaymentfeecalcv4.vercel.app"
           title="NG Pay Fee Calculator"
           loading="lazy"
           allow="clipboard-write"></iframe>
-        <iframe id="tool-game" class="tool-frame"
+        <iframe id="tool-game"
+          class="tool-frame"
           src="https://jidsdodgergame.vercel.app/"
           title="Squaredodger Game"
           loading="lazy"></iframe>
-        <iframe id="tool-fintech" class="tool-frame"
-          src="https://decode-ngfintech.vercel.app"
+        <iframe id="tool-fintech"
+          class="tool-frame"
+          src="./ng-fintech.html"
           title="Nigerian Fintech Landscape 2026"
           loading="lazy"></iframe>
       </div>
     </div>
 
-  </div>
-</div>
+    <!-- CONNECT WITH ME — bottom, under tools -->
+    <div class="card" style="grid-column: span 3;">
+      <div class="card-label"><span class="dot"></span> Connect With Me</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <a href="https://t.co/sR0pXMr2xZ" target="_blank" class="link-item">
+          <span class="link-icon">🗂</span> Portfolio
+        </a>
+        <a href="https://x.com/Swiiish_x" target="_blank" class="link-item">
+          <span class="link-icon">𝕏</span> Twitter / X
+        </a>
+        <a href="https://www.linkedin.com/in/abdulthedataanalyst/" target="_blank" class="link-item">
+          <span class="link-icon">💼</span> LinkedIn
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /dashboard-grid -->
+</div><!-- /container -->
 
 <!-- TICKER -->
 <div class="news-ticker">
   <div class="ticker-label">LIVE</div>
-  <div class="ticker-wrapper" id="tickerWrapper">
+  <div class="ticker-wrapper">
     <span id="ticker-match">🏆 FT: Man City 4–0 Liverpool (FA Cup QF) · Haaland hat-trick 🔵⚽⚽⚽</span>
     <span id="ticker-weather">🇳🇬 LAGOS: Loading...</span>
     <span>📊 ABDULWAJID — I love making complex ideas simple and accessible</span>
