@@ -4,326 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jid's Dashboard</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #0a0a0a;
-            font-family: 'DM Mono', monospace;
-            color: #e0e0e0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: #111;
-            padding: 20px 30px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-            border: 1px solid #222;
-        }
-
-        .avatar-wrap {
-            position: relative;
-        }
-
-        .avatar-wrap img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #f97316;
-        }
-
-        .avatar-status {
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 14px;
-            height: 14px;
-            background: #22c55e;
-            border-radius: 50%;
-            border: 2px solid #111;
-        }
-
-        .header-text h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .header-meta {
-            font-size: 0.75rem;
-            color: #666;
-        }
-
-        .sep {
-            margin: 0 8px;
-        }
-
-        .live-dot {
-            background: #22c55e;
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        .header-brand {
-            margin-left: auto;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            color: #f97316;
-            letter-spacing: 2px;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 20px;
-        }
-
-        .card-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888;
-            margin-bottom: 16px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 12px;
-        }
-
-        .dot {
-            width: 6px;
-            height: 6px;
-            background: #f97316;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #1a1a1a;
-        }
-
-        .fx-value {
-            color: #f97316;
-        }
-
-        .card-hero {
-            grid-column: span 2;
-        }
-
-        .hero-inner {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .hero-fixture {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 15px 0 10px;
-        }
-
-        .hero-fixture span {
-            color: #f97316;
-            margin: 0 10px;
-        }
-
-        .hero-meta {
-            font-size: 0.75rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .last-result {
-            background: #0a0a0a;
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 10px;
-        }
-
-        .result-label {
-            font-size: 0.65rem;
-            color: #666;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .result-score {
-            font-size: 1.1rem;
-        }
-
-        .result-win {
-            color: #22c55e;
-        }
-
-        .result-loss {
-            color: #ef4444;
-        }
-
-        .result-comp {
-            font-size: 0.7rem;
-            color: #888;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .hero-right {
-            text-align: center;
-            background: #0a0a0a;
-            padding: 20px;
-            border-radius: 16px;
-            min-width: 150px;
-        }
-
-        .countdown-label {
-            font-size: 0.7rem;
-            color: #888;
-            margin-bottom: 10px;
-        }
-
-        #countdown {
-            font-size: 2rem;
-            font-weight: bold;
-            font-family: monospace;
-        }
-
-        .tools-card {
-            grid-column: span 3;
-        }
-
-        .tools-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 10px;
-        }
-
-        .tool-tab {
-            background: transparent;
-            border: none;
-            color: #888;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-        }
-
-        .tool-tab.active {
-            color: #f97316;
-            border-bottom: 2px solid #f97316;
-        }
-
-        .tool-frame-wrap {
-            width: 100%;
-            height: 600px;
-            position: relative;
-        }
-
-        .tool-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 12px;
-            display: none;
-            background: #fff;
-        }
-
-        .tool-frame.active-frame {
-            display: block;
-        }
-
-        .skeleton {
-            background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            height: 20px;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .news-ticker {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 12px 20px;
-            overflow: hidden;
-            display: flex;
-            gap: 20px;
-        }
-
-        .ticker-label {
-            background: #f97316;
-            color: #000;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.7rem;
-        }
-
-        .ticker-wrapper {
-            display: flex;
-            gap: 40px;
-            overflow-x: auto;
-            white-space: nowrap;
-            flex: 1;
-        }
-
-        .ticker-wrapper span {
-            font-size: 0.75rem;
-            color: #aaa;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .card-hero {
-                grid-column: span 1;
-            }
-            .hero-inner {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
+  <!-- HEADER -->
   <header>
     <div class="avatar-wrap">
       <img src="https://media.licdn.com/dms/image/v2/D4E03AQFCmn-OEMQYcA/profile-displayphoto-crop_800_800/B4EZ1aQz7_IEAI-/0/1775335853855?e=1776902400&v=beta&t=vYXvM9-6InZFOmHqfnbkxIFY3dwC__E45p-aRWq8xoA" alt="Jid">
@@ -342,11 +29,13 @@
     <div class="header-brand">SWIIISH.X</div>
   </header>
 
+  <!-- GRID -->
   <div class="dashboard-grid">
 
+    <!-- FX CARD -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Naira Exchange
-        <span id="fx-timestamp" style="margin-left:auto;font-size:0.6rem;opacity:0.5"></span>
+        <span id="fx-timestamp" style="margin-left:auto;font-size:0.6rem;opacity:0.5;font-family:'DM Mono',monospace"></span>
       </div>
       <div id="fx-list">
         <div class="row"><span>USD / NGN</span><strong class="fx-value" id="usd-ngn">Loading...</strong></div>
@@ -355,42 +44,145 @@
       </div>
     </div>
 
+    <!-- CRYPTO CARD -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Market Watch <span class="live-dot" style="margin-left:auto">Live</span></div>
-      <div id="crypto-list"></div>
+      <div id="crypto-list">
+        <div class="skeleton" style="width:100%"></div>
+        <div class="skeleton" style="width:90%"></div>
+        <div class="skeleton" style="width:95%"></div>
+        <div class="skeleton" style="width:85%"></div>
+      </div>
     </div>
 
+    <!-- WEATHER CARD -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Nigeria Weather</div>
-      <div id="weather-list"></div>
+      <div id="weather-list">
+        <div class="skeleton" style="width:100%"></div>
+        <div class="skeleton" style="width:90%"></div>
+        <div class="skeleton" style="width:95%"></div>
+        <div class="skeleton" style="width:85%"></div>
+      </div>
     </div>
 
+    <!-- HERO MATCH CARD — auto-updated by script.js -->
     <div class="card card-hero">
       <div class="hero-inner">
         <div class="hero-left">
           <div class="card-label"><span class="dot"></span> Next Man City Match</div>
-          <div class="hero-fixture">Man City <span>vs</span> Chelsea</div>
-          <div class="hero-meta">Premier League · Sun Apr 12 · 4:30 PM WAT · Etihad Stadium</div>
+          <div class="hero-fixture" id="hero-fixture">Man City <span>vs</span> <span id="hero-opponent">Chelsea</span></div>
+          <div class="hero-meta" id="hero-meta">Premier League · Sun Apr 12 · 4:30 PM WAT · Etihad Stadium</div>
           <div class="last-result">
             <span class="result-label">Last Result</span>
-            <span class="result-score">Man City <strong class="result-win">4</strong> – <strong class="result-loss">0</strong> Liverpool</span>
-            <span class="result-comp">FA Cup QF · Sat Apr 5 · Haaland hat-trick 🔵</span>
+            <span class="result-score" id="last-result-score">Man City <strong class="result-win" id="city-score">4</strong> – <strong class="result-loss" id="opp-score">0</strong> <span id="last-result-opp">Liverpool</span></span>
+            <span class="result-comp" id="last-result-comp">FA Cup QF · Apr 5 · Haaland hat-trick 🔵</span>
           </div>
         </div>
         <div class="hero-right">
-          <div class="countdown-label">Kick-off in</div>
+          <div class="countdown-label" id="countdown-label">Kick-off in</div>
           <div id="countdown">00d 00h 00m</div>
           <div class="countdown-unit" id="countdown-secs">00s remaining</div>
         </div>
       </div>
     </div>
 
+    <!-- LINKS CARD -->
+    <div class="card" style="grid-column: span 3;">
+      <div class="card-label"><span class="dot"></span> Connect With Me</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <a href="https://t.co/sR0pXMr2xZ" target="_blank" class="link-item">
+          <span class="link-icon">🗂</span> Portfolio
+        </a>
+        <a href="https://x.com/Swiiish_x" target="_blank" class="link-item">
+          <span class="link-icon">𝕏</span> Twitter / X
+        </a>
+        <a href="https://www.linkedin.com/in/abdulthedataanalyst/" target="_blank" class="link-item">
+          <span class="link-icon">💼</span> LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- SAVINGS SIMULATOR CARD -->
+    <div class="card" id="savings-simulator" style="grid-column: span 3;">
+      <div class="card-label"><span class="dot"></span> 2026 Wealth Path Simulator</div>
+      <div class="simulator-container">
+
+        <div class="sim-inputs">
+          <div class="row">
+            <span>Monthly Deposit (₦)</span>
+            <input type="number" id="sim-deposit" value="50000" class="sim-input-field">
+          </div>
+          <div class="row">
+            <span>Current Balance (₦)</span>
+            <input type="number" id="sim-initial" value="100000" class="sim-input-field">
+          </div>
+          <div class="row">
+            <span>Fintech Strategy</span>
+            <select id="sim-strategy" class="sim-input-field">
+              <option value="0.15">Neobank High-Yield (15%)</option>
+              <option value="0.12">Locked Savings (12%)</option>
+              <option value="0.04">Traditional Bank (4%)</option>
+            </select>
+          </div>
+          <div class="row" style="padding-top:4px;">
+            <span>Target Month</span>
+            <select id="sim-months" class="sim-input-field">
+              <option value="8">Dec 2026 (8 mo)</option>
+              <option value="12">Apr 2027 (12 mo)</option>
+              <option value="24">Apr 2028 (24 mo)</option>
+              <option value="36">Apr 2029 (36 mo)</option>
+            </select>
+          </div>
+          <button onclick="calculateSavings()" class="link-item sim-btn">
+            📈 Generate Wealth Path
+          </button>
+        </div>
+
+        <div class="sim-results">
+          <div class="sim-result-grid">
+            <div class="sim-result-block">
+              <div class="sim-result-label">Projected Balance</div>
+              <div id="sim-total" class="sim-big-number">₦0.00</div>
+            </div>
+            <div class="sim-result-block">
+              <div class="sim-result-label">Interest Earned</div>
+              <div id="sim-interest-earned" class="sim-medium-number">₦0</div>
+            </div>
+            <div class="sim-result-block">
+              <div class="sim-result-label">Total Deposited</div>
+              <div id="sim-deposited" class="sim-medium-number" style="color:var(--muted)">₦0</div>
+            </div>
+            <div class="sim-result-block">
+              <div class="sim-result-label">Effective Return</div>
+              <div id="sim-return-pct" class="sim-medium-number" style="color:var(--city-gold)">0%</div>
+            </div>
+          </div>
+          <div id="sim-bar-wrap" style="margin-top:18px;">
+            <div style="font-size:0.62rem;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Breakdown</div>
+            <div style="display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px;">
+              <div id="sim-bar-principal" style="background:var(--city-blue);height:100%;transition:width 0.6s ease;width:0%"></div>
+              <div id="sim-bar-deposits" style="background:var(--up);height:100%;transition:width 0.6s ease;width:0%"></div>
+              <div id="sim-bar-interest" style="background:var(--city-gold);height:100%;transition:width 0.6s ease;width:0%"></div>
+            </div>
+            <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.6rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:var(--city-blue)"></div>Initial Principal</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.6rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:var(--up)"></div>New Deposits</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.6rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:var(--city-gold)"></div>Interest</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TOOLS CARD -->
     <div class="card tools-card" style="grid-column: span 3;">
       <div class="card-label"><span class="dot"></span> My Tools</div>
       <div class="tools-tabs">
         <button class="tool-tab active" onclick="showTool('calculator', this)">⚙ Fee Calculator</button>
         <button class="tool-tab" onclick="showTool('game', this)">🎮 Squaredodger</button>
-        <button class="tool-tab" onclick="showTool('decode', this)">📈 Fintech 2026</button>
+        <button class="tool-tab" onclick="showTool('fintech', this)">📊 Fintech 2026</button>
       </div>
       <div class="tool-frame-wrap">
         <iframe id="tool-calculator" class="tool-frame active-frame"
@@ -402,9 +194,9 @@
           src="https://jidsdodgergame.vercel.app/"
           title="Squaredodger Game"
           loading="lazy"></iframe>
-        <iframe id="tool-decode" class="tool-frame"
-          src="decode.html"
-          title="DECODE Fintech Report"
+        <iframe id="tool-fintech" class="tool-frame"
+          src="https://decode-ngfintech.vercel.app"
+          title="Nigerian Fintech Landscape 2026"
           loading="lazy"></iframe>
       </div>
     </div>
@@ -412,170 +204,23 @@
   </div>
 </div>
 
+<!-- TICKER -->
 <div class="news-ticker">
   <div class="ticker-label">LIVE</div>
-  <div class="ticker-wrapper">
-    <span>🏆 FT: Man City 4–0 Liverpool (FA Cup QF) · Haaland hat-trick 🔵⚽⚽⚽</span>
+  <div class="ticker-wrapper" id="tickerWrapper">
+    <span id="ticker-match">🏆 FT: Man City 4–0 Liverpool (FA Cup QF) · Haaland hat-trick 🔵⚽⚽⚽</span>
     <span id="ticker-weather">🇳🇬 LAGOS: Loading...</span>
     <span>📊 ABDULWAJID — I love making complex ideas simple and accessible</span>
-    <span>⚽ NEXT: Man City vs Chelsea (PL) · Sun Apr 12 · 4:30 PM WAT · Etihad</span>
+    <span id="ticker-next">⚽ NEXT: Man City vs Chelsea (PL) · Sun Apr 12 · 4:30 PM WAT</span>
+    <span>📡 Data Analyst · Journalist · Canva Designer · Man City Fan</span>
+    <span id="ticker-match2">🏆 FT: Man City 4–0 Liverpool (FA Cup QF) · City into FA Cup semis 🔵</span>
+    <span id="ticker-weather2">🇳🇬 LAGOS: Loading...</span>
+    <span>📊 @SWIIISH.x — Making complex ideas simple and accessible</span>
+    <span id="ticker-next2">⚽ NEXT: Man City vs Chelsea (PL) · Sun Apr 12 · 4:30 PM WAT</span>
     <span>📡 Data Analyst · Journalist · Canva Designer · Man City Fan</span>
   </div>
 </div>
 
-<script>
-// Clock and Greeting
-function updateClock() {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
-    
-    // Update greeting
-    let greeting = '';
-    if (hours < 12) greeting = 'Good Morning';
-    else if (hours < 17) greeting = 'Good Afternoon';
-    else greeting = 'Good Evening';
-    document.getElementById('greeting').innerHTML = `${greeting}, Jid`;
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-// Exchange Rates (using free API)
-async function fetchExchangeRates() {
-    try {
-        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-        const data = await response.json();
-        const usdToNgn = data.rates.NGN;
-        const gbpToUsd = data.rates.GBP;
-        const eurToUsd = data.rates.EUR;
-        
-        document.getElementById('usd-ngn').innerText = `₦${usdToNgn.toFixed(2)}`;
-        document.getElementById('gbp-ngn').innerText = `₦${(gbpToUsd * usdToNgn).toFixed(2)}`;
-        document.getElementById('eur-ngn').innerText = `₦${(eurToUsd * usdToNgn).toFixed(2)}`;
-        document.getElementById('fx-timestamp').innerText = new Date().toLocaleTimeString();
-    } catch (error) {
-        document.getElementById('usd-ngn').innerText = 'Error loading';
-    }
-}
-fetchExchangeRates();
-setInterval(fetchExchangeRates, 60000);
-
-// Crypto Prices
-async function fetchCrypto() {
-    const cryptos = ['bitcoin', 'ethereum', 'solana', 'cardano'];
-    const container = document.getElementById('crypto-list');
-    container.innerHTML = '';
-    
-    for (const crypto of cryptos) {
-        try {
-            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=usd&include_24hr_change=true`);
-            const data = await response.json();
-            const price = data[crypto].usd;
-            const change = data[crypto].usd_24h_change;
-            const changeClass = change >= 0 ? 'color: #22c55e' : 'color: #ef4444';
-            
-            container.innerHTML += `
-                <div class="row">
-                    <span>${crypto.toUpperCase()}</span>
-                    <div>
-                        <strong>$${price.toLocaleString()}</strong>
-                        <small style="${changeClass}; margin-left: 8px;">${change.toFixed(2)}%</small>
-                    </div>
-                </div>
-            `;
-        } catch (error) {
-            container.innerHTML = '<div class="row">Error loading crypto data</div>';
-        }
-    }
-}
-fetchCrypto();
-setInterval(fetchCrypto, 30000);
-
-// Weather for Nigerian cities
-async function fetchWeather() {
-    const cities = ['Lagos', 'Abuja', 'Ilorin', 'Port Harcourt'];
-    const container = document.getElementById('weather-list');
-    container.innerHTML = '';
-    
-    for (const city of cities) {
-        try {
-            // Using Open-Meteo API (free, no API key needed)
-            let lat, lon;
-            if (city === 'Lagos') { lat = 6.5244; lon = 3.3792; }
-            else if (city === 'Abuja') { lat = 9.0765; lon = 7.3986; }
-            else if (city === 'Ilorin') { lat = 8.4966; lon = 4.5423; }
-            else { lat = 4.8156; lon = 7.0498; }
-            
-            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-            const data = await response.json();
-            const temp = data.current_weather.temperature;
-            
-            container.innerHTML += `
-                <div class="row">
-                    <span>${city}</span>
-                    <strong>${temp.toFixed(1)}°C</strong>
-                </div>
-            `;
-            
-            // Update ticker for Lagos
-            if (city === 'Lagos') {
-                document.getElementById('ticker-weather').innerHTML = `🇳🇬 LAGOS: ${temp.toFixed(1)}°C · Partly Cloudy`;
-            }
-        } catch (error) {
-            container.innerHTML = '<div class="row">Weather data unavailable</div>';
-        }
-    }
-}
-fetchWeather();
-setInterval(fetchWeather, 300000);
-
-// Countdown to match (April 12, 2026, 4:30 PM WAT = UTC+1)
-function updateCountdown() {
-    const matchDate = new Date(2026, 3, 12, 15, 30, 0); // April 12, 3:30 PM UTC (4:30 PM WAT)
-    const now = new Date();
-    const diff = matchDate - now;
-    
-    if (diff <= 0) {
-        document.getElementById('countdown').innerHTML = "Match Started!";
-        document.getElementById('countdown-secs').innerHTML = "Kick-off!";
-        return;
-    }
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (86400000)) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-    
-    document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m`;
-    document.getElementById('countdown-secs').innerHTML = `${seconds}s remaining`;
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-// Tool switcher
-function showTool(tool, button) {
-    // Update active tab styling
-    document.querySelectorAll('.tool-tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    button.classList.add('active');
-    
-    // Hide all frames
-    document.querySelectorAll('.tool-frame').forEach(frame => {
-        frame.classList.remove('active-frame');
-    });
-    
-    // Show selected frame
-    if (tool === 'calculator') {
-        document.getElementById('tool-calculator').classList.add('active-frame');
-    } else if (tool === 'game') {
-        document.getElementById('tool-game').classList.add('active-frame');
-    } else if (tool === 'decode') {
-        document.getElementById('tool-decode').classList.add('active-frame');
-    }
-}
-</script>
+<script src="script.js"></script>
 </body>
 </html>
