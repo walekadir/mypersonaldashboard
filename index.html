@@ -7,8 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div class="container">
+
+  <!-- ABOUT BANNER -->
+  <div class="about-banner" onclick="openAbout()">
+    <div class="about-banner-left">
+      <div class="about-banner-icon">ℹ</div>
+      <div>
+        <div class="about-banner-title">Jid's Personal Dashboard</div>
+        <div class="about-banner-sub">Live data · Man City tracker · Fintech tools · Wealth simulator</div>
+      </div>
+    </div>
+    <div class="about-banner-btn">What's here? →</div>
+  </div>
 
   <!-- HEADER -->
   <header>
@@ -19,24 +30,19 @@
     <div class="header-text">
       <h1 id="greeting">Good Morning, Jid</h1>
       <div class="header-meta">
-        <span>📍 Ilorin, Nigeria</span>
-        <span class="sep">·</span>
-        <span id="clock">00:00:00</span>
-        <span class="sep">·</span>
+        <span>📍 Ilorin, Nigeria</span><span class="sep">·</span>
+        <span id="clock">00:00:00</span><span class="sep">·</span>
         <span class="live-dot">Live</span>
       </div>
     </div>
     <div class="header-brand">SWIIISH.X</div>
   </header>
 
-  <!-- GRID -->
   <div class="dashboard-grid">
 
-    <!-- FX CARD -->
+    <!-- FX -->
     <div class="card">
-      <div class="card-label"><span class="dot"></span> Naira Exchange
-        <span id="fx-timestamp" style="margin-left:auto;font-size:0.6rem;opacity:0.5;font-family:'DM Mono',monospace"></span>
-      </div>
+      <div class="card-label"><span class="dot"></span> Naira Exchange <span id="fx-timestamp" style="margin-left:auto;font-size:0.6rem;opacity:0.5;font-family:'DM Mono',monospace"></span></div>
       <div id="fx-list">
         <div class="row"><span>USD / NGN</span><strong class="fx-value" id="usd-ngn">Loading...</strong></div>
         <div class="row"><span>GBP / NGN</span><strong class="fx-value" id="gbp-ngn">Loading...</strong></div>
@@ -44,29 +50,19 @@
       </div>
     </div>
 
-    <!-- CRYPTO CARD -->
+    <!-- CRYPTO -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Market Watch <span class="live-dot" style="margin-left:auto">Live</span></div>
-      <div id="crypto-list">
-        <div class="skeleton" style="width:100%"></div>
-        <div class="skeleton" style="width:90%"></div>
-        <div class="skeleton" style="width:95%"></div>
-        <div class="skeleton" style="width:85%"></div>
-      </div>
+      <div id="crypto-list"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:95%"></div><div class="skeleton" style="width:85%"></div></div>
     </div>
 
-    <!-- WEATHER CARD -->
+    <!-- WEATHER -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Nigeria Weather</div>
-      <div id="weather-list">
-        <div class="skeleton" style="width:100%"></div>
-        <div class="skeleton" style="width:90%"></div>
-        <div class="skeleton" style="width:95%"></div>
-        <div class="skeleton" style="width:85%"></div>
-      </div>
+      <div id="weather-list"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:95%"></div><div class="skeleton" style="width:85%"></div></div>
     </div>
 
-    <!-- HERO MATCH CARD -->
+    <!-- HERO MATCH -->
     <div class="card card-hero">
       <div class="hero-inner">
         <div class="hero-left">
@@ -76,7 +72,7 @@
           <div class="last-result">
             <span class="result-label">Last Result</span>
             <span class="result-score">Man City <strong class="result-win" id="city-score">4</strong> – <strong class="result-loss" id="opp-score">0</strong> <span id="last-result-opp">Liverpool</span></span>
-            <span class="result-comp" id="last-result-comp">FA Cup QF · Apr 5 · Haaland hat-trick 🔵</span>
+            <span class="result-comp" id="last-result-comp">FA Cup QF · Haaland hat-trick ⚽⚽⚽</span>
           </div>
         </div>
         <div class="hero-right">
@@ -88,63 +84,23 @@
     </div>
 
     <!-- SAVINGS SIMULATOR -->
-    <div class="card" id="savings-simulator" style="grid-column: span 3;">
+    <div class="card" id="savings-simulator" style="grid-column:span 3;">
       <div class="card-label"><span class="dot"></span> 2026 Wealth Path Simulator</div>
       <div class="simulator-container">
-
         <div class="sim-inputs">
-          <div class="row">
-            <span>Monthly Deposit (₦)</span>
-            <input type="number" id="sim-deposit" value="50000" class="sim-input-field">
-          </div>
-          <div class="row">
-            <span>Current Balance (₦)</span>
-            <input type="number" id="sim-initial" value="100000" class="sim-input-field">
-          </div>
-          <div class="row">
-            <span>Fintech Strategy</span>
-            <select id="sim-strategy" class="sim-input-field">
-              <option value="0.15">Neobank High-Yield (15%)</option>
-              <option value="0.12">Locked Savings (12%)</option>
-              <option value="0.04">Traditional Bank (4%)</option>
-            </select>
-          </div>
-          <div class="row">
-            <span>Target Month</span>
-            <select id="sim-months" class="sim-input-field">
-              <option value="8">Dec 2026 (8 mo)</option>
-              <option value="12">Apr 2027 (12 mo)</option>
-              <option value="24">Apr 2028 (24 mo)</option>
-              <option value="36">Apr 2029 (36 mo)</option>
-            </select>
-          </div>
-          <button onclick="calculateSavings()" class="link-item sim-btn">
-            📈 Generate Wealth Path
-          </button>
+          <div class="row"><span>Monthly Deposit (₦)</span><input type="number" id="sim-deposit" value="50000" class="sim-input-field"></div>
+          <div class="row"><span>Current Balance (₦)</span><input type="number" id="sim-initial" value="100000" class="sim-input-field"></div>
+          <div class="row"><span>Fintech Strategy</span><select id="sim-strategy" class="sim-input-field"><option value="0.15">Neobank High-Yield (15%)</option><option value="0.12">Locked Savings (12%)</option><option value="0.04">Traditional Bank (4%)</option></select></div>
+          <div class="row"><span>Target Month</span><select id="sim-months" class="sim-input-field"><option value="8">Dec 2026 (8 mo)</option><option value="12">Apr 2027 (12 mo)</option><option value="24">Apr 2028 (24 mo)</option><option value="36">Apr 2029 (36 mo)</option></select></div>
+          <button onclick="calculateSavings()" class="link-item sim-btn">📈 Generate Wealth Path</button>
         </div>
-
         <div class="sim-results">
           <div class="sim-result-grid">
-            <div class="sim-result-block" style="grid-column:span 2;">
-              <div class="sim-result-label">Projected Balance</div>
-              <div id="sim-total" class="sim-big-number">₦0.00</div>
-            </div>
-            <div class="sim-result-block">
-              <div class="sim-result-label">Interest Earned</div>
-              <div id="sim-interest-earned" class="sim-medium-number">₦0</div>
-            </div>
-            <div class="sim-result-block">
-              <div class="sim-result-label">Total Deposited</div>
-              <div id="sim-deposited" class="sim-medium-number" style="color:var(--muted)">₦0</div>
-            </div>
-            <div class="sim-result-block">
-              <div class="sim-result-label">Effective Return</div>
-              <div id="sim-return-pct" class="sim-medium-number" style="color:var(--city-gold)">0%</div>
-            </div>
-            <div class="sim-result-block">
-              <div class="sim-result-label">Duration</div>
-              <div id="sim-duration" class="sim-medium-number" style="color:var(--muted)">8 months</div>
-            </div>
+            <div class="sim-result-block" style="grid-column:span 2;"><div class="sim-result-label">Projected Balance</div><div id="sim-total" class="sim-big-number">₦0.00</div></div>
+            <div class="sim-result-block"><div class="sim-result-label">Interest Earned</div><div id="sim-interest-earned" class="sim-medium-number">₦0</div></div>
+            <div class="sim-result-block"><div class="sim-result-label">Total Deposited</div><div id="sim-deposited" class="sim-medium-number" style="color:var(--muted)">₦0</div></div>
+            <div class="sim-result-block"><div class="sim-result-label">Effective Return</div><div id="sim-return-pct" class="sim-medium-number" style="color:var(--city-gold)">0%</div></div>
+            <div class="sim-result-block"><div class="sim-result-label">Duration</div><div id="sim-duration" class="sim-medium-number" style="color:var(--muted)">8 months</div></div>
           </div>
           <div style="margin-top:18px;">
             <div style="font-size:0.62rem;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Portfolio Breakdown</div>
@@ -160,56 +116,36 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- TOOLS CARD -->
-    <div class="card tools-card" style="grid-column: span 3;">
+    <!-- TOOLS -->
+    <div class="card tools-card" style="grid-column:span 3;">
       <div class="card-label"><span class="dot"></span> My Tools</div>
       <div class="tools-tabs">
-        <button class="tool-tab active" onclick="showTool('calculator', this)">⚙ Fee Calculator</button>
-        <button class="tool-tab" onclick="showTool('game', this)">🎮 Squaredodger</button>
-        <button class="tool-tab" onclick="showTool('fintech', this)">📊 Fintech 2026</button>
+        <button class="tool-tab active" onclick="showTool('calculator',this)">⚙ Fee Calculator</button>
+        <button class="tool-tab" onclick="showTool('game',this)">🎮 Squaredodger</button>
+        <button class="tool-tab" onclick="showTool('fintech',this)">📊 Fintech 2026</button>
       </div>
       <div class="tool-frame-wrap">
-        <iframe id="tool-calculator"
-          class="tool-frame active-frame"
-          src="https://jidspaymentfeecalcv4.vercel.app"
-          title="NG Pay Fee Calculator"
-          loading="lazy"
-          allow="clipboard-write"></iframe>
-        <iframe id="tool-game"
-          class="tool-frame"
-          src="https://jidsdodgergame.vercel.app/"
-          title="Squaredodger Game"
-          loading="lazy"></iframe>
-        <iframe id="tool-fintech"
-          class="tool-frame"
-          src="./ng-fintech.html"
-          title="Nigerian Fintech Landscape 2026"
-          loading="lazy"></iframe>
+        <iframe id="tool-calculator" class="tool-frame active-frame" src="https://jidspaymentfeecalcv4.vercel.app" title="NG Pay Fee Calculator" loading="lazy" allow="clipboard-write"></iframe>
+        <iframe id="tool-game" class="tool-frame" src="https://jidsdodgergame.vercel.app/" title="Squaredodger" loading="lazy"></iframe>
+        <iframe id="tool-fintech" class="tool-frame" src="./ng-fintech.html" title="Nigerian Fintech 2026" loading="lazy"></iframe>
       </div>
     </div>
 
-    <!-- CONNECT WITH ME — bottom, under tools -->
-    <div class="card" style="grid-column: span 3;">
+    <!-- CONNECT -->
+    <div class="card" style="grid-column:span 3;">
       <div class="card-label"><span class="dot"></span> Connect With Me</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-        <a href="https://t.co/sR0pXMr2xZ" target="_blank" class="link-item">
-          <span class="link-icon">🗂</span> Portfolio
-        </a>
-        <a href="https://x.com/Swiiish_x" target="_blank" class="link-item">
-          <span class="link-icon">𝕏</span> Twitter / X
-        </a>
-        <a href="https://www.linkedin.com/in/abdulthedataanalyst/" target="_blank" class="link-item">
-          <span class="link-icon">💼</span> LinkedIn
-        </a>
+        <a href="https://t.co/sR0pXMr2xZ" target="_blank" class="link-item"><span class="link-icon">🗂</span> Portfolio</a>
+        <a href="https://x.com/Swiiish_x" target="_blank" class="link-item"><span class="link-icon">𝕏</span> Twitter / X</a>
+        <a href="https://www.linkedin.com/in/abdulthedataanalyst/" target="_blank" class="link-item"><span class="link-icon">💼</span> LinkedIn</a>
       </div>
     </div>
 
-  </div><!-- /dashboard-grid -->
-</div><!-- /container -->
+  </div>
+</div>
 
 <!-- TICKER -->
 <div class="news-ticker">
@@ -225,6 +161,30 @@
     <span>📊 @SWIIISH.x — Making complex ideas simple and accessible</span>
     <span id="ticker-next2">⚽ NEXT: Man City vs Chelsea (PL) · Sun Apr 12 · 4:30 PM WAT</span>
     <span>📡 Data Analyst · Journalist · Canva Designer · Man City Fan</span>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="about-modal" id="aboutModal">
+  <div class="about-modal-box">
+    <div class="about-modal-header">
+      <div class="about-modal-title">About This Dashboard</div>
+      <button class="about-modal-close" onclick="closeAbout()">✕</button>
+    </div>
+    <div class="about-modal-body">
+      <p class="about-intro">A personal command centre built by <strong>Abdulwajid (Jid)</strong> — data analyst, journalism, Canva designer, and Man City supporter based in Nigeria. Everything on this page is live, interactive and built from scratch.</p>
+      <div class="about-sections">
+        <div class="about-item"><div class="about-item-icon">💱</div><div><div class="about-item-title">Naira Exchange Rates</div><div class="about-item-desc">Live USD, GBP and EUR rates fetched from open.er-api.com and cached hourly. Reflects real market rates, not bank rates.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">📈</div><div><div class="about-item-title">Market Watch</div><div class="about-item-desc">Live crypto prices for BTC, ETH, SOL — and the Man City fan token (CITY). Updates every 60 seconds via CoinGecko.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">🌤</div><div><div class="about-item-title">Nigeria Weather</div><div class="about-item-desc">Real-time temperature and conditions for Lagos, Abuja, Kano and Port Harcourt via Open-Meteo API.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">⚽</div><div><div class="about-item-title">Man City Match Tracker</div><div class="about-item-desc">Shows the last result and next fixture with a live countdown timer. Updates automatically from city.json in the repo — edited manually after each match in about 30 seconds.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">💰</div><div><div class="about-item-title">2026 Wealth Path Simulator</div><div class="about-item-desc">Enter your monthly deposit, current balance, a fintech strategy (Neobank 15%, Locked Savings 12%, Traditional Bank 4%) and a target month. Uses compound interest to project your balance, interest earned and portfolio breakdown. Auto-recalculates on any input change.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">⚙</div><div><div class="about-item-title">Fee Calculator (My Tools → Tab 1)</div><div class="about-item-desc">Independent Nigerian payment gateway fee calculator. Compare Flutterwave, Paystack, Monnify and Squad. Includes reverse calc, bulk invoicing, live FX rates, donut chart and PDF receipt export.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">🎮</div><div><div class="about-item-title">Squaredodger (My Tools → Tab 2)</div><div class="about-item-desc">A browser arcade game — dodge the red squares for as long as you can. Built in vanilla JS with skins, a leaderboard and Web Audio API sound effects.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">📊</div><div><div class="about-item-title">Fintech 2026 (My Tools → Tab 3)</div><div class="about-item-desc">An interactive intelligence report on Nigeria's fintech ecosystem — company cards, funding timeline, valuation charts, M&A acquisition map, and six DECODE insight pieces. Built as a DECODE content project.</div></div></div>
+      </div>
+      <div class="about-footer-note">Built with HTML, CSS and vanilla JS · Deployed on Vercel · All data sources are free and open<br/>Follow the build journey → <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a></div>
+    </div>
   </div>
 </div>
 
