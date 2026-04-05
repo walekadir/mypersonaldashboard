@@ -1,0 +1,16 @@
+{
+  "last": {
+    "opponent": "Liverpool",
+    "cityScore": 4,
+    "oppScore": 0,
+    "competition": "FA Cup QF",
+    "note": "Haaland hat-trick ⚽⚽⚽",
+    "date": "2026-04-05"
+  },
+  "next": {
+    "opponent": "Chelsea",
+    "competition": "Premier League",
+    "datetime": "2026-04-12T15:30:00Z",
+    "venue": "Etihad Stadium"
+  }
+}
