@@ -126,11 +126,13 @@
         <button class="tool-tab active" onclick="showTool('calculator',this)">⚙ Fee Calculator</button>
         <button class="tool-tab" onclick="showTool('game',this)">🎮 Squaredodger</button>
         <button class="tool-tab" onclick="showTool('fintech',this)">📊 Fintech 2026</button>
+        <button class="tool-tab" onclick="showTool('movies',this)">🎬 What to Watch</button>
       </div>
       <div class="tool-frame-wrap">
         <iframe id="tool-calculator" class="tool-frame active-frame" src="https://jidspaymentfeecalcv4.vercel.app" title="NG Pay Fee Calculator" loading="lazy" allow="clipboard-write"></iframe>
         <iframe id="tool-game" class="tool-frame" src="https://jidsdodgergame.vercel.app/" title="Squaredodger" loading="lazy"></iframe>
         <iframe id="tool-fintech" class="tool-frame" src="./ng-fintech.html" title="Nigerian Fintech 2026" loading="lazy"></iframe>
+        <iframe id="tool-movies" class="tool-frame" src="./movie-recommender.html" title="What to Watch Tonight" loading="lazy"></iframe>
       </div>
     </div>
 
@@ -172,7 +174,7 @@
       <button class="about-modal-close" onclick="closeAbout()">✕</button>
     </div>
     <div class="about-modal-body">
-      <p class="about-intro">A personal command centre built by <strong>Abdulwajid (Jid)</strong> — data analyst, journalism, Canva designer, and Man City supporter based in Nigeria. Everything on this page is live, interactive and built from scratch.</p>
+      <p class="about-intro">A personal command centre built by <strong>Abdulwajid (Jid)</strong> — data analyst, radio commentator, Mass Comm student and Man City supporter based in Ilorin, Nigeria. Everything on this page is live, interactive and built from scratch.</p>
       <div class="about-sections">
         <div class="about-item"><div class="about-item-icon">💱</div><div><div class="about-item-title">Naira Exchange Rates</div><div class="about-item-desc">Live USD, GBP and EUR rates fetched from open.er-api.com and cached hourly. Reflects real market rates, not bank rates.</div></div></div>
         <div class="about-item"><div class="about-item-icon">📈</div><div><div class="about-item-title">Market Watch</div><div class="about-item-desc">Live crypto prices for BTC, ETH, SOL — and the Man City fan token (CITY). Updates every 60 seconds via CoinGecko.</div></div></div>
@@ -182,6 +184,7 @@
         <div class="about-item"><div class="about-item-icon">⚙</div><div><div class="about-item-title">Fee Calculator (My Tools → Tab 1)</div><div class="about-item-desc">Independent Nigerian payment gateway fee calculator. Compare Flutterwave, Paystack, Monnify and Squad. Includes reverse calc, bulk invoicing, live FX rates, donut chart and PDF receipt export.</div></div></div>
         <div class="about-item"><div class="about-item-icon">🎮</div><div><div class="about-item-title">Squaredodger (My Tools → Tab 2)</div><div class="about-item-desc">A browser arcade game — dodge the red squares for as long as you can. Built in vanilla JS with skins, a leaderboard and Web Audio API sound effects.</div></div></div>
         <div class="about-item"><div class="about-item-icon">📊</div><div><div class="about-item-title">Fintech 2026 (My Tools → Tab 3)</div><div class="about-item-desc">An interactive intelligence report on Nigeria's fintech ecosystem — company cards, funding timeline, valuation charts, M&A acquisition map, and six DECODE insight pieces. Built as a DECODE content project.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">🎬</div><div><div class="about-item-title">What to Watch Tonight (My Tools → Tab 4)</div><div class="about-item-desc">AI-powered movie and series recommender. Pick your mood, select genres (Nollywood, anime, K-Drama, Hollywood and more), add context like "something like Money Heist but African" and Claude returns personalised picks with a reason why you'll love each one.</div></div></div>
       </div>
       <div class="about-footer-note">Built with HTML, CSS and vanilla JS · Deployed on Vercel · All data sources are free and open<br/>Follow the build journey → <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a></div>
     </div>
