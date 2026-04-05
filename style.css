@@ -515,3 +515,123 @@ input[type="number"] { -moz-appearance: textfield; }
   .ticker-wrapper { padding-left: calc(100% + 52px); }
   .ticker-wrapper span { font-size: 0.7rem; padding: 0 24px; }
 }
+
+/* ─── SAVINGS SIMULATOR ─── */
+.simulator-container {
+  display: flex; gap: 28px; flex-wrap: wrap;
+}
+.sim-inputs {
+  flex: 1; min-width: 260px;
+  display: flex; flex-direction: column;
+}
+.sim-inputs .row { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.sim-inputs .row span { color: var(--muted); font-size: 0.85rem; }
+.sim-input-field {
+  background: var(--navy); border: 1px solid var(--card-border);
+  color: var(--text); padding: 8px 12px; border-radius: 8px;
+  font-family: 'DM Mono', monospace; font-size: 0.85rem;
+  width: 160px; text-align: right;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.sim-input-field:focus {
+  outline: none; border-color: var(--city-blue);
+  box-shadow: 0 0 8px rgba(108,171,221,0.2);
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+.sim-btn {
+  margin-top: 18px !important; width: 100%;
+  justify-content: center; cursor: pointer;
+  background: rgba(108,171,221,0.1) !important;
+  border: 1px solid rgba(108,171,221,0.25) !important;
+  color: var(--city-blue) !important;
+  font-weight: 700; letter-spacing: 0.5px;
+}
+.sim-btn:hover {
+  background: rgba(108,171,221,0.2) !important;
+  border-color: var(--city-blue) !important;
+  transform: none !important;
+}
+.sim-results {
+  flex: 1.5; min-width: 260px;
+  background: var(--navy-mid); padding: 22px;
+  border-radius: 14px; border: 1px solid var(--card-border);
+}
+.sim-result-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.sim-result-label {
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 4px;
+}
+.sim-big-number {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem;
+  letter-spacing: 1px; color: var(--city-blue); line-height: 1;
+}
+.sim-medium-number {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+  letter-spacing: 0.5px; color: var(--up); line-height: 1;
+}
+.sim-legend-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.6rem; color: var(--muted);
+  font-family: 'DM Mono', monospace;
+}
+.sim-legend-dot {
+  width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+}
+
+/* ─── TOOLS CARD ─── */
+.tools-card { padding-bottom: 0; overflow: hidden; }
+.tools-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.tool-tab {
+  padding: 8px 18px;
+  background: rgba(108,171,221,0.06); border: 1px solid rgba(108,171,221,0.12);
+  border-radius: 8px; color: var(--muted);
+  font-family: 'DM Mono', monospace; font-size: 0.78rem;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.tool-tab:hover { color: var(--text); border-color: rgba(108,171,221,0.3); }
+.tool-tab.active { background: rgba(108,171,221,0.14); border-color: var(--city-blue); color: var(--city-blue); }
+
+.tool-frame-wrap {
+  position: relative; width: 100%; height: 680px;
+  border-radius: 0 0 18px 18px; overflow: hidden; background: #060e16;
+}
+.tool-frame {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease; border-radius: 0 0 18px 18px;
+}
+.tool-frame.active-frame { opacity: 1; pointer-events: auto; }
+
+/* ─── LAST RESULT ─── */
+.last-result {
+  display: flex; flex-direction: column; gap: 3px;
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid rgba(108,171,221,0.1);
+}
+.result-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+}
+.result-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 1.5px; color: var(--text);
+}
+.result-win  { color: var(--up); }
+.result-loss { color: var(--down); }
+.result-comp { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+
+/* ─── MOBILE EXTRAS ─── */
+@media (max-width: 600px) {
+  .simulator-container { flex-direction: column; }
+  .sim-results { min-width: unset; }
+  .sim-input-field { width: 130px; }
+  .sim-big-number { font-size: 1.8rem; }
+  .tool-frame-wrap { height: 560px; }
+  .tools-tabs { flex-wrap: wrap; }
+  .tool-tab { font-size: 0.72rem; padding: 7px 12px; }
+}
