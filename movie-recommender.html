@@ -158,14 +158,12 @@ body::after{
 <body>
 <div class="wrapper">
 
-  <!-- HEADER -->
   <div class="page-header">
     <div class="header-eyebrow"><div class="eyebrow-dot"></div>AI-Powered · Jid's Dashboard</div>
     <h1 class="page-title">What to <em>Watch</em> Tonight</h1>
     <p class="page-sub">Pick your mood, era, and genres. Get personalised picks — Nollywood, Hollywood, anime, K-drama and everything between.</p>
   </div>
 
-  <!-- MOOD -->
   <div class="mood-section">
     <div class="section-label">How are you feeling?</div>
     <div class="mood-pills" id="moodPills">
@@ -180,7 +178,6 @@ body::after{
     </div>
   </div>
 
-  <!-- GENRE -->
   <div class="mood-section">
     <div class="section-label">Genre (pick any)</div>
     <div class="genre-grid" id="genreGrid">
@@ -203,7 +200,6 @@ body::after{
     </div>
   </div>
 
-  <!-- YEAR RANGE -->
   <div class="mood-section">
     <div class="section-label">Era / Year range</div>
     <div class="year-era-pills" id="yearEraPills">
@@ -227,14 +223,12 @@ body::after{
     </div>
   </div>
 
-  <!-- CONTEXT -->
   <div class="context-section">
     <div class="section-label">Tell me more (optional)</div>
     <textarea class="context-input" id="contextInput"
       placeholder="e.g. 'something like Money Heist but African', 'no subtitles please', 'date night with my partner', 'last watched Squid Game', 'want to cry my eyes out'…"></textarea>
   </div>
 
-  <!-- OPTIONS -->
   <div class="options-row">
     <div class="option-toggle" id="includeNollywood" onclick="this.classList.toggle('active')">🇳🇬 Include Nollywood</div>
     <div class="option-toggle" id="includeAnime" onclick="this.classList.toggle('active')">⚔️ Include Anime</div>
@@ -249,11 +243,9 @@ body::after{
   <button class="recommend-btn" id="recommendBtn" onclick="getRecommendations()">🎬 Find My Watch</button>
 
   <div class="api-note" id="apiNote">
-    ⚠️ API not configured yet. See setup instructions below — takes 2 minutes.<br/>
-    <a href="https://console.anthropic.com" target="_blank">Get free API key →</a> then add it to Vercel environment variables as <strong>ANTHROPIC_API_KEY</strong>.
+    ⚠️ API not configured yet. Add your key to Vercel environment variables as <strong>GROQ_API_KEY</strong>.
   </div>
 
-  <!-- LOADING -->
   <div class="loading-state" id="loadingState">
     <div class="film-strip">
       <div class="film-frame"></div><div class="film-frame"></div>
@@ -262,11 +254,10 @@ body::after{
     <div class="loading-text" id="loadingText">Scanning the catalogue…</div>
   </div>
 
-  <!-- RESULTS -->
   <div class="results-wrap" id="resultsWrap" style="display:none;"></div>
 
   <div class="page-footer">
-    Powered by Claude AI · <a href="https://mypersonaldashboard.vercel.app" target="_blank">Jid's Dashboard</a> · <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a>
+    Powered by Groq AI · <a href="https://mypersonaldashboard.vercel.app" target="_blank">Jid's Dashboard</a> · <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a>
   </div>
 </div>
 
@@ -327,7 +318,7 @@ document.querySelectorAll('.genre-btn').forEach(btn => {
 const loadingLines = [
   "Scanning the catalogue…","Consulting the film gods…",
   "Checking what Jid would rate 10/10…","Searching Nollywood archives…",
-  "Asking Claude for the real ones…","Filtering out the mid…",
+  "Asking Groq for the real ones…","Filtering out the mid…",
   "Almost there — curating just for you…","Crossing time zones and genres…",
 ];
 let loadingInterval = null;
@@ -433,7 +424,7 @@ function renderResults(movies) {
   wrap.innerHTML = `
     <div class="results-header">
       <div class="results-title">Your Picks</div>
-      <div class="results-meta">${movies.length} recommendation${movies.length>1?'s':''} · Claude AI</div>
+      <div class="results-meta">${movies.length} recommendation${movies.length>1?'s':''} · Groq AI</div>
     </div>
     ${movies.map((m,i) => {
       const cc = getCardColor(m.origin, m.genres);
@@ -479,7 +470,6 @@ async function getRecommendations() {
       body: JSON.stringify({ prompt: buildPrompt() })
     });
 
-    // 🔴 FIX: Properly check if the response failed
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
       if (res.status === 500 && errData.error && errData.error.includes('API key')) {
@@ -489,7 +479,7 @@ async function getRecommendations() {
     }
 
     const data = await res.json();
-    const raw  = data.content?.[0]?.text || '';
+    const raw  = data.text || '';
 
     let movies = [];
     try {
@@ -498,7 +488,7 @@ async function getRecommendations() {
     } catch {
       const match = raw.match(/\[[\s\S]*\]/);
       if (match) movies = JSON.parse(match[0]);
-      else throw new Error('Could not parse response from Claude');
+      else throw new Error('Could not parse response from Groq');
     }
 
     renderResults(movies);
