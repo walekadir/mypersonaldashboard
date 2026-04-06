@@ -1,15 +1,4 @@
 // api/recommend.js
-// Vercel Serverless Function — proxies requests to Anthropic API
-// Solves CORS: browser calls /api/recommend → this calls Anthropic → returns result
-//
-// SETUP:
-// 1. Add this file to your dashboard repo at: api/recommend.js
-// 2. In Vercel dashboard → Settings → Environment Variables
-//    Add: ANTHROPIC_API_KEY = your_key_here
-// 3. Get your free API key at: console.anthropic.com
-//
-// That's it. No other config needed.
-
 export default async function handler(req, res) {
   // Allow CORS from your dashboard
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,7 +31,7 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-3-haiku-20240307', // 🔴 FIX: Using a valid Anthropic model
         max_tokens: 1000,
         messages: [{ role: 'user', content: prompt }],
       }),
