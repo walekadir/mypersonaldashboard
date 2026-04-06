@@ -479,12 +479,13 @@ async function getRecommendations() {
       body: JSON.stringify({ prompt: buildPrompt() })
     });
 
-    if (res.status === 500) {
-      const err = await res.json();
-      if (err.error && err.error.includes('API key')) {
-        note.classList.add('show');
-        throw new Error('API key not configured in Vercel');
+    // 🔴 FIX: Properly check if the response failed
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      if (res.status === 500 && errData.error && errData.error.includes('API key')) {
+         note.classList.add('show');
       }
+      throw new Error(errData.error || `Server Error: ${res.status}`);
     }
 
     const data = await res.json();
@@ -497,12 +498,17 @@ async function getRecommendations() {
     } catch {
       const match = raw.match(/\[[\s\S]*\]/);
       if (match) movies = JSON.parse(match[0]);
-      else throw new Error('Could not parse response');
+      else throw new Error('Could not parse response from Claude');
     }
 
     renderResults(movies);
   } catch (err) {
-    wrap.innerHTML = `<div class="state-msg"><div class="big">⚠️</div>${err.message.includes('API key') ? 'API key not set up yet — see the note above.' : 'Something went wrong. Check your connection and try again.'}<br/><span style="font-size:0.62rem;opacity:0.5;margin-top:6px;display:block">${err.message}</span></div>`;
+    wrap.innerHTML = `<div class="state-msg">
+      <div class="big">⚠️</div>
+      Something went wrong.
+      <br/>
+      <span style="font-size:0.62rem;opacity:0.8;color:var(--red);margin-top:6px;display:block">${err.message}</span>
+    </div>`;
     wrap.style.display = 'block';
   } finally {
     stopLoading();
