@@ -1,4 +1,3 @@
-// api/recommend.js
 export default async function handler(req, res) {
   // Allow CORS from your dashboard
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,36 +13,49 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  // We are using Groq now!
+  const apiKey = process.env.GROQ_API_KEY; 
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured. Add ANTHROPIC_API_KEY in Vercel environment variables.' });
+    return res.status(500).json({ error: 'Groq API key not configured in Vercel.' });
   }
 
   try {
     const { prompt } = req.body;
     if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    // Fetch from Groq
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'claude-3-haiku-20240307', // 🔴 FIX: Using a valid Anthropic model
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }],
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'system', content: 'You are a helpful movie recommendation assistant. Always return valid JSON arrays.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
       }),
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.error?.message || 'Anthropic API error' });
+      return res.status(response.status).json({ error: data.error?.message || 'Groq API error' });
     }
 
-    return res.status(200).json(data);
+    // THE TRICK: We extract Groq's text and package it exactly how Claude does!
+    const groqText = data.choices?.[0]?.message?.content || '';
+    
+    // The frontend is looking for data.content[0].text, so we give it exactly that:
+    return res.status(200).json({
+      content: [
+        { text: groqText }
+      ]
+    });
+
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
