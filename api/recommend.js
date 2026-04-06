@@ -13,10 +13,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // We are using Groq now!
-  const apiKey = process.env.GROQ_API_KEY; 
+  // Look for the exact Groq key in Vercel
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'Groq API key not configured in Vercel.' });
+    return res.status(500).json({ error: 'API key not configured. Add GROQ_API_KEY in Vercel environment variables.' });
   }
 
   try {
@@ -46,15 +46,9 @@ export default async function handler(req, res) {
       return res.status(response.status).json({ error: data.error?.message || 'Groq API error' });
     }
 
-    // THE TRICK: We extract Groq's text and package it exactly how Claude does!
-    const groqText = data.choices?.[0]?.message?.content || '';
-    
-    // The frontend is looking for data.content[0].text, so we give it exactly that:
-    return res.status(200).json({
-      content: [
-        { text: groqText }
-      ]
-    });
+    // Extract the text from Groq and send it cleanly to the frontend
+    const aiText = data.choices?.[0]?.message?.content || '';
+    return res.status(200).json({ text: aiText });
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
