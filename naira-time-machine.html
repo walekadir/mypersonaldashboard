@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Jid's Naira Time Machine | Purchasing Power Visualizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,900;1,700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09090c;--surface:#111115;--surface2:#18181e;--surface3:#202028;
+  --border:#28282e;--border2:#38383e;
+  --text:#f4f1ea;--muted:#68687a;--muted2:#3c3c48;
+  --gold:#f5c842;--gold-glow:rgba(245,200,66,0.12);--gold-dim:#c4a018;
+  --red:#f43f5e;--green:#22c55e;--blue:#38bdf8;
+  --then-color:#38bdf8;--now-color:#f5c842;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Mono',monospace;
+  min-height:100vh;padding:0 0 60px;
+  position:relative;overflow-x:hidden;
+}
+/* Ambient glow */
+body::before{
+  content:'';position:fixed;
+  top:0;left:50%;transform:translateX(-50%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(245,200,66,0.05) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+/* Grain */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.4;pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+.ntm-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(9,9,12,0.94);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.ntm-logo{display:flex;align-items:center;gap:12px;}
+.ntm-logo-icon{
+  width:34px;height:34px;border-radius:8px;
+  background:linear-gradient(135deg,#c4a018,#f5c842);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.ntm-logo-text{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--text);letter-spacing:-0.02em;}
+.ntm-logo-sub{font-size:0.58rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:1px;}
+.ntm-source-tag{font-size:0.58rem;color:var(--muted);letter-spacing:0.08em;}
+.ntm-source-tag a{color:var(--gold-dim);text-decoration:none;}
+
+/* ── CONTAINER ── */
+.ntm-wrap{max-width:900px;margin:0 auto;padding:28px 20px;position:relative;z-index:1;}
+
+/* ── HERO ── */
+.ntm-hero{text-align:center;margin-bottom:36px;}
+.ntm-eyebrow{
+  font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.ntm-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.ntm-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,5vw,3rem);
+  font-weight:900;line-height:1.0;letter-spacing:-0.02em;
+  margin-bottom:10px;
+}
+.ntm-title em{font-style:italic;color:var(--gold);}
+.ntm-sub{font-size:0.72rem;color:var(--muted);line-height:1.7;max-width:460px;margin:0 auto;}
+
+/* ── INPUT CARD ── */
+.input-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:24px;margin-bottom:20px;
+}
+.input-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:14px;margin-bottom:20px;
+}
+@media(max-width:600px){.input-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.input-grid{grid-template-columns:1fr;}}
+
+.input-field{display:flex;flex-direction:column;gap:5px;}
+.input-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.input-wrap{position:relative;display:flex;align-items:center;}
+.input-prefix{
+  position:absolute;left:11px;
+  font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;
+  color:var(--gold);pointer-events:none;z-index:1;
+}
+.input-el{
+  width:100%;background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);
+  font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:500;
+  padding:11px 11px 11px 28px;outline:none;
+  transition:border-color 0.18s,box-shadow 0.18s;
+  -moz-appearance:textfield;
+}
+.input-el::-webkit-inner-spin-button,.input-el::-webkit-outer-spin-button{-webkit-appearance:none;}
+.input-el:focus{border-color:var(--gold-dim);box-shadow:0 0 0 3px var(--gold-glow);background:var(--surface3);}
+.input-el.no-prefix{padding-left:11px;}
+.input-hint{font-size:0.58rem;color:var(--muted2);}
+
+/* Year pills */
+.year-pills{display:flex;gap:7px;flex-wrap:wrap;}
+.year-pill{
+  padding:7px 14px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.7rem;cursor:pointer;transition:all 0.15s;user-select:none;
+}
+.year-pill:hover{color:var(--text);border-color:var(--border2);}
+.year-pill.active{background:var(--gold-glow);border-color:var(--gold);color:var(--gold);}
+
+/* CTA */
+.travel-btn{
+  width:100%;padding:15px;margin-top:16px;
+  background:linear-gradient(135deg,#c4a018,#f5c842);
+  border:none;border-radius:12px;
+  color:#1a1400;
+  font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;
+  letter-spacing:0.05em;cursor:pointer;
+  transition:all 0.2s;
+}
+.travel-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(245,200,66,0.25);}
+.travel-btn:active{transform:translateY(0);}
+
+/* ── RESULTS ── */
+.results-section{display:none;}
+.results-section.show{display:block;}
+
+/* Verdict banner */
+.verdict-banner{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:22px 24px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.verdict-banner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.verdict-label{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.verdict-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.3rem,3.5vw,2rem);
+  font-weight:900;line-height:1.1;
+  color:var(--text);margin-bottom:8px;
+}
+.verdict-title .loss-word{color:var(--red);}
+.verdict-sub{font-size:0.72rem;color:var(--muted);line-height:1.6;}
+.verdict-pct{
+  font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;
+  color:var(--red);margin-bottom:4px;
+}
+
+/* Stat grid */
+.stat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:10px;margin-bottom:16px;
+}
+.stat-block{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:14px;
+}
+.stat-label{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.stat-value{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);}
+.stat-value.red{color:var(--red)}.stat-value.green{color:var(--green)}.stat-value.gold{color:var(--gold)}
+
+/* ── GOODS COMPARISON ── */
+.goods-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:22px;margin-bottom:16px;
+}
+.goods-title{
+  font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;
+  color:var(--text);margin-bottom:6px;
+}
+.goods-sub{font-size:0.65rem;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+
+.good-row{margin-bottom:24px;}
+.good-row:last-child{margin-bottom:0;}
+.good-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+}
+.good-icon{font-size:1.4rem;}
+.good-name{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);}
+.good-change{font-size:0.68rem;color:var(--red);margin-left:auto;}
+
+/* Bar comparison */
+.bar-compare{display:flex;flex-direction:column;gap:8px;}
+.bar-row{display:flex;align-items:center;gap:12px;}
+.bar-period-label{
+  font-size:0.65rem;color:var(--muted);width:36px;flex-shrink:0;text-align:right;
+  font-family:'Syne',sans-serif;font-weight:600;
+}
+.bar-track{flex:1;height:28px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;}
+.bar-fill{
+  height:100%;border-radius:6px;
+  display:flex;align-items:center;padding:0 10px;
+  transition:width 0.9s cubic-bezier(0.34,1.56,0.64,1);
+  width:0%;position:relative;min-width:0;
+}
+.bar-fill-text{
+  font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;
+  color:rgba(0,0,0,0.75);white-space:nowrap;overflow:hidden;
+}
+.bar-count{
+  font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;
+  flex-shrink:0;text-align:right;min-width:80px;
+}
+
+/* ── INFLATION CHART ── */
+.chart-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:22px;margin-bottom:16px;
+}
+.chart-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.chart-sub{font-size:0.62rem;color:var(--muted);margin-bottom:18px;}
+.chart-canvas-wrap{position:relative;width:100%;height:200px;}
+canvas{width:100%;height:100%;}
+
+/* ── CONTEXT ── */
+.context-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:22px;margin-bottom:16px;
+}
+.context-items{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.context-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px;background:var(--surface2);border-radius:10px;
+  border:1px solid var(--border);
+}
+.context-item-icon{font-size:1.2rem;flex-shrink:0;padding-top:1px;}
+.context-item-title{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+.context-item-text{font-size:0.68rem;color:var(--muted);line-height:1.6;}
+.context-item-text strong{color:var(--text);}
+
+/* ── DECODE SECTION ── */
+.decode-card{
+  background:var(--gold-glow);
+  border:1px solid rgba(245,200,66,0.2);
+  border-radius:14px;padding:22px;margin-bottom:16px;
+}
+.decode-badge{
+  display:inline-block;
+  background:var(--gold);color:#1a1400;
+  font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;
+  letter-spacing:3px;padding:4px 10px;border-radius:5px;
+  margin-bottom:12px;
+}
+.decode-insight{font-size:0.78rem;color:var(--text);line-height:1.8;}
+.decode-insight strong{font-weight:700;color:var(--gold);}
+
+/* Footer */
+.ntm-footer{text-align:center;margin-top:40px;font-size:0.6rem;color:var(--muted);line-height:1.7;}
+.ntm-footer a{color:var(--gold-dim);text-decoration:none;}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+@media(max-width:500px){.ntm-wrap{padding:18px 14px;}.ntm-header{padding:12px 14px;}.input-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="ntm-header">
+  <div class="ntm-logo">
+    <div class="ntm-logo-icon">⏳</div>
+    <div>
+      <div class="ntm-logo-text">Naira Time Machine</div>
+      <div class="ntm-logo-sub">Purchasing Power Visualizer</div>
+    </div>
+  </div>
+  <div class="ntm-source-tag">Data: NBS · CBN · Vanguard · Legit.ng</div>
+</div>
+
+<div class="ntm-wrap">
+
+  <!-- HERO -->
+  <div class="ntm-hero">
+    <div class="ntm-eyebrow"><div class="ntm-eyebrow-dot"></div>DECODE Intelligence · Nigeria Economic Data</div>
+    <h1 class="ntm-title">What did your <em>money</em><br/>actually buy?</h1>
+    <p class="ntm-sub">Enter an amount and travel back in time. See exactly how many bags of rice, litres of fuel, or dollars that money could buy then — versus what it buys right now in 2026.</p>
+  </div>
+
+  <!-- INPUT CARD -->
+  <div class="input-card">
+    <div class="input-grid">
+      <div class="input-field" style="grid-column:1/3;">
+        <div class="input-label">Amount (₦)</div>
+        <div class="input-wrap">
+          <span class="input-prefix">₦</span>
+          <input type="number" class="input-el" id="amount" value="50000" min="1" step="1000" oninput="onAmountChange()"/>
+        </div>
+        <div class="input-hint">e.g. your salary, savings, or any amount</div>
+      </div>
+      <div class="input-field">
+        <div class="input-label">Custom year (optional)</div>
+        <div class="input-wrap">
+          <input type="number" class="input-el no-prefix" id="customYear" placeholder="e.g. 2012" min="2005" max="2025" oninput="selectCustomYear()"/>
+        </div>
+      </div>
+    </div>
+    <div class="input-label" style="margin-bottom:10px;">Or pick a year</div>
+    <div class="year-pills" id="yearPills">
+      <div class="year-pill" data-year="2005" onclick="selectYear(2005,this)">2005</div>
+      <div class="year-pill" data-year="2008" onclick="selectYear(2008,this)">2008</div>
+      <div class="year-pill active" data-year="2010" onclick="selectYear(2010,this)">2010</div>
+      <div class="year-pill" data-year="2012" onclick="selectYear(2012,this)">2012</div>
+      <div class="year-pill" data-year="2015" onclick="selectYear(2015,this)">2015</div>
+      <div class="year-pill" data-year="2016" onclick="selectYear(2016,this)">2016</div>
+      <div class="year-pill" data-year="2018" onclick="selectYear(2018,this)">2018</div>
+      <div class="year-pill" data-year="2019" onclick="selectYear(2019,this)">2019</div>
+      <div class="year-pill" data-year="2020" onclick="selectYear(2020,this)">2020</div>
+      <div class="year-pill" data-year="2022" onclick="selectYear(2022,this)">2022</div>
+      <div class="year-pill" data-year="2023" onclick="selectYear(2023,this)">2023</div>
+      <div class="year-pill" data-year="2024" onclick="selectYear(2024,this)">2024</div>
+      <div class="year-pill" data-year="2025" onclick="selectYear(2025,this)">2025</div>
+    </div>
+    <button class="travel-btn" onclick="calculate()">⏳ Travel Back in Time</button>
+  </div>
+
+  <!-- RESULTS (hidden until calculate) -->
+  <div class="results-section" id="results">
+
+    <div class="verdict-banner">
+      <div class="verdict-label" id="verdictLabel">Purchasing Power Analysis · 2026</div>
+      <div class="verdict-pct" id="verdictPct"></div>
+      <div class="verdict-title" id="verdictTitle"></div>
+      <div class="verdict-sub" id="verdictSub"></div>
+    </div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <!-- GOODS COMPARISON -->
+    <div class="goods-card">
+      <div class="goods-title">What could ₦<span id="goodsAmt">50,000</span> buy?</div>
+      <div class="goods-sub" id="goodsSub"></div>
+      <div id="goodsRows"></div>
+    </div>
+
+    <!-- INFLATION CHART -->
+    <div class="chart-card">
+      <div class="chart-title">Nigeria Inflation Rate — Annual %</div>
+      <div class="chart-sub">Source: NBS / World Bank / IMF historical data</div>
+      <div class="chart-canvas-wrap"><canvas id="inflationChart"></canvas></div>
+    </div>
+
+    <!-- CONTEXT -->
+    <div class="context-card">
+      <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;">What happened between <span id="ctxYear">2010</span> and 2026?</div>
+      <div style="font-size:0.65rem;color:var(--muted);">The policy decisions that eroded your purchasing power</div>
+      <div class="context-items" id="contextItems"></div>
+    </div>
+
+    <!-- DECODE INSIGHT -->
+    <div class="decode-card">
+      <div class="decode-badge">DECODE</div>
+      <div class="decode-insight" id="decodeInsight"></div>
+    </div>
+
+  </div>
+
+  <div class="ntm-footer">
+    Naira Time Machine · Part of <a href="https://mypersonaldashboard.vercel.app" target="_blank">Jid's Dashboard</a> · Built by <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a><br/>
+    Data sourced from NBS, CBN, World Bank, Vanguard, Legit.ng, GlobalPetrolPrices.com
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// HARDCODED DATASET — All sourced from NBS, CBN, Vanguard etc.
+// ═══════════════════════════════════════════════════════════
+
+const DATA = {
+  //         year: { rice50kg, petrolPerL, usdNgn, inflationPct, minWage, jollotPot }
+  2005: { rice: 4000,   petrol: 65,   usd: 132,   inflation: 17.9, minWage: 7500   },
+  2006: { rice: 4200,   petrol: 65,   usd: 128,   inflation: 8.2,  minWage: 7500   },
+  2007: { rice: 5000,   petrol: 65,   usd: 125,   inflation: 5.4,  minWage: 5500   },
+  2008: { rice: 5500,   petrol: 65,   usd: 118,   inflation: 11.6, minWage: 5500   },
+  2009: { rice: 6000,   petrol: 65,   usd: 148,   inflation: 12.5, minWage: 18000  },
+  2010: { rice: 6500,   petrol: 65,   usd: 150,   inflation: 13.7, minWage: 18000  },
+  2011: { rice: 7000,   petrol: 65,   usd: 153,   inflation: 10.8, minWage: 18000  },
+  2012: { rice: 7500,   petrol: 97,   usd: 157,   inflation: 12.2, minWage: 18000  },
+  2013: { rice: 8000,   petrol: 97,   usd: 158,   inflation: 8.5,  minWage: 18000  },
+  2014: { rice: 8200,   petrol: 97,   usd: 160,   inflation: 8.1,  minWage: 18000  },
+  2015: { rice: 8500,   petrol: 87,   usd: 197,   inflation: 9.0,  minWage: 18000  },
+  2016: { rice: 16000,  petrol: 145,  usd: 315,   inflation: 15.7, minWage: 18000  },
+  2017: { rice: 19000,  petrol: 145,  usd: 306,   inflation: 16.5, minWage: 18000  },
+  2018: { rice: 21000,  petrol: 145,  usd: 306,   inflation: 12.1, minWage: 18000  },
+  2019: { rice: 25000,  petrol: 145,  usd: 306,   inflation: 11.4, minWage: 30000  },
+  2020: { rice: 26000,  petrol: 162,  usd: 381,   inflation: 13.2, minWage: 30000  },
+  2021: { rice: 32000,  petrol: 162,  usd: 413,   inflation: 17.0, minWage: 30000  },
+  2022: { rice: 50000,  petrol: 162,  usd: 430,   inflation: 18.8, minWage: 30000  },
+  2023: { rice: 65000,  petrol: 617,  usd: 760,   inflation: 24.7, minWage: 30000  },
+  2024: { rice: 95000,  petrol: 1030, usd: 1500,  inflation: 31.4, minWage: 77000  },
+  2025: { rice: 85000,  petrol: 1200, usd: 1530,  inflation: 23.0, minWage: 77000  },
+};
+
+// 2026 "now" values
+const NOW = { year: 2026, rice: 80000, petrol: 1270, usd: 1580, inflation: 15.1, minWage: 77000 };
+
+// Key historical context events
+const CONTEXT_EVENTS = {
+  2005: [
+    { icon:'🛢', title:'Obasanjo Era Stability', text:'Mid-2000s oil boom kept exchange rates stable at ~₦130/$1. <strong>Fuel subsidies fully in place.</strong> Rice was affordable at ₦4,000 per 50kg bag.' },
+    { icon:'📈', title:'Pre-Reform Inflation', text:'Annual inflation around <strong>17.9%</strong> but largely managed. Nigeria\'s oil windfall masked underlying structural vulnerabilities.' },
+  ],
+  2010: [
+    { icon:'💱', title:'Naira Held Steady', text:'CBN managed the naira at ~₦150/$1 through forex interventions. <strong>Petrol still ₦65/litre</strong> — unchanged since 2004 due to subsidies. A bag of rice cost ₦6,500.' },
+    { icon:'🌾', title:'Food Import Dependency', text:'Nigeria was importing over <strong>17 million tons of rice between 2011–2015</strong> annually, spending billions in foreign exchange. Domestic production was negligible.' },
+  ],
+  2015: [
+    { icon:'💸', title:'First Naira Shock', text:'New CBN FX restrictions caused naira to slide. <strong>The dollar jumped from ₦150 to ₦197.</strong> Rice prices rose to ₦8,500 as import costs climbed.' },
+    { icon:'🚫', title:'Rice Import Restriction', text:'Buhari government restricted rice imports through land borders to force local production. <strong>Prices began rising sharply</strong> due to supply shortfalls.' },
+  ],
+  2016: [
+    { icon:'📉', title:'Naira Devaluation', text:'CBN abandoned the peg. The naira collapsed from ₦197 to <strong>₦315/$1 overnight</strong> — a 60% devaluation. Rice jumped to ₦16,000. Petrol rose to ₦145/litre after partial subsidy removal.' },
+    { icon:'🔴', title:'Official Recession', text:'Nigeria entered its first recession in 25 years. <strong>Inflation hit 15.7%.</strong> This was the single most damaging year for Nigerian purchasing power in recent memory.' },
+  ],
+  2019: [
+    { icon:'🚧', title:'Border Closure', text:'Government closed land borders to block rice smuggling. This caused <strong>immediate scarcity and prices jumped to ₦25,000</strong> per bag — a near-tripling from 2015.' },
+    { icon:'💰', title:'Minimum Wage Increase', text:'Minimum wage rose from ₦18,000 to ₦30,000 — <strong>first increase in 10 years</strong>. But with rice at ₦25,000, a full bag now cost 83% of monthly minimum wage.' },
+  ],
+  2020: [
+    { icon:'🦠', title:'COVID-19 Supply Shocks', text:'Lockdowns disrupted food supply chains. Rice climbed to <strong>₦26,000–₦30,000</strong>. Petrol remained ₦162/litre under the last period of full subsidy maintenance.' },
+    { icon:'💱', title:'Dollar Pressure Continues', text:'CBN spent reserves defending the naira. The official rate diverged sharply from the parallel market. <strong>Real dollar cost for importers was ₦450–₦480.</strong>' },
+  ],
+  2022: [
+    { icon:'🌊', title:'Global Commodity Surge', text:'Post-COVID global inflation, the Russia-Ukraine war, and supply chain disruptions pushed global food prices up. <strong>Rice hit ₦50,000.</strong> Still held below the worst — but fuel subsidy bill was consuming ₦400bn+ monthly.' },
+    { icon:'⚠️', title:'Subsidy Cliff Approaching', text:'Nigeria\'s fuel subsidy was costing the government <strong>over $10 billion annually</strong>. Economists warned the system was unsustainable. The reckoning was coming.' },
+  ],
+  2023: [
+    { icon:'🔥', title:'Tinubu Removes Fuel Subsidy', text:'On inauguration day, President Tinubu declared: <strong>"Subsidy is gone."</strong> Petrol jumped from ₦195 to ₦617/litre in weeks — a 208% increase. This single decision triggered the biggest inflation surge in decades.' },
+    { icon:'💰', title:'Naira Float', text:'CBN abandoned the managed exchange rate. The naira went from ₦460 to <strong>₦750 then ₦1,500</strong> against the dollar by early 2024 — a 70%+ devaluation in months. Every imported product became catastrophically expensive.' },
+  ],
+  2024: [
+    { icon:'📊', title:'Inflation Peaks at 31.4%', text:'Annual inflation hit <strong>31.4%</strong> — the highest in nearly 30 years. A bag of rice crossed ₦95,000. The minimum wage was increased to ₦77,000 but couldn\'t buy even one full bag of rice.' },
+    { icon:'🏭', title:'Dangote Refinery Opens', text:'Nigeria\'s first major domestic refinery opened in September 2024, processing <strong>650,000 barrels/day.</strong> Initially offered some hope of price relief — petrol began edging down from peak ₦1,100+.' },
+  ],
+  2025: [
+    { icon:'📉', title:'Inflation Starts to Ease', text:'Annual inflation fell from 31.4% to <strong>23%</strong> as the naira stabilised and food imports resumed. Rice prices dropped slightly from the ₦95,000+ peak to around ₦80,000–₦85,000.' },
+    { icon:'🔄', title:'NBS Methodology Change', text:'NBS rebased the CPI from 2009 to 2024, making headline inflation appear to drop sharply to ~15% under the new methodology. <strong>Economists debated whether this reflected real price relief or statistical revision.</strong>' },
+  ],
+};
+
+function getContextEvents(year) {
+  // Find exact year or nearest available
+  const available = Object.keys(CONTEXT_EVENTS).map(Number).sort((a,b)=>a-b);
+  let best = available[0];
+  for (const y of available) { if (y <= year) best = y; }
+  return CONTEXT_EVENTS[best] || [];
+}
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let selectedYear = 2010;
+let amount = 50000;
+
+function selectYear(year, btn) {
+  selectedYear = year;
+  document.querySelectorAll('.year-pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('customYear').value = '';
+  autoCalculate();
+}
+
+function selectCustomYear() {
+  const v = parseInt(document.getElementById('customYear').value);
+  if (v >= 2005 && v <= 2025) {
+    selectedYear = v;
+    document.querySelectorAll('.year-pill').forEach(p => p.classList.remove('active'));
+    autoCalculate();
+  }
+}
+
+function onAmountChange() {
+  amount = parseFloat(document.getElementById('amount').value) || 50000;
+  if (document.getElementById('results').classList.contains('show')) autoCalculate();
+}
+
+function autoCalculate() {
+  amount = parseFloat(document.getElementById('amount').value) || 50000;
+  calculate();
+}
+
+// ═══════════════════════════════════════════════════════════
+// INTERPOLATE — get data for any year
+// ═══════════════════════════════════════════════════════════
+function getDataForYear(year) {
+  if (DATA[year]) return DATA[year];
+  // Linear interpolation between nearest years
+  const years = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+  let lo = years[0], hi = years[years.length-1];
+  for (let i = 0; i < years.length-1; i++) {
+    if (years[i] <= year && years[i+1] >= year) { lo = years[i]; hi = years[i+1]; break; }
+  }
+  if (lo === hi) return DATA[lo];
+  const t = (year - lo) / (hi - lo);
+  const d0 = DATA[lo], d1 = DATA[hi];
+  return {
+    rice:      Math.round(d0.rice      + t*(d1.rice-d0.rice)),
+    petrol:    Math.round(d0.petrol    + t*(d1.petrol-d0.petrol)),
+    usd:       Math.round(d0.usd       + t*(d1.usd-d0.usd)),
+    inflation: +(d0.inflation + t*(d1.inflation-d0.inflation)).toFixed(1),
+    minWage:   Math.round(d0.minWage   + t*(d1.minWage-d0.minWage)),
+  };
+}
+
+// ═══════════════════════════════════════════════════════════
+// CALCULATE CUMULATIVE INFLATION MULTIPLIER
+// ═══════════════════════════════════════════════════════════
+function getCumulativeMultiplier(fromYear, toYear) {
+  let mult = 1;
+  const years = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+  for (const y of years) {
+    if (y > fromYear && y <= toYear) {
+      mult *= (1 + DATA[y].inflation / 100);
+    }
+  }
+  return mult;
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAIN CALCULATE
+// ═══════════════════════════════════════════════════════════
+function calculate() {
+  amount = parseFloat(document.getElementById('amount').value) || 50000;
+  const then = getDataForYear(selectedYear);
+  const now  = NOW;
+
+  // Purchasing power loss via cumulative inflation
+  const mult = getCumulativeMultiplier(selectedYear, 2026);
+  const equivalentNow = Math.round(amount * mult);
+  const powerLossPct  = ((equivalentNow - amount) / amount * 100).toFixed(0);
+
+  // Goods
+  const goods = [
+    {
+      id: 'rice', icon: '🌾', name: '50kg Bags of Rice',
+      thenPrice: then.rice, nowPrice: now.rice,
+      thenQty: amount / then.rice, nowQty: amount / now.rice,
+    },
+    {
+      id: 'petrol', icon: '⛽', name: 'Litres of Petrol',
+      thenPrice: then.petrol, nowPrice: now.petrol,
+      thenQty: amount / then.petrol, nowQty: amount / now.petrol,
+    },
+    {
+      id: 'usd', icon: '💵', name: 'US Dollars',
+      thenPrice: then.usd, nowPrice: now.usd,
+      thenQty: amount / then.usd, nowQty: amount / now.usd,
+    },
+    {
+      id: 'minwage', icon: '👷', name: 'Days of Minimum Wage',
+      thenPrice: then.minWage / 22, nowPrice: now.minWage / 22,
+      thenQty: amount / (then.minWage / 22), nowQty: amount / (now.minWage / 22),
+    },
+  ];
+
+  // Render
+  showResults(selectedYear, amount, then, equivalentNow, powerLossPct, mult, goods);
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function fmt(n) { return Math.abs(n) >= 1000 ? '₦' + n.toLocaleString('en-NG') : '₦' + n.toFixed(0); }
+function fmtN(n) { return n >= 1000 ? n.toLocaleString('en-NG',{maximumFractionDigits:0}) : n.toFixed(n < 10 ? 1 : 0); }
+
+function showResults(year, amt, then, equivNow, lossPct, mult, goods) {
+  const section = document.getElementById('results');
+  section.classList.add('show');
+
+  // Verdict
+  document.getElementById('verdictLabel').textContent = `Purchasing Power · ${year} → 2026`;
+  document.getElementById('verdictPct').textContent = `−${lossPct}% purchasing power lost`;
+  document.getElementById('verdictTitle').innerHTML =
+    `₦${amt.toLocaleString()} in ${year} = <span class="loss-word">₦${equivNow.toLocaleString()}</span> today`;
+  document.getElementById('verdictSub').textContent =
+    `Inflation has compounded ${((mult-1)*100).toFixed(0)}% from ${year} to 2026. To buy the same things today, you'd need ${fmt(equivNow)} — not ${fmt(amt)}.`;
+
+  // Stats
+  const stats = [
+    { l:`₦/$1 in ${year}`,  v:`₦${then.usd.toLocaleString()}`,    c:'' },
+    { l:'₦/$1 in 2026',     v:`₦${NOW.usd.toLocaleString()}`,     c:'red' },
+    { l:`Petrol in ${year}`, v:`₦${then.petrol}/L`,               c:'' },
+    { l:'Petrol in 2026',    v:`₦${NOW.petrol}/L`,                c:'red' },
+    { l:`Min Wage in ${year}`,v:`₦${then.minWage.toLocaleString()}`,c:'' },
+    { l:'Min Wage in 2026',  v:`₦${NOW.minWage.toLocaleString()}`, c:'green' },
+    { l:`Equiv. today`,      v:fmt(equivNow),                     c:'red' },
+    { l:`Inflation span`,    v:`+${((mult-1)*100).toFixed(0)}%`,  c:'red' },
+  ];
+  document.getElementById('statGrid').innerHTML = stats.map(s =>
+    `<div class="stat-block"><div class="stat-label">${s.l}</div><div class="stat-value ${s.c}">${s.v}</div></div>`
+  ).join('');
+
+  // Goods header
+  document.getElementById('goodsAmt').textContent = amt.toLocaleString();
+  document.getElementById('goodsSub').textContent =
+    `In ${year} vs today in 2026. The bars show how many units ₦${amt.toLocaleString()} could buy.`;
+
+  // Goods rows
+  document.getElementById('goodsRows').innerHTML = goods.map(g => {
+    const maxQty = Math.max(g.thenQty, g.nowQty, 0.01);
+    const thenW  = Math.max(2, (g.thenQty / maxQty) * 95).toFixed(1);
+    const nowW   = Math.max(2, (g.nowQty  / maxQty) * 95).toFixed(1);
+    const pctLoss= ((g.nowQty - g.thenQty) / g.thenQty * 100).toFixed(0);
+    const isUp   = parseFloat(pctLoss) > 0;
+    return `
+      <div class="good-row">
+        <div class="good-header">
+          <span class="good-icon">${g.icon}</span>
+          <span class="good-name">${g.name}</span>
+          <span class="good-change" style="color:${isUp?'var(--green)':'var(--red)'}">${isUp?'+':''}${pctLoss}% ${isUp?'more':'less'}</span>
+        </div>
+        <div class="bar-compare">
+          <div class="bar-row">
+            <div class="bar-period-label" style="color:var(--then-color)">${year}</div>
+            <div class="bar-track">
+              <div class="bar-fill" data-w="${thenW}" style="background:linear-gradient(90deg,#1a4e6e,#38bdf8);width:0%">
+                <span class="bar-fill-text">${fmt(g.thenPrice)} each</span>
+              </div>
+            </div>
+            <div class="bar-count" style="color:var(--then-color)">${fmtN(g.thenQty)} units</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-period-label" style="color:var(--now-color)">2026</div>
+            <div class="bar-track">
+              <div class="bar-fill" data-w="${nowW}" style="background:linear-gradient(90deg,#7a5e00,#f5c842);width:0%">
+                <span class="bar-fill-text">${fmt(g.nowPrice)} each</span>
+              </div>
+            </div>
+            <div class="bar-count" style="color:var(--now-color)">${fmtN(g.nowQty)} units</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill[data-w]').forEach(el => {
+      el.style.width = el.getAttribute('data-w') + '%';
+    });
+  }, 100);
+
+  // Inflation line chart
+  drawInflationChart(year);
+
+  // Context
+  document.getElementById('ctxYear').textContent = year;
+  const events = getContextEvents(year);
+  document.getElementById('contextItems').innerHTML = events.map(e => `
+    <div class="context-item">
+      <div class="context-item-icon">${e.icon}</div>
+      <div>
+        <div class="context-item-title">${e.title}</div>
+        <div class="context-item-text">${e.text}</div>
+      </div>
+    </div>`).join('');
+
+  // DECODE Insight
+  renderDecodeInsight(year, amt, goods, lossPct, then);
+
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════════════════════
+// INFLATION CHART
+// ═══════════════════════════════════════════════════════════
+function drawInflationChart(highlightYear) {
+  const canvas = document.getElementById('inflationChart');
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  canvas.width  = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  const years  = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+  const vals   = years.map(y => DATA[y].inflation);
+  const allVals= [...vals, NOW.inflation];
+  const allYrs = [...years, 2026];
+  const maxV   = Math.max(...allVals) * 1.15;
+  const pad    = { l:40, r:20, t:20, b:36 };
+  const cW     = W - pad.l - pad.r;
+  const cH     = H - pad.t - pad.b;
+  const n      = allYrs.length;
+
+  // Grid lines
+  [10, 20, 30].forEach(v => {
+    if (v <= maxV) {
+      const y = pad.t + cH - (v / maxV) * cH;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y);
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1; ctx.setLineDash([3,4]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(255,255,255,0.2)'; ctx.font = '9px DM Mono, monospace'; ctx.textAlign = 'right';
+      ctx.fillText(v + '%', pad.l - 4, y + 3);
+    }
+  });
+
+  // Points
+  const pts = allYrs.map((yr, i) => ({
+    x: pad.l + (i / (n-1)) * cW,
+    y: pad.t + cH - (allVals[i] / maxV) * cH,
+    year: yr, val: allVals[i]
+  }));
+
+  // Gradient fill
+  const grad = ctx.createLinearGradient(0, pad.t, 0, H - pad.b);
+  grad.addColorStop(0, 'rgba(245,200,66,0.2)');
+  grad.addColorStop(1, 'rgba(245,200,66,0)');
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pad.t + cH);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length-1].x, pad.t + cH);
+  ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  pts.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+  ctx.strokeStyle = '#f5c842'; ctx.lineWidth = 1.8; ctx.stroke();
+
+  // Dots + highlight
+  pts.forEach(p => {
+    const isHL = p.year === highlightYear;
+    const is26 = p.year === 2026;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, isHL ? 6 : 3.5, 0, Math.PI*2);
+    ctx.fillStyle = isHL ? '#f43f5e' : is26 ? '#22c55e' : '#f5c842';
+    ctx.fill();
+    if (isHL || is26) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke(); }
+
+    // Year label on axis (every 3 years)
+    if (p.year % 4 === 0 || isHL || is26) {
+      ctx.fillStyle = isHL ? '#f43f5e' : is26 ? '#22c55e' : 'rgba(255,255,255,0.3)';
+      ctx.font = `${isHL || is26 ? 'bold ' : ''}9px DM Mono, monospace`;
+      ctx.textAlign = 'center';
+      ctx.fillText(p.year, p.x, H - 4);
+    }
+
+    // Value label for highlighted years
+    if (isHL || is26) {
+      ctx.fillStyle = isHL ? '#f43f5e' : '#22c55e';
+      ctx.font = 'bold 9px DM Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(p.val + '%', p.x, p.y - 10);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// JID's INTELLIGENCE INSIGHT
+// ═══════════════════════════════════════════════════════════
+function renderDecodeInsight(year, amt, goods, lossPct, then) {
+  const riceGood = goods.find(g => g.id === 'rice');
+  const petrolGood = goods.find(g => g.id === 'petrol');
+  const usdGood = goods.find(g => g.id === 'usd');
+
+  const thenRiceBags  = riceGood.thenQty.toFixed(1);
+  const nowRiceBags   = riceGood.nowQty.toFixed(1);
+  const thenPetrolL   = Math.round(petrolGood.thenQty).toLocaleString();
+  const nowPetrolL    = Math.round(petrolGood.nowQty).toLocaleString();
+  const thenDollars   = usdGood.thenQty.toFixed(0);
+  const nowDollars    = usdGood.nowQty.toFixed(0);
+
+  const insight = `
+    In <strong>${year}</strong>, ₦${amt.toLocaleString()} could buy <strong>${thenRiceBags} bags of rice</strong>, 
+    <strong>${thenPetrolL} litres of petrol</strong>, and <strong>$${thenDollars}</strong>.
+    <br/><br/>
+    In <strong>2026</strong>, the same ₦${amt.toLocaleString()} buys just <strong>${nowRiceBags} bags of rice</strong>, 
+    <strong>${nowPetrolL} litres of petrol</strong>, and <strong>$${nowDollars}</strong>.
+    <br/><br/>
+    Your naira has lost <strong>${lossPct}% of its purchasing power</strong> in that period. 
+    To have the same buying power as ₦${amt.toLocaleString()} in ${year}, 
+    you'd need roughly <strong>₦${Math.round(amt * getCumulativeMultiplier(year, 2026)).toLocaleString()}</strong> today.
+    <br/><br/>
+    This is why keeping money in a savings account at 4% while inflation runs at 15–31% 
+    is a <strong>guaranteed way to get poorer</strong> — even as your balance grows.
+    The question isn't "how much do I have?" It's "what can I actually buy with it?"
+  `;
+
+  document.getElementById('decodeInsight').innerHTML = insight;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BOOT — auto-calculate on load
+// ═══════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  amount = parseFloat(document.getElementById('amount').value) || 50000;
+  calculate();
+});
+</script>
+</body>
+</html>
