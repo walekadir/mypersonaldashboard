@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="TrueProfit — Know your real profit. A side hustle calculator for Nigerian business owners and entrepreneurs worldwide."/>
+<title>TrueProfit — Know Your Real Profit</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#f7f6f3;
+  --white:#ffffff;
+  --surface:#f0efe9;
+  --border:#e2e0d8;
+  --border2:#ccc9be;
+  --text:#1a1a1a;
+  --muted:#8a8878;
+  --muted2:#b5b3a8;
+  --profit:#16a34a;
+  --profit-bg:#f0fdf4;
+  --profit-border:#bbf7d0;
+  --loss:#dc2626;
+  --loss-bg:#fef2f2;
+  --loss-border:#fecaca;
+  --warning:#d97706;
+  --warning-bg:#fffbeb;
+  --warning-border:#fde68a;
+  --accent:#1a1a1a;
+  --accent-light:#2d2d2d;
+  --green:#16a34a;
+  --red:#dc2626;
+  --blue:#2563eb;
+  --scenario-a:#2563eb;
+  --scenario-b:#9333ea;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  min-height:100vh;
+  padding:0 0 80px;
+}
+
+/* ── HEADER ── */
+.tp-header{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;
+  gap:12px;flex-wrap:wrap;
+}
+.tp-logo{display:flex;align-items:center;gap:10px;}
+.tp-logo-mark{
+  width:34px;height:34px;background:var(--text);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.tp-logo-mark svg{width:16px;height:16px;}
+.tp-logo-text{
+  font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+  color:var(--text);letter-spacing:-0.02em;
+}
+.tp-logo-text span{color:var(--green);}
+.tp-tagline{font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+.tp-header-actions{display:flex;align-items:center;gap:8px;}
+.tp-nav-btn{
+  padding:7px 13px;background:transparent;border:1px solid var(--border);
+  border-radius:8px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.05em;cursor:pointer;transition:all 0.15s;white-space:nowrap;
+  display:flex;align-items:center;gap:5px;
+}
+.tp-nav-btn:hover{border-color:var(--text);color:var(--text);}
+.tp-nav-btn.active{background:var(--text);border-color:var(--text);color:var(--white);}
+.tp-reset-btn{
+  padding:7px 13px;background:transparent;border:1px solid var(--border);
+  border-radius:8px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.05em;cursor:pointer;transition:all 0.15s;white-space:nowrap;
+}
+.tp-reset-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ── VIEWS ── */
+.tp-view{display:none;}
+.tp-view.active{display:block;}
+
+/* ── CONTAINER ── */
+.tp-container{max-width:960px;margin:0 auto;padding:28px 20px;}
+
+/* ── HERO ── */
+.tp-hero{text-align:center;margin-bottom:32px;}
+.tp-hero-label{
+  font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.tp-hero-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--green);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.tp-hero-title{
+  font-family:'Syne',sans-serif;font-size:clamp(1.7rem,4.5vw,2.8rem);
+  font-weight:800;line-height:1.0;letter-spacing:-0.03em;margin-bottom:10px;
+}
+.tp-hero-title em{
+  font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--green);
+}
+.tp-hero-sub{font-size:0.75rem;color:var(--muted);line-height:1.7;max-width:420px;margin:0 auto;}
+
+/* ── CURRENCY BAR ── */
+.currency-bar{
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.currency-bar-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+.currency-pills{display:flex;gap:6px;flex-wrap:wrap;flex:1;}
+.currency-pill{
+  padding:6px 13px;background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.7rem;font-weight:500;cursor:pointer;transition:all 0.15s;user-select:none;
+}
+.currency-pill:hover{border-color:var(--border2);color:var(--text);}
+.currency-pill.active{background:var(--text);border-color:var(--text);color:var(--white);}
+
+/* ── CARDS ── */
+.tp-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:14px;padding:22px;margin-bottom:14px;position:relative;overflow:hidden;
+}
+.tp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--card-accent,var(--text));opacity:0.08;
+}
+.tp-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.tp-card-icon{
+  width:30px;height:30px;border-radius:8px;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;
+}
+.tp-card-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;}
+.tp-card-sub{font-size:0.6rem;color:var(--muted);margin-top:2px;}
+
+/* ── FORM FIELDS ── */
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:540px){.field-row{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.field-input-wrap{position:relative;display:flex;align-items:center;}
+.field-prefix{
+  position:absolute;left:11px;font-family:'Syne',sans-serif;
+  font-size:0.82rem;font-weight:700;color:var(--muted);pointer-events:none;z-index:1;
+}
+.field-input{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-family:'DM Mono',monospace;
+  font-size:0.88rem;font-weight:500;padding:10px 12px 10px 30px;outline:none;
+  transition:border-color 0.18s,box-shadow 0.18s;-moz-appearance:textfield;
+}
+.field-input::-webkit-inner-spin-button,.field-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.field-input:focus{border-color:var(--text);box-shadow:0 0 0 3px rgba(26,26,26,0.08);background:var(--white);}
+.field-input.no-prefix{padding-left:12px;}
+.field-hint{font-size:0.58rem;color:var(--muted2);}
+
+/* ── EXPENSE CHECKBOXES ── */
+.expense-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:7px;margin-bottom:14px;
+}
+.expense-item{
+  display:flex;align-items:center;gap:9px;padding:9px 11px;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  cursor:pointer;transition:all 0.15s;user-select:none;
+}
+.expense-item:hover{border-color:var(--border2);}
+.expense-item.checked{background:rgba(26,26,26,0.04);border-color:var(--border2);}
+.expense-checkbox{
+  width:15px;height:15px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;background:var(--white);
+}
+.expense-item.checked .expense-checkbox{background:var(--text);border-color:var(--text);}
+.expense-checkbox-tick{color:var(--white);font-size:0.58rem;display:none;}
+.expense-item.checked .expense-checkbox-tick{display:block;}
+.expense-name{font-size:0.7rem;color:var(--text);flex:1;}
+.expense-amount{
+  font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:500;
+  width:78px;background:transparent;border:none;color:var(--text);
+  text-align:right;outline:none;display:none;-moz-appearance:textfield;
+}
+.expense-amount::-webkit-inner-spin-button,.expense-amount::-webkit-outer-spin-button{-webkit-appearance:none;}
+.expense-item.checked .expense-amount{display:block;}
+
+/* ── MISC SECTION ── */
+.section-divider{
+  display:flex;align-items:center;gap:12px;margin:4px 0 14px;
+  font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.misc-rows{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
+.misc-row{display:flex;align-items:center;gap:7px;}
+.misc-name-input{
+  flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'DM Mono',monospace;font-size:0.73rem;
+  padding:8px 11px;outline:none;transition:border-color 0.15s;
+}
+.misc-name-input:focus{border-color:var(--border2);}
+.misc-name-input::placeholder{color:var(--muted2);}
+.misc-amt-input{
+  width:106px;background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'DM Mono',monospace;font-size:0.73rem;font-weight:500;
+  padding:8px 11px;outline:none;transition:border-color 0.15s;
+  text-align:right;-moz-appearance:textfield;
+}
+.misc-amt-input::-webkit-inner-spin-button,.misc-amt-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.misc-amt-input:focus{border-color:var(--border2);}
+.misc-remove{
+  width:26px;height:26px;border-radius:6px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);font-size:0.85rem;cursor:pointer;transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.misc-remove:hover{background:var(--loss-bg);border-color:var(--loss);color:var(--loss);}
+.add-misc-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 13px;
+  background:transparent;border:1px dashed var(--border2);border-radius:8px;
+  color:var(--muted);font-family:'DM Mono',monospace;font-size:0.66rem;
+  cursor:pointer;transition:all 0.15s;margin-top:6px;
+}
+.add-misc-btn:hover{border-color:var(--text);color:var(--text);}
+
+/* ── SAVE ROW ── */
+.save-row{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;
+}
+.save-label-input{
+  flex:1;min-width:180px;background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'DM Mono',monospace;font-size:0.78rem;
+  padding:10px 13px;outline:none;transition:border-color 0.15s;
+}
+.save-label-input:focus{border-color:var(--text);}
+.save-label-input::placeholder{color:var(--muted2);}
+
+/* ── BUTTONS ── */
+.calc-btn{
+  flex:1;min-width:180px;padding:14px;background:var(--text);border:none;border-radius:12px;
+  color:var(--white);font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;
+  letter-spacing:0.04em;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;
+}
+.calc-btn:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:0 6px 24px rgba(26,26,26,0.18);}
+.calc-btn:active{transform:translateY(0);}
+.save-btn{
+  padding:14px 22px;background:var(--green);border:none;border-radius:12px;
+  color:var(--white);font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;
+}
+.save-btn:hover{opacity:0.88;transform:translateY(-1px);}
+
+/* ── RESULTS CARD ── */
+.results-card{
+  border-radius:14px;padding:26px;margin-bottom:14px;border:1.5px solid var(--border);
+  transition:all 0.3s ease;opacity:0;transform:translateY(8px);pointer-events:none;
+}
+.results-card.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+.results-card.profit-state{background:var(--profit-bg);border-color:var(--profit-border);}
+.results-card.loss-state{background:var(--loss-bg);border-color:var(--loss-border);}
+.results-card.break-state{background:var(--warning-bg);border-color:var(--warning-border);}
+
+.result-verdict{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap;}
+.verdict-emoji{font-size:2.3rem;line-height:1;}
+.verdict-label{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.verdict-main{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;}
+.verdict-main.profit{color:var(--profit);}
+.verdict-main.loss{color:var(--loss);}
+.verdict-main.break{color:var(--warning);}
+
+.result-big-number{
+  font-family:'Syne',sans-serif;font-size:clamp(2.2rem,6vw,3.6rem);
+  font-weight:800;letter-spacing:-0.04em;line-height:1;margin-bottom:5px;
+}
+.result-big-number.profit{color:var(--profit);}
+.result-big-number.loss{color:var(--loss);}
+.result-big-number.break{color:var(--warning);}
+.result-sub{font-size:0.7rem;color:var(--muted);margin-bottom:24px;}
+
+.result-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:9px;margin-bottom:22px;
+}
+.result-block{
+  background:rgba(255,255,255,0.7);border-radius:10px;padding:13px;
+  border:1px solid rgba(0,0,0,0.06);
+}
+.result-block-label{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.result-block-value{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);}
+.result-block-value.up{color:var(--profit);}
+.result-block-value.down{color:var(--loss);}
+.result-block-value.warn{color:var(--warning);}
+
+/* Breakdown bar */
+.breakdown-section{margin-bottom:18px;}
+.breakdown-label{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+.breakdown-bar{
+  height:11px;border-radius:6px;display:flex;overflow:hidden;gap:2px;
+  background:rgba(0,0,0,0.06);margin-bottom:9px;
+}
+.bar-seg{height:100%;border-radius:4px;transition:width 0.7s cubic-bezier(0.34,1.56,0.64,1);min-width:0;}
+.bar-cogs{background:#2563eb;}
+.bar-expenses{background:#dc2626;}
+.bar-profit{background:#15803d;}
+.breakdown-legend{display:flex;gap:13px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:0.6rem;color:var(--muted);}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+
+/* Expense breakdown */
+.expense-breakdown{margin-top:18px;}
+.expense-breakdown-title{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+.expense-breakdown-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.7rem;
+}
+.expense-breakdown-row:last-child{border-bottom:none;}
+.expense-breakdown-name{color:var(--text);}
+.expense-breakdown-amt{font-family:'Syne',sans-serif;font-weight:700;color:var(--loss);}
+
+/* ── SMART INSIGHTS ── */
+.insight-box{
+  margin-top:18px;padding:14px 16px;background:rgba(255,255,255,0.6);
+  border-radius:10px;border-left:3px solid var(--text);
+}
+.insight-box-label{font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.insight-box-text{font-size:0.73rem;color:var(--text);line-height:1.6;}
+.insight-box-text strong{font-weight:700;}
+.insight-actions{margin-top:12px;display:flex;flex-direction:column;gap:5px;}
+.insight-action-item{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;
+  background:rgba(255,255,255,0.5);border-radius:8px;border:1px solid rgba(0,0,0,0.06);
+  font-size:0.68rem;color:var(--text);
+}
+.insight-action-arrow{font-weight:700;color:var(--profit);}
+.insight-action-impact{margin-left:auto;font-family:'Syne',sans-serif;font-weight:700;font-size:0.72rem;color:var(--profit);}
+.insight-action-impact.warn{color:var(--warning);}
+
+/* Action row */
+.action-row{
+  display:flex;gap:8px;flex-wrap:wrap;
+  margin-top:18px;padding-top:14px;border-top:1px solid rgba(0,0,0,0.08);
+}
+.action-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  background:transparent;border:1px solid var(--border2);border-radius:8px;
+  color:var(--muted);font-family:'DM Mono',monospace;font-size:0.66rem;cursor:pointer;transition:all 0.15s;
+}
+.action-btn:hover{border-color:var(--text);color:var(--text);}
+.action-btn.copied{border-color:var(--profit);color:var(--profit);}
+.action-btn svg{width:12px;height:12px;}
+
+/* ── HISTORY VIEW ── */
+.history-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;
+}
+.history-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;}
+.history-count{font-size:0.65rem;color:var(--muted);margin-top:2px;}
+.clear-all-btn{
+  padding:7px 13px;background:transparent;border:1px solid var(--border);
+  border-radius:8px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.63rem;cursor:pointer;transition:all 0.15s;
+}
+.clear-all-btn:hover{border-color:var(--red);color:var(--red);}
+
+.history-empty{
+  text-align:center;padding:60px 20px;
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+}
+.history-empty-icon{font-size:2.5rem;margin-bottom:12px;}
+.history-empty-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:6px;}
+.history-empty-sub{font-size:0.72rem;color:var(--muted);}
+
+.history-list{display:flex;flex-direction:column;gap:12px;}
+.history-item{
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  padding:18px 20px;cursor:pointer;transition:all 0.15s;
+}
+.history-item:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.06);}
+.history-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.history-item-label{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;letter-spacing:-0.01em;}
+.history-item-date{font-size:0.6rem;color:var(--muted);margin-top:3px;}
+.history-item-profit{text-align:right;}
+.history-item-profit-val{
+  font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+}
+.history-item-profit-val.profit{color:var(--profit);}
+.history-item-profit-val.loss{color:var(--loss);}
+.history-item-profit-val.break{color:var(--warning);}
+.history-item-profit-label{font-size:0.58rem;color:var(--muted);text-align:right;margin-top:2px;}
+.history-item-stats{
+  display:flex;gap:16px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);
+}
+.history-stat{font-size:0.62rem;color:var(--muted);}
+.history-stat strong{color:var(--text);font-weight:600;}
+.history-item-actions{display:flex;gap:6px;margin-top:12px;}
+.hist-btn{
+  padding:5px 11px;background:transparent;border:1px solid var(--border);
+  border-radius:7px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.6rem;cursor:pointer;transition:all 0.15s;
+}
+.hist-btn:hover{border-color:var(--text);color:var(--text);}
+.hist-btn.delete:hover{border-color:var(--red);color:var(--red);}
+
+/* ── TREND CHART ── */
+.trend-section{
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  padding:22px;margin-bottom:16px;
+}
+.trend-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.trend-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;}
+.trend-sub{font-size:0.6rem;color:var(--muted);margin-top:2px;}
+.trend-pills{display:flex;gap:6px;}
+.trend-pill{
+  padding:5px 11px;background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;color:var(--muted);font-family:'DM Mono',monospace;
+  font-size:0.62rem;cursor:pointer;transition:all 0.15s;user-select:none;
+}
+.trend-pill:hover{border-color:var(--border2);color:var(--text);}
+.trend-pill.active{background:var(--text);border-color:var(--text);color:var(--white);}
+.trend-canvas-wrap{position:relative;height:180px;margin-bottom:12px;}
+canvas#trendChart{width:100%;height:100%;}
+.trend-empty{
+  height:180px;display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;color:var(--muted);background:var(--surface);border-radius:10px;
+}
+.trend-stats{display:flex;gap:20px;flex-wrap:wrap;}
+.trend-stat-item{font-size:0.68rem;}
+.trend-stat-label{color:var(--muted);margin-bottom:2px;}
+.trend-stat-value{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;}
+.trend-stat-value.up{color:var(--profit);}
+.trend-stat-value.down{color:var(--loss);}
+
+/* ── SCENARIO COMPARISON ── */
+.scenario-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px;
+}
+.scenario-badge{
+  padding:4px 10px;border-radius:20px;font-size:0.6rem;font-weight:600;letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.badge-a{background:rgba(37,99,235,0.1);color:var(--scenario-a);}
+.badge-b{background:rgba(147,51,234,0.1);color:var(--scenario-b);}
+
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:560px){.scenario-grid{grid-template-columns:1fr;}}
+
+.scenario-col{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px;
+}
+.scenario-col.a{border-top:3px solid var(--scenario-a);}
+.scenario-col.b{border-top:3px solid var(--scenario-b);}
+.scenario-col-title{
+  font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;margin-bottom:14px;
+}
+
+.scenario-result{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:18px;margin-bottom:14px;
+}
+.scenario-result-label{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.scenario-compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.sc-block{background:var(--white);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.06);}
+.sc-block-label{font-size:0.58rem;color:var(--muted);margin-bottom:4px;}
+.sc-block-a{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--scenario-a);}
+.sc-block-b{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--scenario-b);}
+.sc-block-diff{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;}
+.sc-block-diff.pos{color:var(--profit);}
+.sc-block-diff.neg{color:var(--loss);}
+.sc-block-diff.nt{color:var(--muted);}
+
+.run-scenario-btn{
+  width:100%;padding:13px;background:var(--text);border:none;border-radius:10px;
+  color:var(--white);font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:800;
+  cursor:pointer;transition:all 0.18s;
+}
+.run-scenario-btn:hover{opacity:0.85;transform:translateY(-1px);}
+
+/* ── TIPS ── */
+.tips-card{
+  background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:14px;
+}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin-top:14px;}
+.tip-item{padding:11px;background:var(--surface);border-radius:10px;border:1px solid var(--border);}
+.tip-icon{font-size:1.05rem;margin-bottom:5px;}
+.tip-title{font-family:'Syne',sans-serif;font-size:0.76rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+.tip-text{font-size:0.62rem;color:var(--muted);line-height:1.5;}
+
+/* ── FOOTER ── */
+.tp-footer{text-align:center;margin-top:44px;font-size:0.6rem;color:var(--muted);line-height:1.7;}
+.tp-footer a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--text);color:var(--white);padding:10px 20px;border-radius:10px;
+  font-family:'DM Mono',monospace;font-size:0.7rem;
+  opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+
+/* ── PRINT ── */
+@media print{
+  .tp-header,.calc-btn,.action-row,.tips-card,.tp-footer,.currency-bar,
+  .tp-view:not(#view-calc),.save-row,.tp-nav-btn,.tp-reset-btn{display:none!important;}
+  .results-card{border:1.5px solid #ccc!important;background:#fff!important;}
+  body{background:#fff;}
+}
+
+@media(max-width:600px){
+  .tp-container{padding:18px 12px;}
+  .tp-hero-title{font-size:1.5rem;}
+  .expense-grid{grid-template-columns:1fr;}
+  .result-big-number{font-size:2rem;}
+  .result-grid{grid-template-columns:1fr 1fr;}
+  .tp-header{padding:12px 14px;}
+  .tp-logo-text{font-size:1rem;}
+  .scenario-compare-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<div class="tp-header">
+  <div class="tp-logo">
+    <div class="tp-logo-mark">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9h12M9 3v12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="tp-logo-text">True<span>Profit</span></div>
+    </div>
+  </div>
+  <div class="tp-header-actions">
+    <button class="tp-nav-btn active" id="nav-calc" onclick="switchView('calc')">⚙ Calculate</button>
+    <button class="tp-nav-btn" id="nav-history" onclick="switchView('history')">📂 History <span id="history-badge" style="display:none;background:var(--green);color:#fff;border-radius:10px;padding:1px 6px;font-size:0.55rem;margin-left:3px;"></span></button>
+    <button class="tp-nav-btn" id="nav-scenario" onclick="switchView('scenario')">🔀 Scenarios</button>
+    <button class="tp-reset-btn" onclick="resetAll()">↺ Reset</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ CALCULATE VIEW ═══════════════════════════ -->
+<div class="tp-view active" id="view-calc">
+<div class="tp-container">
+
+  <div class="tp-hero">
+    <div class="tp-hero-label"><div class="tp-hero-dot"></div>Side Hustle Profit Calculator</div>
+    <h1 class="tp-hero-title">Are you actually <em>making money?</em></h1>
+    <p class="tp-hero-sub">Most business owners only count what they see. TrueProfit counts everything — including the costs you've been forgetting. Get your real number.</p>
+  </div>
+
+  <!-- CURRENCY -->
+  <div class="currency-bar">
+    <div class="currency-bar-label">Currency</div>
+    <div class="currency-pills" id="currencyPills">
+      <div class="currency-pill active" data-sym="₦" data-code="NGN">₦ NGN</div>
+      <div class="currency-pill" data-sym="$" data-code="USD">$ USD</div>
+      <div class="currency-pill" data-sym="£" data-code="GBP">£ GBP</div>
+      <div class="currency-pill" data-sym="€" data-code="EUR">€ EUR</div>
+      <div class="currency-pill" data-sym="KSh" data-code="KES">KSh KES</div>
+      <div class="currency-pill" data-sym="₵" data-code="GHS">₵ GHS</div>
+      <div class="currency-pill" data-sym="R" data-code="ZAR">R ZAR</div>
+    </div>
+  </div>
+
+  <!-- REVENUE -->
+  <div class="tp-card" style="--card-accent:#16a34a;">
+    <div class="tp-card-header">
+      <div class="tp-card-icon">💰</div>
+      <div><div class="tp-card-title">Revenue</div><div class="tp-card-sub">What came in</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <div class="field-label">Total Sales / Revenue</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="pfx1">₦</span>
+          <input type="number" class="field-input" id="revenue" placeholder="0.00" min="0" step="0.01" oninput="liveCalc()"/>
+        </div>
+        <div class="field-hint">Total amount received from customers</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Units Sold</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" style="color:var(--muted2)">#</span>
+          <input type="number" class="field-input" id="unitsSold" placeholder="0" min="0" step="1" oninput="liveCalc()"/>
+        </div>
+        <div class="field-hint">Optional — for per-unit analysis</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COGS -->
+  <div class="tp-card" style="--card-accent:#2563eb;">
+    <div class="tp-card-header">
+      <div class="tp-card-icon">📦</div>
+      <div><div class="tp-card-title">Cost of Goods Sold (COGS)</div><div class="tp-card-sub">What it cost to produce or buy what you sold</div></div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <div class="field-label">Materials / Stock Cost</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="pfx2">₦</span>
+          <input type="number" class="field-input" id="cogs" placeholder="0.00" min="0" step="0.01" oninput="liveCalc()"/>
+        </div>
+        <div class="field-hint">Raw materials, wholesale goods, inventory</div>
+      </div>
+      <div class="field">
+        <div class="field-label">Labour Cost</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="pfx3">₦</span>
+          <input type="number" class="field-input" id="labour" placeholder="0.00" min="0" step="0.01" oninput="liveCalc()"/>
+        </div>
+        <div class="field-hint">Staff wages, contractor fees, your own time</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIDDEN EXPENSES -->
+  <div class="tp-card" style="--card-accent:#dc2626;">
+    <div class="tp-card-header">
+      <div class="tp-card-icon">🕵️</div>
+      <div><div class="tp-card-title">Hidden Expenses</div><div class="tp-card-sub">Tick what applies and enter the amount</div></div>
+    </div>
+    <div class="expense-grid" id="expenseGrid"></div>
+    <div class="section-divider">Miscellaneous</div>
+    <div class="misc-rows" id="miscRows"></div>
+    <button class="add-misc-btn" onclick="addMiscRow()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 1v10M1 6h10"/></svg>
+      Add expense
+    </button>
+  </div>
+
+  <!-- SAVE + CALCULATE ROW -->
+  <div class="save-row">
+    <input type="text" class="save-label-input" id="reportLabel" placeholder="Label this report (e.g. March Sales, Batch #4)…"/>
+    <button class="calc-btn" onclick="calculate()">Calculate →</button>
+    <button class="save-btn" onclick="saveReport()">💾 Save</button>
+  </div>
+
+  <!-- RESULTS CARD -->
+  <div class="results-card" id="resultsCard">
+    <div class="result-verdict" id="resultVerdict"></div>
+    <div class="result-big-number" id="resultBigNumber">₦0</div>
+    <div class="result-sub" id="resultSub"></div>
+    <div class="result-grid" id="resultGrid"></div>
+    <div class="breakdown-section">
+      <div class="breakdown-label">Revenue breakdown</div>
+      <div class="breakdown-bar" id="breakdownBar">
+        <div class="bar-seg bar-cogs" id="bCogs" style="width:0%"></div>
+        <div class="bar-seg bar-expenses" id="bExp" style="width:0%"></div>
+        <div class="bar-seg bar-profit" id="bProfit" style="width:0%"></div>
+      </div>
+      <div class="breakdown-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>COGS</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Hidden expenses</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#15803d"></div>True profit</div>
+      </div>
+    </div>
+    <div class="expense-breakdown" id="expenseBreakdown"></div>
+    <div class="insight-box" id="insightBox"></div>
+    <div class="action-row">
+      <button class="action-btn" id="copyBtn" onclick="copyResult()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M3 11H2a1 1 0 01-1-1V2a1 1 0 011-1h8a1 1 0 011 1v1"/></svg>
+        Copy Result
+      </button>
+      <button class="action-btn" onclick="window.print()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6V2h8v4M4 12H2a1 1 0 01-1-1V7a1 1 0 011-1h12a1 1 0 011 1v4a1 1 0 01-1 1h-2M4 10h8v4H4v-4z"/></svg>
+        Print / PDF
+      </button>
+      <button class="action-btn" onclick="loadIntoScenario()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v14M1 8h14"/><circle cx="8" cy="8" r="6"/></svg>
+        Run Scenario
+      </button>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-card">
+    <div class="tp-card-header" style="margin-bottom:0;">
+      <div class="tp-card-icon">💡</div>
+      <div>
+        <div class="tp-card-title">Why Hidden Costs Matter</div>
+        <div class="tp-card-sub">The gap between what you think you make and what you actually make</div>
+      </div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-item"><div class="tip-icon">🚚</div><div class="tip-title">Delivery &amp; Transport</div><div class="tip-text">Every trip to the market, courier fee, or fuel cost eats into your profit. Most people never add it up.</div></div>
+      <div class="tip-item"><div class="tip-icon">📱</div><div class="tip-title">Data &amp; Airtime</div><div class="tip-text">Responding to customers, processing orders, marketing on social — your data bill is a business cost.</div></div>
+      <div class="tip-item"><div class="tip-icon">💳</div><div class="tip-title">Platform Fees</div><div class="tip-text">Flutterwave, Paystack, Instagram ads, WhatsApp Business — these add up faster than you think.</div></div>
+      <div class="tip-item"><div class="tip-icon">⏰</div><div class="tip-title">Your Time Has Value</div><div class="tip-text">If you're making ₦5,000 profit working 10 hours, you earned ₦500/hr. Is that worth it? Now you know.</div></div>
+    </div>
+  </div>
+
+  <div class="tp-footer">
+    TrueProfit · Built by <a href="https://x.com/Swiiish_x" target="_blank">Abdulwajid (Jid)</a> ·
+    Part of <a href="https://mypersonaldashboard.vercel.app" target="_blank">Jid's Dashboard</a> ·
+    Free forever
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════ HISTORY VIEW ═══════════════════════════ -->
+<div class="tp-view" id="view-history">
+<div class="tp-container">
+  <div class="history-header">
+    <div>
+      <div class="history-title">Saved Reports</div>
+      <div class="history-count" id="historyCount">0 reports saved</div>
+    </div>
+    <button class="clear-all-btn" onclick="clearAllHistory()">Clear All</button>
+  </div>
+
+  <!-- TREND CHART -->
+  <div class="trend-section" id="trendSection" style="display:none;">
+    <div class="trend-header">
+      <div>
+        <div class="trend-title">Profit Over Time</div>
+        <div class="trend-sub">Are you improving or just working?</div>
+      </div>
+      <div class="trend-pills">
+        <div class="trend-pill active" data-metric="profit" onclick="switchTrendMetric(this,'profit')">Profit</div>
+        <div class="trend-pill" data-metric="revenue" onclick="switchTrendMetric(this,'revenue')">Revenue</div>
+        <div class="trend-pill" data-metric="margin" onclick="switchTrendMetric(this,'margin')">Margin %</div>
+      </div>
+    </div>
+    <div class="trend-canvas-wrap"><canvas id="trendChart"></canvas></div>
+    <div class="trend-stats" id="trendStats"></div>
+  </div>
+
+  <div id="historyList"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════ SCENARIO VIEW ═══════════════════════════ -->
+<div class="tp-view" id="view-scenario">
+<div class="tp-container">
+  <div class="tp-hero" style="margin-bottom:24px;">
+    <div class="tp-hero-label"><div class="tp-hero-dot"></div>Scenario Comparison</div>
+    <h1 class="tp-hero-title" style="font-size:clamp(1.4rem,3.5vw,2rem);">What if you <em>changed something?</em></h1>
+    <p class="tp-hero-sub">Compare two pricing or cost scenarios side by side. Instant difference in profit.</p>
+  </div>
+
+  <div class="scenario-grid">
+    <!-- SCENARIO A -->
+    <div class="scenario-col a">
+      <div class="tp-card-header" style="margin-bottom:16px;">
+        <div class="tp-card-icon" style="background:rgba(37,99,235,0.1);">A</div>
+        <div>
+          <div class="tp-card-title">Scenario A</div>
+          <div class="tp-card-sub">Current / Base</div>
+        </div>
+        <span class="scenario-badge badge-a" style="margin-left:auto;">Baseline</span>
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <div class="field-label">Revenue</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sc-pfx-a1">₦</span>
+          <input type="number" class="field-input" id="sc-a-rev" placeholder="0.00" min="0" step="0.01" oninput="runScenario()"/>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <div class="field-label">COGS + Labour</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sc-pfx-a2">₦</span>
+          <input type="number" class="field-input" id="sc-a-cogs" placeholder="0.00" min="0" step="0.01" oninput="runScenario()"/>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <div class="field-label">Hidden Expenses</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sc-pfx-a3">₦</span>
+          <input type="number" class="field-input" id="sc-a-exp" placeholder="0.00" min="0" step="0.01" oninput="runScenario()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Units Sold</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" style="color:var(--muted2)">#</span>
+          <input type="number" class="field-input" id="sc-a-units" placeholder="0" min="0" step="1" oninput="runScenario()"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENARIO B -->
+    <div class="scenario-col b">
+      <div class="tp-card-header" style="margin-bottom:16px;">
+        <div class="tp-card-icon" style="background:rgba(147,51,234,0.1);">B</div>
+        <div>
+          <div class="tp-card-title">Scenario B</div>
+          <div class="tp-card-sub">New / Proposed</div>
+        </div>
+        <span class="scenario-badge badge-b" style="margin-left:auto;">Proposed</span>
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <div class="field-label">Revenue</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sc-pfx-b1">₦</span>
+          <input type="number" class="field-input" id="sc-b-rev" placeholder="0.00" min="0" step="0.01" oninput="runScenario()"/>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <div class="field-label">COGS + Labour</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sc-pfx-b2">₦</span>
+          <input type="number" class="field-input" id="sc-b-cogs" placeholder="0.00" min="0" step="0.01" oninput="runScenario()"/>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <div class="field-label">Hidden Expenses</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" id="sc-pfx-b3">₦</span>
+          <input type="number" class="field-input" id="sc-b-exp" placeholder="0.00" min="0" step="0.01" oninput="runScenario()"/>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Units Sold</div>
+        <div class="field-input-wrap">
+          <span class="field-prefix" style="color:var(--muted2)">#</span>
+          <input type="number" class="field-input" id="sc-b-units" placeholder="0" min="0" step="1" oninput="runScenario()"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO RESULTS -->
+  <div class="scenario-result" id="scenarioResult" style="display:none;">
+    <div class="scenario-result-label">Side-by-Side Comparison</div>
+    <div class="scenario-compare-grid" id="scenarioCompareGrid"></div>
+  </div>
+  <div id="scenarioInsight" style="margin-bottom:16px;"></div>
+
+  <button class="run-scenario-btn" onclick="runScenario()">▶ Compare Scenarios</button>
+
+  <div class="tp-footer" style="margin-top:32px;">
+    TrueProfit · Scenario Comparison Tool · <a href="#" onclick="switchView('calc')">← Back to Calculator</a>
+  </div>
+</div>
+</div>
+
+
+<script>
+// ══════════════════════════════════════════════
+// CONSTANTS & STATE
+// ══════════════════════════════════════════════
+let currency = { sym: '₦', code: 'NGN' };
+let lastResult = null;
+let trendMetric = 'profit';
+
+const HIDDEN_EXPENSES = [
+  { id: 'delivery',   name: 'Delivery / Transport',     placeholder: '0.00' },
+  { id: 'packaging',  name: 'Packaging Materials',       placeholder: '0.00' },
+  { id: 'data',       name: 'Data / Airtime',            placeholder: '0.00' },
+  { id: 'platform',   name: 'Platform / Gateway Fees',   placeholder: '0.00' },
+  { id: 'marketing',  name: 'Marketing / Ads',           placeholder: '0.00' },
+  { id: 'utilities',  name: 'Utilities (Power/Water)',    placeholder: '0.00' },
+  { id: 'rent',       name: 'Rent / Space',              placeholder: '0.00' },
+  { id: 'equipment',  name: 'Equipment / Tools',         placeholder: '0.00' },
+  { id: 'returns',    name: 'Returns / Refunds',          placeholder: '0.00' },
+  { id: 'storage',    name: 'Storage / Warehouse',        placeholder: '0.00' },
+  { id: 'insurance',  name: 'Insurance',                 placeholder: '0.00' },
+  { id: 'bank',       name: 'Bank Charges',              placeholder: '0.00' },
+];
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+function init() {
+  renderExpenseGrid();
+  setupCurrencyPills();
+  updateHistoryBadge();
+}
+
+function renderExpenseGrid() {
+  const grid = document.getElementById('expenseGrid');
+  grid.innerHTML = HIDDEN_EXPENSES.map(e => `
+    <div class="expense-item" id="ei-${e.id}" onclick="toggleExpense('${e.id}')">
+      <div class="expense-checkbox"><span class="expense-checkbox-tick">✓</span></div>
+      <div class="expense-name">${e.name}</div>
+      <input type="number" class="expense-amount" id="ea-${e.id}"
+        placeholder="${e.placeholder}" min="0" step="0.01"
+        onclick="event.stopPropagation()" oninput="liveCalc()" />
+    </div>`).join('');
+}
+
+function setupCurrencyPills() {
+  document.querySelectorAll('.currency-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.currency-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currency = { sym: pill.dataset.sym, code: pill.dataset.code };
+      updatePrefixes();
+      liveCalc();
+    });
+  });
+}
+
+function updatePrefixes() {
+  const ids = ['pfx1','pfx2','pfx3'];
+  ids.forEach(id => { const el = document.getElementById(id); if(el) el.textContent = currency.sym; });
+  ['sc-pfx-a1','sc-pfx-a2','sc-pfx-a3','sc-pfx-b1','sc-pfx-b2','sc-pfx-b3'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.textContent = currency.sym;
+  });
+}
+
+// ══════════════════════════════════════════════
+// VIEW SWITCHING
+// ══════════════════════════════════════════════
+function switchView(view) {
+  document.querySelectorAll('.tp-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tp-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.getElementById('nav-' + view).classList.add('active');
+  if (view === 'history') renderHistory();
+}
+
+// ══════════════════════════════════════════════
+// EXPENSE TOGGLES
+// ══════════════════════════════════════════════
+function toggleExpense(id) {
+  const item = document.getElementById(`ei-${id}`);
+  const amt  = document.getElementById(`ea-${id}`);
+  item.classList.toggle('checked');
+  if (!item.classList.contains('checked')) { amt.value = ''; }
+  else { setTimeout(() => amt.focus(), 50); }
+  liveCalc();
+}
+
+// ══════════════════════════════════════════════
+// MISC ROWS
+// ══════════════════════════════════════════════
+let miscCount = 0;
+function addMiscRow() {
+  miscCount++;
+  const row = document.createElement('div');
+  row.className = 'misc-row'; row.id = `misc-${miscCount}`;
+  row.innerHTML = `
+    <input type="text" class="misc-name-input" placeholder="Expense name…" />
+    <input type="number" class="misc-amt-input" placeholder="0.00" min="0" step="0.01" oninput="liveCalc()" />
+    <button class="misc-remove" onclick="removeMiscRow(${miscCount})" title="Remove">✕</button>`;
+  document.getElementById('miscRows').appendChild(row);
+}
+function removeMiscRow(id) {
+  const el = document.getElementById(`misc-${id}`);
+  if (el) el.remove();
+  liveCalc();
+}
+
+// ══════════════════════════════════════════════
+// COLLECT
+// ══════════════════════════════════════════════
+function getVal(id) { return parseFloat(document.getElementById(id)?.value) || 0; }
+
+function collectExpenses() {
+  const items = [];
+  HIDDEN_EXPENSES.forEach(e => {
+    const item = document.getElementById(`ei-${e.id}`);
+    if (item && item.classList.contains('checked')) {
+      const amt = parseFloat(document.getElementById(`ea-${e.id}`)?.value) || 0;
+      if (amt > 0) items.push({ name: e.name, amount: amt });
+    }
+  });
+  document.querySelectorAll('.misc-row').forEach(row => {
+    const name = row.querySelector('.misc-name-input')?.value?.trim() || 'Miscellaneous';
+    const amt  = parseFloat(row.querySelector('.misc-amt-input')?.value) || 0;
+    if (amt > 0) items.push({ name, amount: amt });
+  });
+  return items;
+}
+
+// ══════════════════════════════════════════════
+// FORMAT
+// ══════════════════════════════════════════════
+function fmt(n) {
+  return currency.sym + Math.abs(n).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtPct(n) { return n.toFixed(1) + '%'; }
+function fmtShort(n) {
+  const abs = Math.abs(n);
+  if (abs >= 1000000) return currency.sym + (abs/1000000).toFixed(1) + 'M';
+  if (abs >= 1000) return currency.sym + (abs/1000).toFixed(1) + 'K';
+  return fmt(n);
+}
+
+// ══════════════════════════════════════════════
+// LIVE CALCULATE
+// ══════════════════════════════════════════════
+function liveCalc() {
+  if (document.getElementById('resultsCard').classList.contains('visible')) {
+    calculate(true);
+  }
+}
+
+// ══════════════════════════════════════════════
+// MAIN CALCULATE
+// ══════════════════════════════════════════════
+function calculate(silent = false) {
+  const revenue = getVal('revenue');
+  const cogs    = getVal('cogs');
+  const labour  = getVal('labour');
+  const units   = getVal('unitsSold');
+  const expenses = collectExpenses();
+
+  const totalCOGS   = cogs + labour;
+  const totalHidden = expenses.reduce((s, e) => s + e.amount, 0);
+  const totalCosts  = totalCOGS + totalHidden;
+  const trueProfit  = revenue - totalCosts;
+  const grossProfit = revenue - totalCOGS;
+  const marginPct   = revenue > 0 ? (trueProfit / revenue) * 100 : 0;
+  const grossMarginPct = revenue > 0 ? (grossProfit / revenue) * 100 : 0;
+  const perUnit     = units > 0 ? trueProfit / units : null;
+  const roi         = totalCosts > 0 ? (trueProfit / totalCosts) * 100 : 0;
+
+  if (revenue === 0 && !silent) { showToast('Enter your revenue first'); return; }
+
+  lastResult = { revenue, totalCOGS, totalHidden, totalCosts, trueProfit, grossProfit,
+    marginPct, grossMarginPct, perUnit, roi, units, expenses, currency: currency.code };
+
+  renderResults(lastResult);
+}
+
+// ══════════════════════════════════════════════
+// RENDER RESULTS
+// ══════════════════════════════════════════════
+function renderResults(r) {
+  const card = document.getElementById('resultsCard');
+  const isProfit = r.trueProfit > 0;
+  const isLoss   = r.trueProfit < 0;
+
+  card.className = `results-card visible ${isProfit ? 'profit-state' : isLoss ? 'loss-state' : 'break-state'}`;
+
+  document.getElementById('resultVerdict').innerHTML = `
+    <div class="verdict-emoji">${isProfit ? '🟢' : isLoss ? '🔴' : '🟡'}</div>
+    <div class="verdict-text-block">
+      <div class="verdict-label">Your Business Is</div>
+      <div class="verdict-main ${isProfit?'profit':isLoss?'loss':'break'}">
+        ${isProfit ? 'Making Real Profit' : isLoss ? 'Running at a Loss' : 'Breaking Even'}
+      </div>
+    </div>`;
+
+  const bigEl = document.getElementById('resultBigNumber');
+  bigEl.textContent = (isLoss ? '–' : '') + fmt(r.trueProfit);
+  bigEl.className = `result-big-number ${isProfit?'profit':isLoss?'loss':'break'}`;
+
+  document.getElementById('resultSub').textContent =
+    `True profit after ALL costs · ${fmtPct(r.marginPct)} net margin`;
+
+  // Metrics grid
+  const g = document.getElementById('resultGrid');
+  const metrics = [
+    { label:'Total Revenue',    value: fmt(r.revenue),            cls:'' },
+    { label:'Total Costs',      value: fmt(r.totalCosts),         cls:'down' },
+    { label:'Gross Profit',     value: fmt(r.grossProfit),        cls: r.grossProfit >= 0 ? 'up' : 'down' },
+    { label:'Hidden Costs',     value: fmt(r.totalHidden),        cls: r.totalHidden > 0 ? 'warn' : '' },
+    { label:'Gross Margin',     value: fmtPct(r.grossMarginPct),  cls:'' },
+    { label:'Net Margin',       value: fmtPct(r.marginPct),       cls: r.marginPct >= 0 ? 'up' : 'down' },
+    { label:'ROI',              value: fmtPct(r.roi),             cls: r.roi >= 0 ? 'up' : 'down' },
+    ...(r.perUnit !== null ? [{ label:'Profit per Unit', value: fmt(r.perUnit), cls: r.perUnit >= 0 ? 'up' : 'down' }] : []),
+  ];
+  g.innerHTML = metrics.map(m => `
+    <div class="result-block">
+      <div class="result-block-label">${m.label}</div>
+      <div class="result-block-value ${m.cls}">${m.value}</div>
+    </div>`).join('');
+
+  // Breakdown bar
+  if (r.revenue > 0) {
+    const cogsW = Math.max(0, Math.min(100, (r.totalCOGS / r.revenue) * 100));
+    const expW  = Math.max(0, Math.min(100 - cogsW, (r.totalHidden / r.revenue) * 100));
+    const prfW  = Math.max(0, 100 - cogsW - expW);
+    setTimeout(() => {
+      document.getElementById('bCogs').style.width   = cogsW + '%';
+      document.getElementById('bExp').style.width    = expW  + '%';
+      document.getElementById('bProfit').style.width = prfW  + '%';
+    }, 80);
+  }
+
+  // Expense breakdown
+  const expEl = document.getElementById('expenseBreakdown');
+  if (r.expenses.length) {
+    expEl.innerHTML = `
+      <div class="expense-breakdown-title">Hidden expense breakdown</div>
+      ${r.expenses.map(e => `
+        <div class="expense-breakdown-row">
+          <span class="expense-breakdown-name">${e.name}</span>
+          <span class="expense-breakdown-amt">–${fmt(e.amount)}</span>
+        </div>`).join('')}
+      <div class="expense-breakdown-row" style="margin-top:6px;padding-top:10px;border-top:1.5px solid rgba(0,0,0,0.1);">
+        <span class="expense-breakdown-name" style="font-weight:700">Total Hidden Costs</span>
+        <span class="expense-breakdown-amt" style="font-size:0.82rem">–${fmt(r.totalHidden)}</span>
+      </div>`;
+  } else { expEl.innerHTML = ''; }
+
+  // Insight
+  document.getElementById('insightBox').innerHTML = `
+    <div class="insight-box-label">💡 TrueProfit Insight</div>
+    <div class="insight-box-text">${generateInsight(r)}</div>
+    <div class="insight-actions">${generateActionItems(r)}</div>`;
+
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ══════════════════════════════════════════════
+// SMART INSIGHT GENERATOR
+// ══════════════════════════════════════════════
+function generateInsight(r) {
+  const hiddenPct = r.revenue > 0 ? (r.totalHidden / r.revenue * 100) : 0;
+
+  if (r.trueProfit < 0) {
+    const shortfall = Math.abs(r.trueProfit);
+    const neededPriceIncrease = r.units > 1 ? (shortfall / r.units) : null;
+    return `You're losing <strong>${fmt(shortfall)}</strong> on this batch. You need at least <strong>${fmt(r.totalCosts)}</strong> in revenue to break even${neededPriceIncrease ? ` — that's <strong>${fmt(neededPriceIncrease)}</strong> more per unit` : ''}. Your hidden costs (<strong>${fmt(r.totalHidden)}</strong>) are a major factor.`;
+  }
+  if (r.trueProfit === 0) {
+    return `You're exactly breaking even. Your hidden costs are <strong>${fmt(r.totalHidden)}</strong>. Reduce just one of them or raise your price slightly to push into profit.`;
+  }
+  if (hiddenPct > 30) {
+    return `Hidden costs are consuming <strong>${fmtPct(hiddenPct)}</strong> of your revenue — dangerously high. You're still profitable at <strong>${fmtPct(r.marginPct)}</strong> net margin, but one bad month could flip this to a loss. Target your biggest hidden cost first.`;
+  }
+  if (r.marginPct < 10) {
+    return `Thin margin alert: <strong>${fmtPct(r.marginPct)}</strong>. You're profitable but fragile — any cost spike or sales dip will hurt. Consider a price increase of 10–15% or reducing your COGS.`;
+  }
+  if (r.marginPct >= 30) {
+    return `Excellent — <strong>${fmtPct(r.marginPct)}</strong> net margin is strong. You're running a healthy operation. This is the right foundation to scale. Keep tracking all costs as volume grows.`;
+  }
+  return `A <strong>${fmtPct(r.marginPct)}</strong> net margin is decent. Hidden costs are <strong>${fmt(r.totalHidden)}</strong>. Small leaks become big ones at scale — audit your hidden expenses quarterly.`;
+}
+
+function generateActionItems(r) {
+  const actions = [];
+
+  // Price increase scenario
+  if (r.revenue > 0 && r.units > 1) {
+    const priceIncrease200 = (200 * r.units);
+    actions.push(`
+      <div class="insight-action-item">
+        <span>📈</span>
+        <span>Increase price by ${currency.sym}200/unit</span>
+        <span class="insight-action-arrow">→</span>
+        <span class="insight-action-impact">+${fmtShort(priceIncrease200)} profit</span>
+      </div>`);
+  }
+
+  // Cut biggest hidden expense
+  if (r.expenses.length > 0) {
+    const biggest = r.expenses.reduce((a, b) => a.amount > b.amount ? a : b);
+    const savePct = r.revenue > 0 ? (biggest.amount / r.revenue * 100) : 0;
+    if (savePct > 5) {
+      actions.push(`
+        <div class="insight-action-item">
+          <span>✂️</span>
+          <span>Cut "${biggest.name}" by 50%</span>
+          <span class="insight-action-arrow">→</span>
+          <span class="insight-action-impact">+${fmtShort(biggest.amount * 0.5)} saved</span>
+        </div>`);
+    }
+  }
+
+  // Hidden costs warning
+  const hiddenPct = r.revenue > 0 ? (r.totalHidden / r.revenue * 100) : 0;
+  if (hiddenPct > 25) {
+    actions.push(`
+      <div class="insight-action-item">
+        <span>⚠️</span>
+        <span>Hidden costs at ${fmtPct(hiddenPct)} of revenue</span>
+        <span class="insight-action-arrow">→</span>
+        <span class="insight-action-impact warn">Too high</span>
+      </div>`);
+  }
+
+  // Break-even point
+  if (r.units > 1 && r.totalCosts > 0) {
+    const breakEvenUnits = Math.ceil(r.totalCosts / (r.revenue / r.units));
+    actions.push(`
+      <div class="insight-action-item">
+        <span>⚖️</span>
+        <span>Break-even point</span>
+        <span class="insight-action-arrow">→</span>
+        <span class="insight-action-impact" style="color:var(--muted)">${breakEvenUnits} units</span>
+      </div>`);
+  }
+
+  return actions.join('');
+}
+
+// ══════════════════════════════════════════════
+// SAVE REPORT
+// ══════════════════════════════════════════════
+function saveReport() {
+  if (!lastResult) { calculate(); if (!lastResult) return; }
+  const label = document.getElementById('reportLabel').value.trim() ||
+    `Report ${new Date().toLocaleDateString('en-NG', { day:'numeric', month:'short' })}`;
+
+  const reports = getReports();
+  const report = {
+    id: Date.now(),
+    label,
+    date: new Date().toISOString(),
+    currency: currency.code,
+    currencySym: currency.sym,
+    ...lastResult
+  };
+  reports.unshift(report);
+  saveReports(reports);
+  document.getElementById('reportLabel').value = '';
+  updateHistoryBadge();
+  showToast(`"${label}" saved to history`);
+}
+
+function getReports() {
+  try { return JSON.parse(localStorage.getItem('tp_reports') || '[]'); } catch { return []; }
+}
+function saveReports(reports) {
+  try { localStorage.setItem('tp_reports', JSON.stringify(reports)); } catch {}
+}
+function updateHistoryBadge() {
+  const count = getReports().length;
+  const badge = document.getElementById('history-badge');
+  if (count > 0) { badge.style.display = 'inline'; badge.textContent = count; }
+  else { badge.style.display = 'none'; }
+}
+
+// ══════════════════════════════════════════════
+// RENDER HISTORY
+// ══════════════════════════════════════════════
+function renderHistory() {
+  const reports = getReports();
+  const countEl = document.getElementById('historyCount');
+  countEl.textContent = `${reports.length} report${reports.length !== 1 ? 's' : ''} saved`;
+
+  const trendSection = document.getElementById('trendSection');
+  if (reports.length >= 2) { trendSection.style.display = 'block'; renderTrendChart(reports); }
+  else { trendSection.style.display = 'none'; }
+
+  const listEl = document.getElementById('historyList');
+  if (reports.length === 0) {
+    listEl.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">📂</div>
+        <div class="history-empty-title">No saved reports yet</div>
+        <div class="history-empty-sub">Run a calculation and hit Save to start tracking your profit over time.</div>
+      </div>`;
+    return;
+  }
+
+  listEl.innerHTML = `<div class="history-list">${reports.map(r => {
+    const isProfit = r.trueProfit > 0;
+    const isLoss = r.trueProfit < 0;
+    const sym = r.currencySym || '₦';
+    const fmtR = (n) => sym + Math.abs(n).toLocaleString('en-NG', { minimumFractionDigits:2, maximumFractionDigits:2 });
+    const dateStr = new Date(r.date).toLocaleDateString('en-NG', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    return `
+      <div class="history-item">
+        <div class="history-item-top">
+          <div>
+            <div class="history-item-label">${r.label}</div>
+            <div class="history-item-date">${dateStr} · ${r.currency || 'NGN'}</div>
+          </div>
+          <div class="history-item-profit">
+            <div class="history-item-profit-val ${isProfit?'profit':isLoss?'loss':'break'}">
+              ${isLoss ? '–' : ''}${fmtR(r.trueProfit)}
+            </div>
+            <div class="history-item-profit-label">True Profit</div>
+          </div>
+        </div>
+        <div class="history-item-stats">
+          <div class="history-stat">Revenue: <strong>${fmtR(r.revenue)}</strong></div>
+          <div class="history-stat">Costs: <strong>${fmtR(r.totalCosts)}</strong></div>
+          <div class="history-stat">Margin: <strong>${r.marginPct.toFixed(1)}%</strong></div>
+          ${r.perUnit !== null && r.perUnit !== undefined ? `<div class="history-stat">Per Unit: <strong>${fmtR(r.perUnit)}</strong></div>` : ''}
+        </div>
+        <div class="history-item-actions">
+          <button class="hist-btn" onclick="loadReport(${r.id})">Load into Calculator</button>
+          <button class="hist-btn" onclick="loadReportToScenario(${r.id})">→ Scenario A</button>
+          <button class="hist-btn delete" onclick="deleteReport(${r.id})">Delete</button>
+        </div>
+      </div>`;
+  }).join('')}</div>`;
+}
+
+function deleteReport(id) {
+  const reports = getReports().filter(r => r.id !== id);
+  saveReports(reports);
+  updateHistoryBadge();
+  renderHistory();
+  showToast('Report deleted');
+}
+
+function clearAllHistory() {
+  if (!confirm('Delete all saved reports?')) return;
+  saveReports([]);
+  updateHistoryBadge();
+  renderHistory();
+  showToast('All reports cleared');
+}
+
+function loadReport(id) {
+  const r = getReports().find(r => r.id === id);
+  if (!r) return;
+  document.getElementById('revenue').value  = r.revenue  || '';
+  document.getElementById('cogs').value     = r.totalCOGS - (getVal('labour')) || '';
+  document.getElementById('labour').value   = '';
+  document.getElementById('unitsSold').value = r.units || '';
+  document.getElementById('reportLabel').value = r.label + ' (copy)';
+  switchView('calc');
+  showToast(`"${r.label}" loaded`);
+}
+
+function loadReportToScenario(id) {
+  const r = getReports().find(r => r.id === id);
+  if (!r) return;
+  document.getElementById('sc-a-rev').value   = r.revenue || '';
+  document.getElementById('sc-a-cogs').value  = r.totalCOGS || '';
+  document.getElementById('sc-a-exp').value   = r.totalHidden || '';
+  document.getElementById('sc-a-units').value = r.units || '';
+  switchView('scenario');
+  runScenario();
+  showToast(`"${r.label}" loaded into Scenario A`);
+}
+
+// ══════════════════════════════════════════════
+// TREND CHART
+// ══════════════════════════════════════════════
+function renderTrendChart(reports) {
+  const reversed = [...reports].reverse();
+  const canvas = document.getElementById('trendChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const wrap = canvas.parentElement;
+  canvas.width  = wrap.offsetWidth * devicePixelRatio;
+  canvas.height = wrap.offsetHeight * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  const W = wrap.offsetWidth, H = wrap.offsetHeight;
+
+  const getData = () => {
+    if (trendMetric === 'profit')  return reversed.map(r => r.trueProfit);
+    if (trendMetric === 'revenue') return reversed.map(r => r.revenue);
+    if (trendMetric === 'margin')  return reversed.map(r => r.marginPct);
+    return [];
+  };
+  const labels = reversed.map(r => r.label.length > 12 ? r.label.slice(0,12)+'…' : r.label);
+  const data = getData();
+
+  const pad = { top:20, right:20, bottom:36, left:60 };
+  const pw = W - pad.left - pad.right;
+  const ph = H - pad.top - pad.bottom;
+
+  const minV = Math.min(...data);
+  const maxV = Math.max(...data);
+  const range = maxV - minV || 1;
+
+  const toY = v => pad.top + ph - ((v - minV) / range) * ph;
+  const toX = i => pad.left + (i / (data.length - 1)) * pw;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = '#e2e0d8';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (ph / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + pw, y); ctx.stroke();
+    const val = maxV - (range / 4) * i;
+    ctx.fillStyle = '#8a8878';
+    ctx.font = `10px DM Mono, monospace`;
+    ctx.textAlign = 'right';
+    const lbl = trendMetric === 'margin' ? val.toFixed(1)+'%' :
+      (Math.abs(val) >= 1000 ? (val/1000).toFixed(1)+'K' : val.toFixed(0));
+    ctx.fillText(lbl, pad.left - 8, y + 3.5);
+  }
+
+  // Gradient fill
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ph);
+  const isPositive = data[data.length-1] >= data[0];
+  grad.addColorStop(0, isPositive ? 'rgba(22,163,74,0.18)' : 'rgba(220,38,38,0.18)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(data[0]));
+  data.forEach((v, i) => { if (i > 0) ctx.lineTo(toX(i), toY(v)); });
+  ctx.lineTo(toX(data.length-1), pad.top + ph);
+  ctx.lineTo(toX(0), pad.top + ph);
+  ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  ctx.strokeStyle = isPositive ? '#16a34a' : '#dc2626';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap  = 'round';
+  data.forEach((v, i) => { i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)); });
+  ctx.stroke();
+
+  // Dots + labels
+  data.forEach((v, i) => {
+    ctx.beginPath();
+    ctx.arc(toX(i), toY(v), 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.strokeStyle = isPositive ? '#16a34a' : '#dc2626';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = `10px DM Mono, monospace`;
+    ctx.textAlign = 'center';
+    const maxLen = data.length > 6 ? 6 : 10;
+    const lbl = labels[i].length > maxLen ? labels[i].slice(0,maxLen)+'…' : labels[i];
+    ctx.fillText(lbl, toX(i), H - 8);
+  });
+
+  // Trend stats
+  const first = data[0], last = data[data.length-1];
+  const change = last - first;
+  const changePct = first !== 0 ? (change / Math.abs(first) * 100) : 0;
+  const best = Math.max(...data), worst = Math.min(...data);
+  const sym = reversed[0]?.currencySym || '₦';
+  const fmtV = v => trendMetric === 'margin' ? v.toFixed(1)+'%' : (sym + Math.abs(v).toLocaleString('en-NG',{minimumFractionDigits:0,maximumFractionDigits:0}));
+
+  document.getElementById('trendStats').innerHTML = `
+    <div class="trend-stat-item">
+      <div class="trend-stat-label">Latest</div>
+      <div class="trend-stat-value ${last >= first ? 'up' : 'down'}">${fmtV(last)}</div>
+    </div>
+    <div class="trend-stat-item">
+      <div class="trend-stat-label">Change</div>
+      <div class="trend-stat-value ${change >= 0 ? 'up' : 'down'}">${change >= 0 ? '+' : ''}${fmtV(change)}</div>
+    </div>
+    <div class="trend-stat-item">
+      <div class="trend-stat-label">Best</div>
+      <div class="trend-stat-value up">${fmtV(best)}</div>
+    </div>
+    <div class="trend-stat-item">
+      <div class="trend-stat-label">Worst</div>
+      <div class="trend-stat-value down">${fmtV(worst)}</div>
+    </div>
+    <div class="trend-stat-item">
+      <div class="trend-stat-label">% Change</div>
+      <div class="trend-stat-value ${changePct >= 0 ? 'up' : 'down'}">${changePct >= 0 ? '+' : ''}${changePct.toFixed(1)}%</div>
+    </div>`;
+}
+
+function switchTrendMetric(el, metric) {
+  trendMetric = metric;
+  document.querySelectorAll('.trend-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderTrendChart(getReports().slice().reverse().reverse());
+}
+
+// ══════════════════════════════════════════════
+// SCENARIO COMPARISON
+// ══════════════════════════════════════════════
+function calcScenario(rev, cogs, exp, units) {
+  const totalCosts = cogs + exp;
+  const profit = rev - totalCosts;
+  const margin = rev > 0 ? (profit / rev) * 100 : 0;
+  const roi    = totalCosts > 0 ? (profit / totalCosts) * 100 : 0;
+  const perUnit = units > 0 ? profit / units : null;
+  return { rev, cogs, exp, totalCosts, profit, margin, roi, perUnit, units };
+}
+
+function runScenario() {
+  const aRev   = parseFloat(document.getElementById('sc-a-rev').value)   || 0;
+  const aCogs  = parseFloat(document.getElementById('sc-a-cogs').value)  || 0;
+  const aExp   = parseFloat(document.getElementById('sc-a-exp').value)   || 0;
+  const aUnits = parseFloat(document.getElementById('sc-a-units').value) || 0;
+  const bRev   = parseFloat(document.getElementById('sc-b-rev').value)   || 0;
+  const bCogs  = parseFloat(document.getElementById('sc-b-cogs').value)  || 0;
+  const bExp   = parseFloat(document.getElementById('sc-b-exp').value)   || 0;
+  const bUnits = parseFloat(document.getElementById('sc-b-units').value) || 0;
+
+  if (aRev === 0 && bRev === 0) return;
+
+  const A = calcScenario(aRev, aCogs, aExp, aUnits);
+  const B = calcScenario(bRev, bCogs, bExp, bUnits);
+
+  const profitDiff  = B.profit - A.profit;
+  const marginDiff  = B.margin - A.margin;
+  const roiDiff     = B.roi - A.roi;
+
+  const resultEl = document.getElementById('scenarioResult');
+  resultEl.style.display = 'block';
+
+  document.getElementById('scenarioCompareGrid').innerHTML = `
+    <div class="sc-block">
+      <div class="sc-block-label">True Profit</div>
+      <div class="sc-block-a">${fmt(A.profit)}</div>
+      <div class="sc-block-b">${fmt(B.profit)}</div>
+    </div>
+    <div class="sc-block">
+      <div class="sc-block-label">Net Margin</div>
+      <div class="sc-block-a">${A.margin.toFixed(1)}%</div>
+      <div class="sc-block-b">${B.margin.toFixed(1)}%</div>
+    </div>
+    <div class="sc-block">
+      <div class="sc-block-label">ROI</div>
+      <div class="sc-block-a">${A.roi.toFixed(1)}%</div>
+      <div class="sc-block-b">${B.roi.toFixed(1)}%</div>
+    </div>
+    <div class="sc-block">
+      <div class="sc-block-label">Total Costs</div>
+      <div class="sc-block-a">${fmt(A.totalCosts)}</div>
+      <div class="sc-block-b">${fmt(B.totalCosts)}</div>
+    </div>
+    ${A.perUnit !== null || B.perUnit !== null ? `
+    <div class="sc-block">
+      <div class="sc-block-label">Per Unit</div>
+      <div class="sc-block-a">${A.perUnit !== null ? fmt(A.perUnit) : '—'}</div>
+      <div class="sc-block-b">${B.perUnit !== null ? fmt(B.perUnit) : '—'}</div>
+    </div>` : ''}
+    <div class="sc-block" style="background:${profitDiff > 0 ? 'rgba(22,163,74,0.08)' : profitDiff < 0 ? 'rgba(220,38,38,0.08)' : 'var(--surface)'}">
+      <div class="sc-block-label">Profit Difference (B–A)</div>
+      <div class="sc-block-diff ${profitDiff > 0 ? 'pos' : profitDiff < 0 ? 'neg' : 'nt'}">
+        ${profitDiff >= 0 ? '+' : ''}${fmt(profitDiff)}
+      </div>
+    </div>`;
+
+  // Scenario insight
+  const insEl = document.getElementById('scenarioInsight');
+  let insText = '';
+  if (profitDiff > 0) {
+    insText = `<div class="insight-box" style="margin-top:0;border-left-color:var(--profit);">
+      <div class="insight-box-label">🔀 Scenario Insight</div>
+      <div class="insight-box-text">Scenario B is <strong>better by ${fmt(profitDiff)}</strong>. That's a <strong>+${marginDiff.toFixed(1)}% margin improvement</strong>. If this is a price increase scenario, it's worth it.</div>
+    </div>`;
+  } else if (profitDiff < 0) {
+    insText = `<div class="insight-box" style="margin-top:0;border-left-color:var(--loss);">
+      <div class="insight-box-label">🔀 Scenario Insight</div>
+      <div class="insight-box-text">Scenario B is <strong>worse by ${fmt(Math.abs(profitDiff))}</strong>. The proposed change reduces your profit and margin. Reconsider before implementing.</div>
+    </div>`;
+  } else {
+    insText = `<div class="insight-box" style="margin-top:0;">
+      <div class="insight-box-label">🔀 Scenario Insight</div>
+      <div class="insight-box-text">Both scenarios yield the same profit. The difference is in your costs and pricing structure, not the bottom line.</div>
+    </div>`;
+  }
+  insEl.innerHTML = insText;
+}
+
+function loadIntoScenario() {
+  if (!lastResult) return;
+  document.getElementById('sc-a-rev').value   = lastResult.revenue || '';
+  document.getElementById('sc-a-cogs').value  = lastResult.totalCOGS || '';
+  document.getElementById('sc-a-exp').value   = lastResult.totalHidden || '';
+  document.getElementById('sc-a-units').value = lastResult.units || '';
+  switchView('scenario');
+  showToast('Current result loaded into Scenario A');
+}
+
+// ══════════════════════════════════════════════
+// COPY RESULT
+// ══════════════════════════════════════════════
+function copyResult() {
+  if (!lastResult) return;
+  const r = lastResult;
+  const lines = [
+    `TrueProfit Report — ${currency.code}`,
+    ``,
+    `Revenue:       ${fmt(r.revenue)}`,
+    `COGS + Labour: ${fmt(r.totalCOGS)}`,
+    `Hidden Costs:  ${fmt(r.totalHidden)}`,
+    `Total Costs:   ${fmt(r.totalCosts)}`,
+    ``,
+    `TRUE PROFIT:   ${r.trueProfit < 0 ? '–' : ''}${fmt(r.trueProfit)}`,
+    `Net Margin:    ${fmtPct(r.marginPct)}`,
+    `ROI:           ${fmtPct(r.roi)}`,
+    ...(r.perUnit !== null ? [`Profit/Unit:   ${fmt(r.perUnit)}`] : []),
+    ``,
+    `Calculated with TrueProfit — mypersonaldashboard.vercel.app`,
+  ];
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = btn.innerHTML.replace('Copy Result', 'Copied!');
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = btn.innerHTML.replace('Copied!', 'Copy Result'); }, 2000);
+  });
+}
+
+// ══════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ══════════════════════════════════════════════
+// RESET
+// ══════════════════════════════════════════════
+function resetAll() {
+  if (!confirm('Reset all input values?')) return;
+  ['revenue','cogs','labour','unitsSold'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = '';
+  });
+  document.querySelectorAll('.expense-item.checked').forEach(el => {
+    el.classList.remove('checked');
+    const inp = el.querySelector('.expense-amount'); if(inp) inp.value = '';
+  });
+  document.getElementById('miscRows').innerHTML = '';
+  miscCount = 0;
+  document.getElementById('resultsCard').className = 'results-card';
+  document.getElementById('reportLabel').value = '';
+  lastResult = null;
+  ['bCogs','bExp','bProfit'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.style.width = '0%';
+  });
+}
+
+// ── BOOT ──
+init();
+</script>
+</body>
+</html>
