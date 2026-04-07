@@ -9,17 +9,19 @@
 <body>
 <div class="container">
 
+  <!-- ABOUT BANNER -->
   <div class="about-banner" onclick="openAbout()">
     <div class="about-banner-left">
       <div class="about-banner-icon">ℹ</div>
       <div>
         <div class="about-banner-title">Jid's Personal Dashboard</div>
-        <div class="about-banner-sub">Live data · Man City tracker · Fintech tools · Wealth simulator · TrueProfit</div>
+        <div class="about-banner-sub">Live data · Man City tracker · Fintech tools · Wealth simulator · TrueProfit · Daily News Digest</div>
       </div>
     </div>
     <div class="about-banner-btn">What's here? →</div>
   </div>
 
+  <!-- HEADER -->
   <header>
     <div class="avatar-wrap">
       <img src="https://media.licdn.com/dms/image/v2/D4E03AQFCmn-OEMQYcA/profile-displayphoto-crop_800_800/B4EZ1aQz7_IEAI-/0/1775335853855?e=1776902400&v=beta&t=vYXvM9-6InZFOmHqfnbkxIFY3dwC__E45p-aRWq8xoA" alt="Jid">
@@ -38,6 +40,7 @@
 
   <div class="dashboard-grid">
 
+    <!-- FX -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Naira Exchange <span id="fx-timestamp" style="margin-left:auto;font-size:0.6rem;opacity:0.5;font-family:'DM Mono',monospace"></span></div>
       <div id="fx-list">
@@ -47,16 +50,19 @@
       </div>
     </div>
 
+    <!-- CRYPTO -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Market Watch <span class="live-dot" style="margin-left:auto">Live</span></div>
       <div id="crypto-list"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:95%"></div><div class="skeleton" style="width:85%"></div></div>
     </div>
 
+    <!-- WEATHER -->
     <div class="card">
       <div class="card-label"><span class="dot"></span> Nigeria Weather</div>
       <div id="weather-list"><div class="skeleton" style="width:100%"></div><div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:95%"></div><div class="skeleton" style="width:85%"></div></div>
     </div>
 
+    <!-- HERO MATCH -->
     <div class="card card-hero">
       <div class="hero-inner">
         <div class="hero-left">
@@ -77,6 +83,7 @@
       </div>
     </div>
 
+    <!-- SAVINGS SIMULATOR -->
     <div class="card" id="savings-simulator" style="grid-column:span 3;">
       <div class="card-label"><span class="dot"></span> 2026 Wealth Path Simulator</div>
       <div class="simulator-container">
@@ -112,6 +119,7 @@
       </div>
     </div>
 
+    <!-- TOOLS -->
     <div class="card tools-card" style="grid-column:span 3;">
       <div class="card-label"><span class="dot"></span> My Tools</div>
       <div class="tools-tabs">
@@ -120,6 +128,7 @@
         <button class="tool-tab" onclick="showTool('fintech',this)">📊 Fintech 2026</button>
         <button class="tool-tab" onclick="showTool('movies',this)">🎬 What to Watch</button>
         <button class="tool-tab" onclick="showTool('trueprofit',this)">💹 TrueProfit</button>
+        <button class="tool-tab" onclick="showTool('news',this)">📰 Daily Digest</button>
       </div>
       <div class="tool-frame-wrap">
         <iframe id="tool-calculator" class="tool-frame active-frame" src="https://jidspaymentfeecalcv4.vercel.app" title="NG Pay Fee Calculator" loading="lazy" allow="clipboard-write"></iframe>
@@ -127,9 +136,11 @@
         <iframe id="tool-fintech" class="tool-frame" src="./ng-fintech.html" title="Nigerian Fintech 2026" loading="lazy"></iframe>
         <iframe id="tool-movies" class="tool-frame" src="./movie-recommender.html" title="What to Watch Tonight" loading="lazy"></iframe>
         <iframe id="tool-trueprofit" class="tool-frame" src="./trueprofit.html" title="TrueProfit Calculator" loading="lazy"></iframe>
+        <iframe id="tool-news" class="tool-frame" src="./news-digest.html" title="Daily Digest" loading="lazy"></iframe>
       </div>
     </div>
 
+    <!-- CONNECT -->
     <div class="card" style="grid-column:span 3;">
       <div class="card-label"><span class="dot"></span> Connect With Me</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
@@ -142,6 +153,7 @@
   </div>
 </div>
 
+<!-- TICKER -->
 <div class="news-ticker">
   <div class="ticker-label">LIVE</div>
   <div class="ticker-wrapper">
@@ -158,6 +170,7 @@
   </div>
 </div>
 
+<!-- ABOUT MODAL -->
 <div class="about-modal" id="aboutModal">
   <div class="about-modal-box">
     <div class="about-modal-header">
@@ -176,7 +189,8 @@
         <div class="about-item"><div class="about-item-icon">🎮</div><div><div class="about-item-title">Squaredodger (My Tools → Tab 2)</div><div class="about-item-desc">A browser arcade game — dodge the red squares for as long as you can. Built in vanilla JS with skins, a leaderboard and Web Audio API sound effects.</div></div></div>
         <div class="about-item"><div class="about-item-icon">📊</div><div><div class="about-item-title">Fintech 2026 (My Tools → Tab 3)</div><div class="about-item-desc">An interactive intelligence report on Nigeria's fintech ecosystem — company cards, funding timeline, valuation charts, M&A acquisition map, and six DECODE insight pieces. Built as a DECODE content project.</div></div></div>
         <div class="about-item"><div class="about-item-icon">🎬</div><div><div class="about-item-title">What to Watch Tonight (My Tools → Tab 4)</div><div class="about-item-desc">AI-powered movie and series recommender. Pick your mood, select genres (Nollywood, anime, K-Drama, Hollywood and more), add context like "something like Money Heist but African" and AI returns personalised picks with a reason why you'll love each one.</div></div></div>
-        <div class="about-item"><div class="about-item-icon">💹</div><div><div class="about-item-title">TrueProfit Calculator (My Tools → Tab 5)</div><div class="about-item-desc">A full profit intelligence suite for Nigerian business owners. Save labelled reports, track profit over time with a trend chart, and run scenario comparisons — what if I raise my price or cut this expense? Smart insights with specific, numeric actions.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">💹</div><div><div class="about-item-title">TrueProfit Calculator (My Tools → Tab 5)</div><div class="about-item-desc">Side hustle profit calculator for Nigerian business owners and entrepreneurs. Enter your revenue, COGS, labour, and tick hidden expenses (delivery, data, packaging, platform fees and more). Calculates your real net profit, margin, ROI, and profit per unit — with a smart insight on what it means for your business.</div></div></div>
+        <div class="about-item"><div class="about-item-icon">📰</div><div><div class="about-item-title">Daily Digest (My Tools → Tab 6)</div><div class="about-item-desc">Live Nigerian news headlines aggregated from Punch, Vanguard, TechCabal, Premium Times, Channels TV and Daily Post. Filter by Politics, Business, Tech, Sports or Entertainment. Updates every 30 minutes automatically — no app switching needed.</div></div></div>
       </div>
       <div class="about-footer-note">Built with HTML, CSS and vanilla JS · Deployed on Vercel · All data sources are free and open<br/>Follow the build journey → <a href="https://x.com/Swiiish_x" target="_blank">@Swiiish_x</a></div>
     </div>
