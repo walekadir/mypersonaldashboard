@@ -1,16 +1,16 @@
 {
   "last": {
-    "opponent": "Chelsea",
-    "cityScore": 3,
-    "oppScore": 0,
+    "opponent": "Arsenal",
+    "cityScore": 2,
+    "oppScore": 1,
     "competition": "Premier League",
-    "note": "O'Reilly, Guehi, Doku ⚽⚽⚽",
-    "date": "2026-04-12"
+    "note": "Cherki, Haaland ⚽⚽",
+    "date": "2026-04-19"
   },
   "next": {
-    "opponent": "Arsenal",
+    "opponent": "Burnley",
     "competition": "Premier League",
-    "datetime": "2026-04-19T15:30:00Z",
-    "venue": "Etihad Stadium"
+    "datetime": "2026-04-22T20:00:00Z",
+    "venue": "Turf Moor"
   }
 }
