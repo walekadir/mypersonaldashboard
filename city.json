@@ -1,16 +1,16 @@
 {
   "last": {
-    "opponent": "Arsenal",
-    "cityScore": 2,
-    "oppScore": 1,
+    "opponent": "Burnley",
+    "cityScore": 1,
+    "oppScore": 0,
     "competition": "Premier League",
-    "note": "Cherki, Haaland ⚽⚽",
-    "date": "2026-04-19"
+    "note": "Haaland ⚽",
+    "date": "2026-04-22"
   },
   "next": {
-    "opponent": "Burnley",
-    "competition": "Premier League",
-    "datetime": "2026-04-22T20:00:00Z",
-    "venue": "Turf Moor"
+    "opponent": "Southampton",
+    "competition": "FA Cup",
+    "datetime": "2026-04-25T17:15:00Z",
+    "venue": "Wembley"
   }
 }
