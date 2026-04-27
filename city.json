@@ -1,16 +1,16 @@
 {
   "last": {
-    "opponent": "Burnley",
-    "cityScore": 1,
-    "oppScore": 0,
-    "competition": "Premier League",
-    "note": "Haaland ⚽",
-    "date": "2026-04-22"
+    "opponent": "Southampton",
+    "cityScore": 2,
+    "oppScore": 1,
+    "competition": "FA Cup",
+    "note": "Doku, Gonzalez ⚽⚽",
+    "date": "2026-04-25"
   },
   "next": {
-    "opponent": "Southampton",
-    "competition": "FA Cup",
-    "datetime": "2026-04-25T17:15:00Z",
-    "venue": "Wembley"
+    "opponent": "Everton",
+    "competition": "Premier League",
+    "datetime": "2026-05-04T20:00:00Z",
+    "venue": "Hill Dickinson Stadium"
   }
 }
