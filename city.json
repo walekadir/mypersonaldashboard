@@ -1,16 +1,16 @@
 {
   "last": {
-    "opponent": "Everton",
+    "opponent": "Brentford",
     "cityScore": 3,
-    "oppScore": 3,
+    "oppScore": 0,
     "competition": "Premier League",
-    "note": "Doku, Haaland, Doku ⚽⚽⚽",
-    "date": "2026-05-04"
+    "note": "Doku, Haaland, Marmoush ⚽⚽⚽",
+    "date": "2026-05-09"
   },
   "next": {
-    "opponent": "Brentford",
+    "opponent": "Crystal Palace",
     "competition": "Premier League",
-    "datetime": "2026-05-09T17:30:00Z",
+    "datetime": "2026-05-13T20:00:00Z",
     "venue": "Etihad Stadium"
   }
 }
