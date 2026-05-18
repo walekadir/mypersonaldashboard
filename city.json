@@ -1,16 +1,16 @@
 {
   "last": {
-    "opponent": "Brentford",
-    "cityScore": 3,
+    "opponent": "Chelsea",
+    "cityScore": 1,
     "oppScore": 0,
-    "competition": "Premier League",
-    "note": "Doku, Haaland, Marmoush ⚽⚽⚽",
-    "date": "2026-05-09"
+    "competition": "2026 FA Cup Final",
+    "note": "Semenyo ⚽",
+    "date": "2026-05-16"
   },
   "next": {
-    "opponent": "Crystal Palace",
+    "opponent": "Bournemouth",
     "competition": "Premier League",
-    "datetime": "2026-05-13T20:00:00Z",
-    "venue": "Etihad Stadium"
+    "datetime": "2026-05-19T19:30:00Z",
+    "venue": "Vitality Stadium"
   }
 }
