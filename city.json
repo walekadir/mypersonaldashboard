@@ -1,16 +1,16 @@
 {
   "last": {
-    "opponent": "Chelsea",
+    "opponent": "Bournemouth",
     "cityScore": 1,
-    "oppScore": 0,
-    "competition": "2026 FA Cup Final",
-    "note": "Semenyo ⚽",
-    "date": "2026-05-16"
+    "oppScore": 1,
+    "competition": "Premier League",
+    "note": "Haaland⚽",
+    "date": "2026-05-19"
   },
   "next": {
-    "opponent": "Bournemouth",
+    "opponent": "Aston Villa",
     "competition": "Premier League",
-    "datetime": "2026-05-19T19:30:00Z",
-    "venue": "Vitality Stadium"
+    "datetime": "2026-05-24T16:00:00Z",
+    "venue": "Etihad Stadium"
   }
 }
